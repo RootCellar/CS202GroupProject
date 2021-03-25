@@ -2,7 +2,7 @@
 A group project for CS202.
 
 
-##The Group
+## The Group
 
 Darian Marvel
 
