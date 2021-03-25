@@ -5,7 +5,7 @@
 
 //This line defines DEBUG, a preprocessor variable
 //Commenting this line out will disable debug printing
-#define DEBUG true
+#define DEBUG
 
 //If debug mode is enabled (DEBUG defined), print the debug message.
 void debug(const char* s) {
