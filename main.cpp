@@ -10,6 +10,18 @@
  *
 */
 
+//Our Headers
+#include "debug.h"
+
+//C++ Headers
+#include <iostream>
+
+//Using statements
+using std::cout;
+using std::endl;
 
 int main() {
+
+    debug("debug mode is enabled!");
+
 }
