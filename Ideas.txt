@@ -4,6 +4,12 @@ Our own list of ideas of what we may do. May include pros/cons
 
 - text based adventure
 
+Pros of making a game:
+- multiple/many parts, easy to divide up the work and avoid git issues
+- can be fun to play
+- can be fun to make
+- good programming challenge and practice
+
 - chatting program
 
 - basic multiplayer game
