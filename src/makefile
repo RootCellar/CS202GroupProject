@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -g -Wall
-LDFLAGS =
+LDFLAGS = -lX11 -lGL -lpthread -lpng -lstdc++fs
 
 # We use this to
 SOURCES = $(wildcard *.cpp)
