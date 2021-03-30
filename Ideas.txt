@@ -1,7 +1,15 @@
 Our own list of ideas of what we may do. May include pros/cons
 
 - game with graphics
-
+   - Mob base class
+        - player
+        - an actual tank
+        - tank
+        - mage
+        - archer
+   - Spell class
+   - action class
+   - projectile class
 - text based adventure
 
 - other game (chess?)
