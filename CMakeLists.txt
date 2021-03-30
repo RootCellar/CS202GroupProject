@@ -9,3 +9,8 @@ add_executable(CS202GroupProject
         src/debug.h
         src/main.cpp
         src/olcPixelGameEngine.h)
+
+if (UNIX AND NOT APPLE)
+    #do something
+    target_link_libraries(CS202GroupProject -lX11 -lGL -lpthread -lpng -lstdc++fs)
+endif (UNIX)
