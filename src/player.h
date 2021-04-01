@@ -5,6 +5,10 @@
 
 class Player : public Mob {
 
+  void update() {
+    
+  }
+
 };
 
 #endif

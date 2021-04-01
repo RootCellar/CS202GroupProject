@@ -15,7 +15,7 @@ public:
 
 	}
 
-	void update(int xPos, int yPos) {
+	void update() {
 
 	}
 
