@@ -13,6 +13,12 @@
 //Our Headers
 #include "debug.h"
 
+#include "level.h"
+#include "entity.h"
+#include "mob.h"
+#include "projectile.h"
+#include "player.h"
+
 //C++ Headers
 #include <iostream>
 
