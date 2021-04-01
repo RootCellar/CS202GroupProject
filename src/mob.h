@@ -7,7 +7,8 @@ class Mob : public Entity {
 
 public:
 	Mob(int health, int x, int y): _health(health){
-
+		setXPos(x);
+		setYPos(y);
 	}
 
 	int getHealth() const {
