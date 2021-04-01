@@ -19,6 +19,11 @@ public:
 	void setSpellSlot(int slotNum /*Spell type*/){
 
 	}
+
+	void increaseMaxHealth(int mod){
+		setHealth((mod *= getHealth()));
+	}
+
 private:
 	vector<Spell> _AvailableSpells[10];
 };
