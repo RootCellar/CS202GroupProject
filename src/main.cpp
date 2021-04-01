@@ -18,6 +18,7 @@
 #include "mob.h"
 #include "projectile.h"
 #include "player.h"
+#include "spell.h"
 
 //C++ Headers
 #include <iostream>
