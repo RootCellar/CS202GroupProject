@@ -29,29 +29,10 @@ public:
   int getId() const { return id; }
 };
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-
-vec2D move(const double speed, const double angle)
-{
-    vec2D v;
-    v._x = (cos(angle) * speed);
-    v._y = (sin(angle) * speed);
-    return v;
-}
-
-=======
->>>>>>> 7a30ba4
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }
 
 int Entity::idPoint = 0;
 
-<<<<<<< HEAD
-=======
->>>>>>> 32c35c0... work on level, team and entity fixes
->>>>>>> 7a30ba4
 #endif
