@@ -15,7 +15,7 @@ public:
 
 	}
 
-	void update(int xPos, int yPos) override {
+	void update(int xPos, int yPos) {
 
 	}
 
