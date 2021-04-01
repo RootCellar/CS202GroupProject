@@ -25,6 +25,15 @@ public:
 
   void update() {
 
+
+    for(Mob m : mobs) {
+      m.update();
+    }
+
+    for(Projectile p : projectiles) {
+      p.update();
+    }
+
   }
 
 };

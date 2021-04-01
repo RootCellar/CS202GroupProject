@@ -2,7 +2,7 @@
 #define SPELL_H
 
 class Spell {
-  
-}
+
+};
 
 #endif
