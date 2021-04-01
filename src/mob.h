@@ -7,9 +7,21 @@ class Mob : public Entity {
 
 public:
 
-  void update() {
+	int getHealth() {
+		return _health;
+	}
 
-  }
+	void setHealth() {
+
+	}
+
+	void update(int xPos, int yPos){
+
+	}
+
+	~Mob()= default;
+private:
+	int _health;
 
 };
 
