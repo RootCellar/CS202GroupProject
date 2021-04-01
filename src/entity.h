@@ -2,6 +2,9 @@
 #define ENTITY_H
 
 #define PI 3.14159265
+#include <string>
+using std::string;
+
 struct vec2D
 {
     double _x;
@@ -10,7 +13,8 @@ struct vec2D
 
 class Entity {
 private:
-    bool _bRedundant;
+    bool _bRedundant = false;
+    string _name;
 
   int xPos;
   int yPos;
@@ -19,6 +23,9 @@ private:
   int id;
 
 public:
+  Entity() {
+    id = idPoint++;
+  }
 
     // Position manipulation
     template<typename T>
@@ -33,11 +40,8 @@ public:
     auto getXPos() { return xPos; };
     auto getYPos() { return yPos; }
 
+    void setRedundant() { _bredundant = true }
     bool isRedundant() { return _bRedundant; }
-
-  Entity() {
-    id = idPoint++;
-  }
 
   virtual ~Entity() = default;
 
