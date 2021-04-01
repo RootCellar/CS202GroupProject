@@ -18,7 +18,11 @@ private:
   std::vector<Mob> mobs;
   std::vector<Projectile> projectiles;
 
-  //may add pending spawns and despawns later.
+  std::vector<Mob> pendingMobSpawns;
+  std::vector<Mob> pendingMobRemovals;
+
+  std::vector<Projectile> pendingProjectileSpawns;
+  std::vector<Projectile> pendingProjectileRemovals;
 
 public:
 
@@ -34,6 +38,13 @@ public:
 
   }
 
+  bool has(Mob m) {
+    for(Mob j : mobs) {
+      if( m == j ) return true;
+    }
+    return false;
+  }
+
   void update() {
 
     for(Mob m : mobs) {
@@ -43,6 +54,14 @@ public:
     for(Projectile p : projectiles) {
       p.update();
     }
+
+    /*
+    while(pendingMobSpawns.size() > 0) {
+      //Mob m = pendingMobSpawns.get(0);
+
+      if(!has(m)) mobs.push_back(m);
+    }
+    */
 
   }
 

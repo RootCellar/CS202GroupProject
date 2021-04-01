@@ -13,6 +13,9 @@ private:
   int xPos;
   int yPos;
 
+  static int idPoint;
+  int id;
+
 public:
 
     template<typename T>
@@ -26,19 +29,21 @@ public:
     auto getXPos() { return xPos; };
     auto getYPos() { return yPos; }
 
+  Entity() {
+    id = idPoint++;
+  }
+
   virtual ~Entity() = default;
 
   virtual void update() = 0;
+
+  int getId() const { return id; }
 };
 
-
-
-vec2D move(const double speed, const double angle)
-{
-    vec2D v;
-    v._x = (cos(angle) * speed);
-    v._y = (sin(angle) * speed);
-    return v;
+bool operator==(const Entity &one, const Entity &two) {
+  return one.getId() == two.getId();
 }
+
+int Entity::idPoint = 0;
 
 #endif
