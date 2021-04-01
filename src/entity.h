@@ -15,6 +15,17 @@ private:
 
 public:
 
+    template<typename T>
+    void setXPos(T newX) { xPos = newX; }
+    template<typename T>
+    void setYPos(T newY) { yPos = newY; };
+    template<typename T>
+    void addToXPos(T addedX) { xPos += addedX; }
+    template<typename T>
+    void addToYPos(T addedY) { yPos += addedY; }
+    auto getXPos() { return xPos; };
+    auto getYPos() { return yPos; }
+
   virtual ~Entity() = default;
 
   virtual void update() = 0;
