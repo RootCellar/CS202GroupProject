@@ -5,6 +5,10 @@ class Entity {
 private:
   int xPos;
   int yPos;
+
+public:
+
+  virtual void update() = 0;
 };
 
 #endif
