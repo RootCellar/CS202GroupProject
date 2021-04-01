@@ -10,6 +10,9 @@ struct vec2D
 
 class Entity {
 private:
+    bool _bFriendly;
+    bool _bRedundant;
+
   int xPos;
   int yPos;
 
@@ -18,6 +21,7 @@ private:
 
 public:
 
+    // Position manipulation
     template<typename T>
     void setXPos(T newX) { xPos = newX; }
     template<typename T>
@@ -26,8 +30,12 @@ public:
     void addToXPos(T addedX) { xPos += addedX; }
     template<typename T>
     void addToYPos(T addedY) { yPos += addedY; }
+
     auto getXPos() { return xPos; };
     auto getYPos() { return yPos; }
+
+    bool isHostile() { return !_bFriendly; };
+    bool isRedundant() { return _bRedundant; }
 
   Entity() {
     id = idPoint++;
