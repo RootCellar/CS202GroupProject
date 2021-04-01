@@ -6,23 +6,25 @@
 class Mob : public Entity {
 
 public:
+	Mob(int health, int x, int y): _health(health){
 
-	int getHealth() {
+	}
+
+	int getHealth() const {
 		return _health;
 	}
 
-	void setHealth() {
-
+	void setHealth(int x) {
+		_health = x;
 	}
 
 	void update() {
-
+		//pass through current positions to entity using member functions
 	}
 
 	~Mob()= default;
 private:
 	int _health;
-
 };
 
 #endif
