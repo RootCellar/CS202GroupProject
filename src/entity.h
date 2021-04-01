@@ -10,7 +10,6 @@ struct vec2D
 
 class Entity {
 private:
-    bool _bFriendly;
     bool _bRedundant;
 
   int xPos;
@@ -34,7 +33,6 @@ public:
     auto getXPos() { return xPos; };
     auto getYPos() { return yPos; }
 
-    bool isHostile() { return !_bFriendly; };
     bool isRedundant() { return _bRedundant; }
 
   Entity() {
