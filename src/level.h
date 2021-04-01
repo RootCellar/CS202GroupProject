@@ -18,14 +18,23 @@ private:
   std::vector<Mob> mobs;
   std::vector<Projectile> projectiles;
 
+  //may add pending spawns and despawns later.
+
 public:
 
   Level(Player p) {
     player = p;
   }
 
-  void update() {
+  void add(Mob m) {
 
+  }
+
+  void add(Projectile p) {
+
+  }
+
+  void update() {
 
     for(Mob m : mobs) {
       m.update();
