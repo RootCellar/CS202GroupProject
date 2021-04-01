@@ -3,6 +3,8 @@
 
 class Projectile : public Entity {
 
+public:
+
   //update the projectile, move it etc.
   void update() {
 

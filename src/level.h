@@ -15,7 +15,7 @@ private:
   Player player;
 
   std::vector<Mob> mobs;
-  std::vector<projectile> projectiles;
+  std::vector<Projectile> projectiles;
 
 public:
 

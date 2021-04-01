@@ -5,6 +5,12 @@
 
 class Mob : public Entity {
 
+public:
+
+  void update() {
+
+  }
+
 };
 
 #endif
