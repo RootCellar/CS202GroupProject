@@ -34,3 +34,4 @@ main
 *.out
 *.app
 /cmake-build-debug/
+/.vs
