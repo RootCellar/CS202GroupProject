@@ -7,6 +7,7 @@
 #include "mob.h"
 #include "player.h"
 #include "projectile.h"
+#include "team.h"
 
 //The world, bosses everyone else around but also serves them
 class Level {
