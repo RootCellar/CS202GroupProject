@@ -11,8 +11,16 @@ public:
 	Player(int health, int x, int y): Mob(health,x,y){
 
 	}
-private:
 
+	const vector<Spell> * getSpellList(){
+		return _AvailableSpells;
+	}
+
+	void setSpellSlot(int slotNum /*Spell type*/){
+
+	}
+private:
+	vector<Spell> _AvailableSpells[10];
 };
 
 #endif
