@@ -9,9 +9,10 @@ public:
 	Mob(int health, int x, int y): _health(health){
 		setXPos(x);
 		setYPos(y);
+		_mobPop++;
 	}
 
-	int getHealth() const {
+	int getHealth() const{
 		return _health;
 	}
 
@@ -19,13 +20,21 @@ public:
 		_health = x;
 	}
 
-	void update() {
-		//pass through current positions to entity using member functions
+	int getCount() const{
+		return _mobPop;
 	}
 
-	~Mob()= default;
+	void update(int xPosMod, int yPosMod) {
+		addToXPos(xPosMod);
+		addToYPos(yPosMod);
+	}
+
+	~Mob(){
+		_mobPop--;
+	}
 private:
 	int _health;
+	static int _mobPop;
 };
 
 #endif
