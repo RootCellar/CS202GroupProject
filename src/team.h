@@ -16,6 +16,6 @@ public:
   int getId() { return id; }
 };
 
-int idPoint = 0;
+int Team::idPoint = 0;
 
 #endif
