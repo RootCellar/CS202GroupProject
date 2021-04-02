@@ -30,7 +30,7 @@ public:
   virtual void update(olc::PixelGameEngine* pge) override
   {
         // Updating position of projectile
-        _position += _direction * _speed;
+        _position += _direction * _speed; //need offset if map moves around.
 
         drawSelf(pge);
 

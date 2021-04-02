@@ -119,7 +119,7 @@ public:
 		p.update(this);
 	}
 protected:
-    Projectile p { olc::vd2d {100, 100}, olc::vd2d {10,0}};
+    Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
 };
 
 
