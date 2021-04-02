@@ -3,6 +3,9 @@
 
 #define PI 3.14159265
 #include <string>
+
+#include "olcPixelGameEngine.h"
+
 using std::string;
 
 struct vec2D
@@ -40,12 +43,12 @@ public:
     auto getXPos() { return xPos; };
     auto getYPos() { return yPos; }
 
-    void setRedundant() { _bredundant = true }
+    void setRedundant() { _bRedundant = true; }
     bool isRedundant() { return _bRedundant; }
 
   virtual ~Entity() = default;
 
-  virtual void update() = 0;
+  virtual void update(olc::PixelGameEngine* pge) = 0;
 
   int getId() const { return id; }
 };

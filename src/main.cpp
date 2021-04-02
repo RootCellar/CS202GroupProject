@@ -13,7 +13,7 @@
 //Our Headers
 #include "debug.h"
 
-#include "level.h"
+//#include "level.h"
 #include "entity.h"
 #include "mob.h"
 #include "projectile.h"
@@ -116,8 +116,10 @@ public:
 		yPos += (ScreenHeight() / 2);
 
 		Draw(xPos, yPos, olc::Pixel( r, g, b) );
+		p.update(this);
 	}
-
+protected:
+    Projectile p { olc::vd2d {100, 100}, olc::vd2d {10,0}};
 };
 
 
