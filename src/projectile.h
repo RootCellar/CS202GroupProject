@@ -27,12 +27,10 @@ public:
         pge->FillCircle(_position, _radius, olc::MAGENTA);
     }
   //update the projectile, move it etc.
-  virtual void update(olc::PixelGameEngine* pge) override
+  virtual void update() override
   {
         // Updating position of projectile
         _position += _direction * _speed; //need offset if map moves around.
-
-        drawSelf(pge);
 
   }
 
