@@ -4,6 +4,7 @@
 #define PI 3.14159265
 #include <string>
 using std::string;
+#include "olcPixelGameEngine.h"
 
 struct vec2D
 {
