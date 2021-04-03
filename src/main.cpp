@@ -116,7 +116,8 @@ public:
 		yPos += (ScreenHeight() / 2);
 
 		Draw(xPos, yPos, olc::Pixel( r, g, b) );
-		p.update(this);
+		p.update();
+		p.drawSelf(this);
 	}
 protected:
     Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
