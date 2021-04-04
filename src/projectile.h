@@ -37,14 +37,14 @@ public:
 
         /////////////////////////////
         // Prototype for Scale function
-        float sx = .05f, sy = .05f;
-        std::vector<std::vector<float>> matrixScale{ { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
+        double sx = .05f, sy = .05f;
+        std::vector<std::vector<double>> matrixScale{ { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
 
         for (int x = 0 ; x < fireBall->width ; ++x) {
             for (int y = 0 ; y < fireBall->height ; ++y) {
                 olc::Pixel p = fireBall->GetPixel(x, y);
 
-                float nx, ny;
+                double nx, ny;
                 nx = x * matrixScale[0][0] + y * matrixScale[0][1] + 1 * matrixScale[0][2] ;
                 ny = x * matrixScale[1][0] + y * matrixScale[1][1] + 1 * matrixScale[1][2];
 
@@ -56,16 +56,19 @@ public:
 
     }
   //update the projectile, move it etc.
-  virtual void update() override
-  {
-        // Updating position of projectile
-        _position += _direction * _speed; //need offset if map moves around.
+  virtual void update() override {
+      // Updating position of projectile
+      _position += _direction * _speed; //need offset if map moves around.
 
   }
-    void xxx(const std::vector<std::vector<float>> &v, float x, float y, float &nx, float &ny)
-    {
 
-    }
+//    void scale(float &nx, float &ny, float x, float y,) {
+//        // To get scale we need the
+//        std::vector<std::vector<float>> matrixScale{{sx, 0,  0},
+//                                                    {0,  sy, 0},
+//                                                    {0,  0,  1}};
+//
+//    }
 };
 
 #endif
