@@ -106,8 +106,14 @@ public:
         p.update();
 		this->SetPixelMode(olc::Pixel::ALPHA);
         p.drawSelf(this, x, y);
-        this->SetPixelMode(olc::Pixel::NORMAL);
+        for ( const auto& ball : myBalls) {
+            ball->update();
+            ball->drawSelf(this, x, y);
+        }
+//        this->SetPixelMode(olc::Pixel::NORMAL);
 //        DrawSprite(olc::vi2d {x, y}, fireBall.get());
+
+
 		return true;
 	}
 
@@ -125,7 +131,7 @@ public:
 	}
 protected:
     Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
-
+    std::vector <std::unique_ptr<Projectile>> myBalls = getMyBalls(olc::vd2d{200, 200} , 3);
 
 };
 

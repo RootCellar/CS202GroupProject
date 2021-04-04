@@ -70,5 +70,28 @@ public:
 //
 //    }
 };
+std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos);
+
+std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos) // fP only gives directions
+{
+//    auto myBall = std::make_unique<Projectile>(sPos, fPos);
+//    //std::unique_ptr <Projectile> myProjectile std::make_unique<Projectile> {sPos, fPos};
+//    return myBall;
+    return std::make_unique<Projectile>(sPos, fPos);
+}
+
+std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int numberOfBalls) {
+    int &n = numberOfBalls;
+    std::vector <std::unique_ptr<Projectile>> myBalls ;
+    // Generate balls in a circle ?
+    //
+    double angleRad = 0 ;
+    for ( int i = 0 ; i < n ; ++i ) {
+        angleRad = 2.0 * PI * (static_cast<double> (i) /n) ;
+        auto direction = olc::vd2d{cos (angleRad), sin (angleRad)};
+        myBalls.push_back(projectileFactory( sPos, sPos + direction ));
+    }
+    return myBalls;
+}
 
 #endif
