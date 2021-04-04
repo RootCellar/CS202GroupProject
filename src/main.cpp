@@ -43,8 +43,8 @@ public:
 
 	int x = 0;
 	int y = 0;
-
-
+//    std::unique_ptr <olc::Sprite> fireBall;
+//    olc::Sprite * spritePtr = nullptr;
 public:
 	bool OnUserCreate() override
 	{
@@ -52,7 +52,8 @@ public:
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
-
+//        fireBall = std::make_unique<olc::Sprite>("fireBall.png");
+//        spritePtr = new olc::Sprite("fireBall.png");
 		return true;
 	}
 
@@ -102,7 +103,9 @@ public:
 		if(GetKey(olc::S).bHeld) {
 			y++;
 		}
-
+        p.update();
+        p.drawSelf(this, x, y);
+//        DrawSprite(olc::vi2d {x, y}, fireBall.get());
 		return true;
 	}
 
@@ -116,11 +119,12 @@ public:
 		yPos += (ScreenHeight() / 2);
 
 		Draw(xPos, yPos, olc::Pixel( r, g, b) );
-		p.update();
-		p.drawSelf(this);
+
 	}
 protected:
     Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
+
+
 };
 
 
