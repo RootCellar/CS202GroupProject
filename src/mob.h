@@ -6,6 +6,8 @@
 class Mob : public Entity {
 
 public:
+	using Entity::Entity;
+	Mob() {}
 	Mob(int health, int x, int y): _health(health){
 		setXPos(x);
 		setYPos(y);
@@ -24,9 +26,14 @@ public:
 		return _mobPop;
 	}
 
-	void update(int xPosMod, int yPosMod) {
-		addToXPos(xPosMod);
-		addToYPos(yPosMod);
+	// update function needs to have the same parameters as the update function it inherits/overrides
+	void update(/*int xPosMod, int yPosMod*/) override {
+		//addToXPos(xPosMod);
+		//addToYPos(yPosMod);
+	}
+
+	virtual void drawSelf(olc::PixelGameEngine* gfx) const override {
+		// Drawing code here...
 	}
 
 	~Mob(){

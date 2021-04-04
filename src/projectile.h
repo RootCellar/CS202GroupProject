@@ -10,6 +10,10 @@ public:
 
   }
 
+  virtual void drawSelf(olc::PixelGameEngine* gfx) const override {
+      // Drawing code here...
+  }
+
 };
 
 #endif
