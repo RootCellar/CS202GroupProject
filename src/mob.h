@@ -7,7 +7,11 @@ class Mob : public Entity {
 
 public:
 	using Entity::Entity;
-	Mob() {}
+
+	Mob() {
+		_mobPop++;
+	}
+
 	Mob(int health, int x, int y): _health(health){
 		setXPos(x);
 		setYPos(y);
@@ -32,7 +36,7 @@ public:
 		//addToYPos(yPosMod);
 	}
 
-	virtual void drawSelf(olc::PixelGameEngine* gfx) const override {
+	virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
 		// Drawing code here...
 	}
 
@@ -43,5 +47,9 @@ private:
 	int _health;
 	static int _mobPop;
 };
+
+//start this at zero, otherwise it becomes whatever value was already at that location
+//Don't forget to initialize your data!
+int Mob::_mobPop = 0;
 
 #endif

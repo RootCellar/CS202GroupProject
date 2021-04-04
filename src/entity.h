@@ -34,7 +34,7 @@ public:
 
   // This may not need to be a virtual function or pure virtual function
   // Offsets x and y are for position on screen as opposed to on the map.
-  virtual void drawSelf(olc::PixelGameEngine* gfx /*, float offsetx, float offsety*/) const = 0;
+  virtual void drawSelf(olc::PixelGameEngine& gfx /*, float offsetx, float offsety*/) const = 0;
   /*
   // Should contain something like the following IF we are using sprites/decals
 
