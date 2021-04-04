@@ -15,8 +15,9 @@ struct vec2D
 
 class Entity {
 private:
-    bool _bRedundant = false;
-    string _name;
+  
+  bool _bRedundant = false;
+  string _name;
 
   int xPos;
   int yPos;
@@ -27,7 +28,7 @@ private:
 public:
   Entity() {
     id = idPoint++;
-    
+
     debug("Entity constructed");
   }
 
@@ -58,11 +59,11 @@ public:
   template<typename T>
   void addToYPos(T addedY) { yPos += addedY; }
 
-  auto getXPos() { return xPos; };
-  auto getYPos() { return yPos; }
+  auto getXPos() const { return xPos; };
+  auto getYPos() const { return yPos; }
 
   void setRedundant() { _bRedundant = true; }
-  bool isRedundant() { return _bRedundant; }
+  bool isRedundant() const { return _bRedundant; }
 
   int getId() const { return id; }
 };

@@ -59,14 +59,14 @@ public:
     if(has(p)) pendingProjectileRemovals.push_back(p);
   }
 
-  bool has(Mob m) {
+  bool has(Mob m) const {
     for(Mob j : mobs) {
       if( m == j ) return true;
     }
     return false;
   }
 
-  bool has(Projectile p) {
+  bool has(Projectile p) const {
     for(Projectile j : projectiles) {
       if( p == j ) return true;
     }
@@ -141,7 +141,7 @@ public:
 
   }
 
-  void renderEntities(Example &gfx) {
+  void renderEntities(Example &gfx) const {
     for(Projectile p : projectiles) {
       p.drawSelf(gfx);
     }

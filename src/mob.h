@@ -12,13 +12,13 @@ public:
 		_mobPop++;
 	}
 
-	Mob(int health, int x, int y): _health(health){
+	Mob(int health, int x, int y): _health(health) {
 		setXPos(x);
 		setYPos(y);
 		_mobPop++;
 	}
 
-	int getHealth() const{
+	int getHealth() const {
 		return _health;
 	}
 
@@ -26,7 +26,7 @@ public:
 		_health = x;
 	}
 
-	int getCount() const{
+	static int getCount() {
 		return _mobPop;
 	}
 
@@ -40,9 +40,10 @@ public:
 		// Drawing code here...
 	}
 
-	~Mob(){
+	~Mob() {
 		_mobPop--;
 	}
+
 private:
 	int _health;
 	static int _mobPop;
