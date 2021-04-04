@@ -4,6 +4,7 @@
 
 class Projectile : public Entity {
 private:
+public:
     olc::vd2d _position ;
     olc::vd2d _endPosition;
     olc::vd2d _direction ;
@@ -12,24 +13,36 @@ private:
     // Since, comparison of doulbes difficult, will be using the max distance to travel for life
     // time of projectile
 
-    double _speed = .10;//.0009; // 0 for testing
+    double _speed = .005;//.0009; // 0 for testing
     double _radius = 5;
-    std::unique_ptr <olc::Sprite> fireBall = std::make_unique<olc::Sprite> ("fireBall.png");
+//    std::unique_ptr <olc::Sprite> fireBall = std::make_unique<olc::Sprite> ("fireBall.png");
 //    olc::Sprite* myBalls = fireBall->Duplicate(_position, olc::vi2d{50, 50});
-    std::unique_ptr <olc::Decal> ballPtr = std::make_unique<olc::Decal> (fireBall.get());
-    olc::Decal* m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+//    std::unique_ptr <olc::Decal> ballPtr = std::make_unique<olc::Decal> (fireBall.get());
+    olc::Decal * m_pDecal = nullptr;
+//    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
 
+    std::shared_ptr <olc::Sprite> fireBall2 = nullptr;
+    std::shared_ptr <olc::Decal> test2 = nullptr;
+    float kurtAngle = 0;
 public:
-    Projectile() ; // Random ??
+    Projectile():Entity()
+    {
+
+    } ; // Random ??
     Projectile(olc::vd2d sPos, olc::vd2d ePos): _position(sPos), _endPosition(ePos)
     {
         auto displacement = _endPosition - _position;
         _distance = displacement.mag();
         _direction = displacement / _distance; // (v2d / mag(v2d))
+        /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+        fireBall2 = std::make_shared<olc::Sprite>("test2.png");
+        test2 = std::make_shared<olc::Decal> (fireBall2.get());
+
     }
     ~Projectile()
     {
 //        delete myBalls;
+        delete m_pDecal;
     }
     void drawSelf(olc::PixelGameEngine* pge, double offsetx, double offsety)
     {
@@ -38,8 +51,19 @@ public:
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, fireBall.get());
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, myBalls);
 //        pge->DrawDecal(_position - olc::vd2d{offsetx, offsety}, ballPtr.get());
-        pge->DrawDecal(_position - olc::vd2d{offsetx, offsety}, m_pDecal);
+//        pge.Clear(olc::BLACK);
+//        pge.DrawDecal(_position , m_pDecal , {.1, .1});
+//        pge.DrawDecal(olc::vi2d{0, 0}, m_pDecal , {.1, .1});
+//        pge->DrawDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), {1.0f, 1.0f});
+//        kurtAngle += .01;
+        float myAngle = PI/2 + atan(_direction.y / _direction.x);
+        if ( _direction.x < 0 ) {
+            myAngle += PI;
+        }
+        pge->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
+//        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, fireBall2.get());
 
+//        pge.DrawDecal(_position - olc::vd2d{offsetx, offsety}, m_pDecal);
         /////////////////////////////
         // Prototype for Scale function
 //        double sx = .05f, sy = .05f;
@@ -99,4 +123,25 @@ std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int number
     return myBalls;
 }
 
+
+class HomingProjectile : public Projectile {
+    Entity &notPointerToEntity ;
+    HomingProjectile( olc::vd2d sPos, Entity &ent ):
+    Projectile(sPos, olc::vi2d{ent.getXPos(), ent.getYPos()}),
+    notPointerToEntity(ent) { }
+
+    virtual void update() override
+    {
+        // Get Final position from the object
+        // adjust direction to object
+        // adjust position
+        _endPosition = olc::vi2d{notPointerToEntity.getXPos(), notPointerToEntity.getYPos()};
+        auto displacement = _endPosition - _position;
+        _distance = displacement.mag();
+        _direction = displacement / _distance;
+
+        _position =
+    }
+
+};
 #endif

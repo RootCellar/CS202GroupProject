@@ -54,22 +54,20 @@ public:
 		y = ScreenHeight() / 2;
 //        fireBall = std::make_unique<olc::Sprite>("fireBall.png");
 //        spritePtr = new olc::Sprite("fireBall.png");
+        m_pDecal = new olc::Decal(new olc::Sprite("test2.png"));
+        myBalls = getMyBalls(olc::vd2d{200, 200} , 10);
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 
-		fAccumulatedTime += fElapsedTime;
-		if (fAccumulatedTime >= fTargetFrameTime)
-		{
-			fAccumulatedTime -= fTargetFrameTime;
-			//fElapsedTime = fTargetFrameTime;
-		}
-		else
-			return true; // Don't do anything this frame
 
-		// called once per frame
+
+		Clear(olc::BLACK);
+		DrawDecal(olc::vi2d{0, 0}, m_pDecal , {1,1});
+//        DrawRotatedDecal(olc::vi2d{0, 0}, m_pDecal , {10, 10});
+        // called once per frame
 		/*
 		for (int x = 0; x < ScreenWidth(); x++)
 			for (int y = 0; y < ScreenHeight(); y++)
@@ -88,6 +86,31 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
+		// myBalls
+		p.update();
+        p.drawSelf(this, x, y);
+
+        this->SetPixelMode(olc::Pixel::ALPHA);
+
+        for ( const auto& ball : myBalls) {
+            ball->update();
+            ball->drawSelf(this, x, y);
+//            ball->update();
+//            DrawDecal({200,200}, ball->test2.get());
+        }
+
+        this->SetPixelMode(olc::Pixel::NORMAL);
+//        DrawSprite(olc::vi2d {x, y}, fireBall.get());
+
+
+        fAccumulatedTime += fElapsedTime;
+        if (fAccumulatedTime >= fTargetFrameTime)
+        {
+            fAccumulatedTime -= fTargetFrameTime;
+            //fElapsedTime = fTargetFrameTime;
+        }
+        else
+            return true; // Don't do anything this frame
 		//if( x > ScreenWidth() ) x=0;
 
 		if(GetKey(olc::A).bHeld) {
@@ -103,15 +126,6 @@ public:
 		if(GetKey(olc::S).bHeld) {
 			y++;
 		}
-        p.update();
-		this->SetPixelMode(olc::Pixel::ALPHA);
-        p.drawSelf(this, x, y);
-        for ( const auto& ball : myBalls) {
-            ball->update();
-            ball->drawSelf(this, x, y);
-        }
-//        this->SetPixelMode(olc::Pixel::NORMAL);
-//        DrawSprite(olc::vi2d {x, y}, fireBall.get());
 
 
 		return true;
@@ -131,8 +145,10 @@ public:
 	}
 protected:
     Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
-    std::vector <std::unique_ptr<Projectile>> myBalls = getMyBalls(olc::vd2d{200, 200} , 6);
-
+    std::vector <std::unique_ptr<Projectile>> myBalls ; //= getMyBalls(olc::vd2d{200, 200} , 10);
+    olc::Decal* m_pDecal = nullptr;
+//    std::unique_ptr<olc::Decal> m_pDecal = nullptr;
+    std::unique_ptr<olc::Sprite> myFireballSprite = nullptr;
 };
 
 

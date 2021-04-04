@@ -36,9 +36,9 @@ public:
 		//addToYPos(yPosMod);
 	}
 
-	virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
+//	virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
 		// Drawing code here...
-	}
+//	}
 
 	~Mob(){
 		_mobPop--;
