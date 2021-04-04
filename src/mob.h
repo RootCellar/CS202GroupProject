@@ -36,7 +36,7 @@ public:
 		//addToYPos(yPosMod);
 	}
 
-	virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
+	void drawSelf(Example& gfx) const override {
 		// Drawing code here...
 	}
 

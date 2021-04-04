@@ -31,6 +31,11 @@ private:
 
 public:
 
+  //Temporary default constructor to allow us to use the level without having a player yet
+  Level() {
+
+  }
+
   Level(Player p) {
     player = p;
   }
@@ -67,14 +72,22 @@ public:
       p.update();
     }
 
-    /*
     while(pendingMobSpawns.size() > 0) {
-      //Mob m = pendingMobSpawns.get(0);
-
+      Mob m = pendingMobSpawns.at(0);
+      pendingMobSpawns.erase( pendingMobSpawns.begin() );
       if(!has(m)) mobs.push_back(m);
     }
-    */
 
+  }
+
+  void renderEntities(Example &gfx) {
+    for(Projectile p : projectiles) {
+      p.drawSelf(gfx);
+    }
+
+    for(Mob m : mobs) {
+      m.drawSelf(gfx);
+    }
   }
 
 };

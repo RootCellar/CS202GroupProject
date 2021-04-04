@@ -44,6 +44,7 @@ public:
 	int x = 0;
 	int y = 0;
 
+	Level level;
 
 public:
 	bool OnUserCreate() override
@@ -87,6 +88,8 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
+		level.renderEntities(*this);
+
 		//if( x > ScreenWidth() ) x=0;
 
 		if(GetKey(olc::A).bHeld) {
@@ -102,6 +105,8 @@ public:
 		if(GetKey(olc::S).bHeld) {
 			y++;
 		}
+
+		level.update();
 
 		return true;
 	}
