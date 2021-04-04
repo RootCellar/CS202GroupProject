@@ -27,6 +27,8 @@ private:
 public:
   Entity() {
     id = idPoint++;
+    
+    debug("Entity constructed");
   }
 
   virtual ~Entity() = default;

@@ -33,10 +33,6 @@ using std::endl;
 class Example : public olc::PixelGameEngine
 {
 public:
-	Example()
-	{
-		sAppName = "Example";
-	}
 
 	float fTargetFrameTime = 1.0f / 50.0f; // Virtual FPS of 50fps
   float fAccumulatedTime = 0.0f;
@@ -44,9 +40,18 @@ public:
 	int x = 0;
 	int y = 0;
 
+	Player player;
+
 	Level level;
 
 public:
+
+	Example(): level(player)
+	{
+		sAppName = "Example";
+	}
+
+
 	bool OnUserCreate() override
 	{
 		// Called once at the start, so create things here

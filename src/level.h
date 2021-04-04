@@ -4,6 +4,7 @@
 #include <vector>
 #include <iterator>
 
+#include "debug.h"
 #include "entity.h"
 #include "mob.h"
 #include "player.h"
@@ -32,13 +33,14 @@ private:
 
 public:
 
-  //Temporary default constructor to allow us to use the level without having a player yet
+  #ifdef DEBUG
+  //debug-only default constructor to allow us to use the level without having a player yet
   Level() {
-
+    debug("Debug constructing a default level! No player given!");
   }
+  #endif
 
-  Level(Player p) {
-    player = p;
+  Level(Player p): player(p) {
   }
 
   void add(Mob m) {
@@ -89,6 +91,7 @@ public:
     return projectiles.end();
   }
 
+  //Call update for everybody, handle spawns and despawns
   void update() {
 
     for(Mob m : mobs) {
@@ -123,6 +126,8 @@ public:
 
       mobs.erase( getIteratorToMob(m) );
     }
+
+    //Despawn projectile from lists
 
     while(pendingProjectileRemovals.size() > 0) {
       Projectile p = pendingProjectileRemovals.at(0);
