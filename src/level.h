@@ -15,8 +15,13 @@ private:
 
   Player player;
 
+  //Lists of mobs and projectiles in the level
+
   std::vector<Mob> mobs;
   std::vector<Projectile> projectiles;
+
+  //Lists of creatures to spawn and despawn
+  //Avoids certain bugs, and means mobs/projectiles can make actions on spawn/despawn
 
   std::vector<Mob> pendingMobSpawns;
   std::vector<Mob> pendingMobRemovals;
@@ -31,16 +36,23 @@ public:
   }
 
   void add(Mob m) {
-
+    if(!has(m)) pendingMobSpawns.push_back(m);
   }
 
   void add(Projectile p) {
-
+    if(!has(p)) pendingProjectileSpawns.push_back(p);
   }
 
   bool has(Mob m) {
     for(Mob j : mobs) {
       if( m == j ) return true;
+    }
+    return false;
+  }
+
+  bool has(Projectile p) {
+    for(Projectile j : projectiles) {
+      if( p == j ) return true;
     }
     return false;
   }
