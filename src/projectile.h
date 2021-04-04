@@ -12,10 +12,13 @@ private:
     // Since, comparison of doulbes difficult, will be using the max distance to travel for life
     // time of projectile
 
-    double _speed = .9;//.0009; // 0 for testing
+    double _speed = .10;//.0009; // 0 for testing
     double _radius = 5;
     std::unique_ptr <olc::Sprite> fireBall = std::make_unique<olc::Sprite> ("fireBall.png");
-    olc::Sprite* myBalls = fireBall->Duplicate(_position, olc::vi2d{50, 50});
+//    olc::Sprite* myBalls = fireBall->Duplicate(_position, olc::vi2d{50, 50});
+    std::unique_ptr <olc::Decal> ballPtr = std::make_unique<olc::Decal> (fireBall.get());
+    olc::Decal* m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+
 public:
     Projectile() ; // Random ??
     Projectile(olc::vd2d sPos, olc::vd2d ePos): _position(sPos), _endPosition(ePos)
@@ -26,7 +29,7 @@ public:
     }
     ~Projectile()
     {
-        delete myBalls;
+//        delete myBalls;
     }
     void drawSelf(olc::PixelGameEngine* pge, double offsetx, double offsety)
     {
@@ -34,23 +37,25 @@ public:
 //        pge->FillCircle(_position - olc::vd2d{offsetx, offsety}, _radius, olc::MAGENTA);
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, fireBall.get());
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, myBalls);
+//        pge->DrawDecal(_position - olc::vd2d{offsetx, offsety}, ballPtr.get());
+        pge->DrawDecal(_position - olc::vd2d{offsetx, offsety}, m_pDecal);
 
         /////////////////////////////
         // Prototype for Scale function
-        double sx = .05f, sy = .05f;
-        std::vector<std::vector<double>> matrixScale{ { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
-
-        for (int x = 0 ; x < fireBall->width ; ++x) {
-            for (int y = 0 ; y < fireBall->height ; ++y) {
-                olc::Pixel p = fireBall->GetPixel(x, y);
-
-                double nx, ny;
-                nx = x * matrixScale[0][0] + y * matrixScale[0][1] + 1 * matrixScale[0][2] ;
-                ny = x * matrixScale[1][0] + y * matrixScale[1][1] + 1 * matrixScale[1][2];
-
-                pge->Draw(nx + _position.x - offsetx  , ny + _position.y - offsety  , p);
-            }
-        }
+//        double sx = .05f, sy = .05f;
+//        std::vector<std::vector<double>> matrixScale{ { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
+//
+//        for (int x = 0 ; x < fireBall->width ; ++x) {
+//            for (int y = 0 ; y < fireBall->height ; ++y) {
+//                olc::Pixel p = fireBall->GetPixel(x, y);
+//
+//                double nx, ny;
+//                nx = x * matrixScale[0][0] + y * matrixScale[0][1] + 1 * matrixScale[0][2] ;
+//                ny = x * matrixScale[1][0] + y * matrixScale[1][1] + 1 * matrixScale[1][2];
+//
+//                pge->Draw(nx + _position.x - offsetx  , ny + _position.y - offsety  , p);
+//            }
+//        }
         // End prototype for scale function
         /////////////////////////////
 

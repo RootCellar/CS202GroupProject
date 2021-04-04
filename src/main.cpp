@@ -131,7 +131,7 @@ public:
 	}
 protected:
     Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
-    std::vector <std::unique_ptr<Projectile>> myBalls = getMyBalls(olc::vd2d{200, 200} , 3);
+    std::vector <std::unique_ptr<Projectile>> myBalls = getMyBalls(olc::vd2d{200, 200} , 6);
 
 };
 
