@@ -49,6 +49,14 @@ public:
     if(!has(p)) pendingProjectileSpawns.push_back(p);
   }
 
+  void remove(Mob m) {
+    if(has(m)) pendingMobRemovals.push_back(m);
+  }
+
+  void remove(Projectile p) {
+    if(has(p)) pendingProjectileRemovals.push_back(p);
+  }
+
   bool has(Mob m) {
     for(Mob j : mobs) {
       if( m == j ) return true;
