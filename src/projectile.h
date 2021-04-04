@@ -30,24 +30,30 @@ public:
     }
     void drawSelf(olc::PixelGameEngine* pge, double offsetx, double offsety)
     {
-//        float sx = .5f, sy = .5f;
-//        std::vector<std::vector<float>> { { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
-        pge->FillCircle(_position - olc::vd2d{offsetx, offsety}, _radius, olc::MAGENTA);
+
+//        pge->FillCircle(_position - olc::vd2d{offsetx, offsety}, _radius, olc::MAGENTA);
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, fireBall.get());
 //        pge->DrawSprite(_position - olc::vd2d{offsetx, offsety}, myBalls);
 
+        /////////////////////////////
+        // Prototype for Scale function
+        float sx = .05f, sy = .05f;
+        std::vector<std::vector<float>> matrixScale{ { sx, 0, 0} , {0, sy, 0}, {0, 0, 1}};
 
-//        for (int x = 0 ; x < fireBall->width ; ++x) {
-//            for (int y = 0 ; y < fireBall->height ; ++y) {
-//                olc::Pixel p = fireBall->GetPixel(x, y);
-//
-//                float nx, ny;
-//                nx = x;
-//                ny = y;
-//
-////                this->draw
-//            }
-//        }
+        for (int x = 0 ; x < fireBall->width ; ++x) {
+            for (int y = 0 ; y < fireBall->height ; ++y) {
+                olc::Pixel p = fireBall->GetPixel(x, y);
+
+                float nx, ny;
+                nx = x * matrixScale[0][0] + y * matrixScale[0][1] + 1 * matrixScale[0][2] ;
+                ny = x * matrixScale[1][0] + y * matrixScale[1][1] + 1 * matrixScale[1][2];
+
+                pge->Draw(nx + _position.x - offsetx  , ny + _position.y - offsety  , p);
+            }
+        }
+        // End prototype for scale function
+        /////////////////////////////
+
     }
   //update the projectile, move it etc.
   virtual void update() override
