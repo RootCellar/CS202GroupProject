@@ -104,7 +104,9 @@ public:
 			y++;
 		}
         p.update();
+		this->SetPixelMode(olc::Pixel::ALPHA);
         p.drawSelf(this, x, y);
+        this->SetPixelMode(olc::Pixel::NORMAL);
 //        DrawSprite(olc::vi2d {x, y}, fireBall.get());
 		return true;
 	}
