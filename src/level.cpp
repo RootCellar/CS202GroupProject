@@ -35,7 +35,7 @@ bool Level::has(Projectile *p) const {
 }
 
 //Loop through the list of mobs and return an iterator to the one you're looking for
-std::vector<Mob>::iterator Level::getIteratorToMob(Mob *m) {
+std::vector<Mob*>::iterator Level::getIteratorToMob(Mob *m) {
   for(size_t i=0; i<mobs.size(); i++) {
     Mob *j = mobs.at(i);
     if( (*m) == (*j) ) return mobs.begin() + i;
@@ -44,7 +44,7 @@ std::vector<Mob>::iterator Level::getIteratorToMob(Mob *m) {
 }
 
 //Loop through the list of projectiles and return an iterator to the one you're looking for
-std::vector<Projectile>::iterator Level::getIteratorToProjectile(Projectile *p) {
+std::vector<Projectile*>::iterator Level::getIteratorToProjectile(Projectile *p) {
   for(size_t i=0; i<projectiles.size(); i++) {
     Projectile *j = projectiles.at(i);
     if( (*p) == (*j) ) return projectiles.begin() + i;
@@ -66,20 +66,20 @@ void Level::update() {
   //Spawn mobs and projectiles from our lists
 
   while(pendingMobSpawns.size() > 0) {
-    Mob m = pendingMobSpawns.at(0);
+    Mob *m = pendingMobSpawns.at(0);
     pendingMobSpawns.erase( pendingMobSpawns.begin() );
     if(!has(m)) mobs.push_back(m);
   }
 
   while(pendingProjectileSpawns.size() > 0) {
-    Projectile p = pendingProjectileSpawns.at(0);
+    Projectile *p = pendingProjectileSpawns.at(0);
     pendingProjectileSpawns.erase( pendingProjectileSpawns.begin() );
     if(!has(p)) projectiles.push_back(p);
   }
 
   //De-spawn mobs from lists
   while(pendingMobRemovals.size() > 0) {
-    Mob m = pendingMobRemovals.at(0);
+    Mob *m = pendingMobRemovals.at(0);
     pendingMobRemovals.erase( pendingMobRemovals.begin() );
     if(!has(m)) {
       continue;
@@ -91,7 +91,7 @@ void Level::update() {
   //Despawn projectile from lists
 
   while(pendingProjectileRemovals.size() > 0) {
-    Projectile p = pendingProjectileRemovals.at(0);
+    Projectile *p = pendingProjectileRemovals.at(0);
     pendingProjectileRemovals.erase( pendingProjectileRemovals.begin() );
     if(!has(p)) {
       continue;

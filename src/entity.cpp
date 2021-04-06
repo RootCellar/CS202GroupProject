@@ -1,5 +1,7 @@
 #include "entity.h"
 
+int Entity::idPoint = 0;
+
 Entity::Entity() {
   id = idPoint++;
 
@@ -21,14 +23,10 @@ gfx->DrawPartialDecal( // Sprite
 */
 
 // Position manipulation
-template<typename T>
-void Entity::setXPos(T newX) { xPos = newX; }
-template<typename T>
-void Entity::setYPos(T newY) { yPos = newY; };
-template<typename T>
-void Entity::addToXPos(T addedX) { xPos += addedX; }
-template<typename T>
-void Entity::addToYPos(T addedY) { yPos += addedY; }
+void Entity::setXPos(int newX) { xPos = newX; }
+void Entity::setYPos(int newY) { yPos = newY; };
+void Entity::addToXPos(int addedX) { xPos += addedX; }
+void Entity::addToYPos(int addedY) { yPos += addedY; }
 
 auto Entity::getXPos() const { return xPos; }
 auto Entity::getYPos() const { return yPos; }

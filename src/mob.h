@@ -24,9 +24,7 @@ public:
 	void takeDamage(int damage);
 
 	// update function needs to have the same parameters as the update function it inherits/overrides
-	void update() override {
-
-	}
+	void update() override;
 
 	void drawSelf(Example& gfx) const override {
 		// Drawing code here...

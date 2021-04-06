@@ -48,10 +48,10 @@ public:
   bool has(Projectile *p) const;
 
   //Loop through the list of mobs and return an iterator to the one you're looking for
-  std::vector<Mob>::iterator getIteratorToMob(Mob *m);
+  std::vector<Mob*>::iterator getIteratorToMob(Mob *m);
 
   //Loop through the list of projectiles and return an iterator to the one you're looking for
-  std::vector<Projectile>::iterator getIteratorToProjectile(Projectile *p);
+  std::vector<Projectile*>::iterator getIteratorToProjectile(Projectile *p);
 
   //Call update for everybody, handle spawns and despawns
   void update();

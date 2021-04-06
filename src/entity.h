@@ -51,14 +51,10 @@ public:
   */
 
   // Position manipulation
-  template<typename T>
-  void setXPos(T newX);
-  template<typename T>
-  void setYPos(T newY);
-  template<typename T>
-  void addToXPos(T addedX);
-  template<typename T>
-  void addToYPos(T addedY);
+  void setXPos(int newX);
+  void setYPos(int newY);
+  void addToXPos(int addedX);
+  void addToYPos(int addedY);
 
   auto getXPos() const;
   auto getYPos() const;
@@ -68,8 +64,6 @@ public:
 
   int getId() const;
 };
-
-int Entity::idPoint = 0;
 
 bool operator==(const Entity &one, const Entity &two);
 

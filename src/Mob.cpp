@@ -37,3 +37,6 @@ void Mob::takeDamage(int damage) {
 		die();
 }
 
+void Mob::update() {
+
+}
