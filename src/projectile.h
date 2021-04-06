@@ -140,7 +140,7 @@ class HomingProjectile : public Projectile {
         _distance = displacement.mag();
         _direction = displacement / _distance;
 
-        _position =
+//        _position =
     }
 
 };
