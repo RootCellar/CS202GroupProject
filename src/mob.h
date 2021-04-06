@@ -24,19 +24,47 @@ public:
 	void takeDamage(int damage);
 
 	// update function needs to have the same parameters as the update function it inherits/overrides
-	void update(/*int xPosMod, int yPosMod*/) override {
-		//addToXPos(xPosMod);
-		//addToYPos(yPosMod);
-	}
+	void update(/*int xPosMod, int yPosMod*/) override;
 
-	void drawSelf(Example& gfx) const override {
-		// Drawing code here...
-	}
+	// Any sort of health regeneration that needs to be called
+	void healthRegen();
+
+	// Any sort of mana regeneration that needs to be called
+	void manaRegen();
+
+	void movement();
+
+	bool inRange(const Mob& target);
+
+	void drawSelf(Example& gfx) const override;
+
+	~Mob();
 
 private:
+	// Personal State
+	bool _isAlive = true;
+
+	// Health
 	int _health;
+	int _maxHealth;
+	double _hpPerFrame;
+
+	// Mana
+	int _mana;
+	int _maxMana;
+	double _mpPerFrame;
+
+	// Offense
+	bool _hasTarget
+	int _dmgDealt;
+	double _critModifier;
+	int _critChance;
+	double _range;
+	double _distFromTarget;
+
 	static int _mobPop;
 
+	//Functions
 	void die();
 };
 #endif

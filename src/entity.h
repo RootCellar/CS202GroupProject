@@ -23,6 +23,13 @@ private:
   int xPos;
   int yPos;
 
+  // Decal/Sprite
+  olc::Decal* _decal;
+  int _facingDirection;
+  int _graphicState;
+  // How many frames until we change the step
+  int _graphicStepTimer;
+
   static int idPoint;
   int id;
 

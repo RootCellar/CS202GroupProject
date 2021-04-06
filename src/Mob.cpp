@@ -37,3 +37,55 @@ void Mob::takeDamage(int damage) {
 		die();
 }
 
+// update function needs to have the same parameters as the update function it inherits/overrides
+void Mob::update(/*int xPosMod, int yPosMod*/) override {
+	//addToXPos(xPosMod);
+	//addToYPos(yPosMod);
+	healthRegen();
+	manaRegen(); // Maybe not this one for everything
+}
+
+// Any sort of health regeneration that needs to be called
+void Mob::healthRegen()
+{
+	if (_isAlive) // Regenerate health
+	{
+		if (_health < _maxHealth)
+			_health += _hpPerFrame;
+		if (_health > _maxHealth)
+			_health = _maxHealth;
+	}
+	// Additional code for abilities that regen health
+}
+
+// Any sort of mana regeneration that needs to be called
+void Mob::manaRegen()
+{
+	if (_isAlive) // Regenerate mana
+	{
+		if (_mana < _maxMana)
+			_mana += _mpPerFrame;
+		if (_mana > _maxMana)
+			_mana = _maxMana;
+	}
+	// Additional code for abilities that regen mana
+}
+
+void Mob::movement() // Has levelRef and members to determine speed and direction or if to stop
+{
+
+}
+
+bool Mob::inRange(const Mob& target) // Has levelRef and members to determine location
+{
+	
+}
+
+
+void Mob::drawSelf(Example& gfx) const override {
+	// Drawing code here...
+}
+
+Mob::~Mob() {
+	_mobPop--;
+}
