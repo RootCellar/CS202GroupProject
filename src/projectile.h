@@ -2,6 +2,7 @@
 #define PROJECTILE_H
 #include <memory>
 #include "olcPixelGameEngine.h"
+#include "entity.h"
 
 class Projectile : public Entity {
 private:

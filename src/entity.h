@@ -33,6 +33,8 @@ public:
 
   virtual ~Entity() = default;
 
+  virtual void setLevel(Level* l);
+
   virtual void update() = 0;
 
   // This may not need to be a virtual function or pure virtual function

@@ -6,6 +6,10 @@ Entity::Entity() {
   debug("Entity constructed");
 }
 
+void Entity::setLevel(Level* l) {
+  level = l;
+}
+
 /*
 // Should contain something like the following IF we are using sprites/decals
 
