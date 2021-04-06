@@ -7,12 +7,12 @@
 //Our Headers
 #include "debug.h"
 
-#include "level.h"
 #include "entity.h"
 #include "mob.h"
 #include "projectile.h"
-#include "player.h"
 #include "spell.h"
+#include "player.h"
+#include "level.h"
 
 //C++ Headers
 #include <iostream>
