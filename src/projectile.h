@@ -138,9 +138,9 @@ class HomingProjectile : public Projectile {
         _endPosition = olc::vi2d{notPointerToEntity.getXPos(), notPointerToEntity.getYPos()};
         auto displacement = _endPosition - _position;
         _distance = displacement.mag();
-        _direction = displacement / _distance;
-
-//        _position =
+        _direction += displacement / _distance *.5;
+        _direction = _direction / _direction.mag();
+        _position = _direction * _speed;
     }
 
 };
