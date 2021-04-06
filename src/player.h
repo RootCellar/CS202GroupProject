@@ -9,7 +9,7 @@ using std::vector;
 class Player : public Mob {
 public:
 	using Mob::Mob;
-	Player() {}
+	Player() : Mob(400, 50, 50) {} // Values passed to Mob() are temporary for now.
 	Player(int health, int x, int y): Mob(health,x,y) {
 
 	}
