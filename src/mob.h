@@ -24,9 +24,8 @@ public:
 	void takeDamage(int damage);
 
 	// update function needs to have the same parameters as the update function it inherits/overrides
-	void update(/*int xPosMod, int yPosMod*/) override {
-		//addToXPos(xPosMod);
-		//addToYPos(yPosMod);
+	void update() override {
+
 	}
 
 	void drawSelf(Example& gfx) const override {
@@ -40,3 +39,9 @@ private:
 	void die();
 };
 #endif
+
+/*
+ * make a pure virtual function attack()
+ * pass update() & drawSelf() onto the derived classes
+ * create derived classes: anAcctualTank, gunThrower, spellCaster, tank, summoner, summonedMob
+ */
