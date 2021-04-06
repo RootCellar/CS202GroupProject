@@ -1,11 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//Declare our game class first,
-//because we include the other files in here that need it
-//before we define it
-class Example;
-
+//Engine
+#include "olcPixelGameEngine.h"
 
 //Our Headers
 #include "debug.h"

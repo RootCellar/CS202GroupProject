@@ -10,10 +10,8 @@
  *
 */
 
-#include "main.h"
-
 #define OLC_PGE_APPLICATION
-#include "olcPixelGameEngine.h"
+#include "main.h"
 
 class Example : public olc::PixelGameEngine
 {
@@ -114,7 +112,6 @@ public:
 	}
 
 };
-
 
 int main()
 {

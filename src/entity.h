@@ -4,8 +4,9 @@
 #define PI 3.14159265
 #include <string>
 using std::string;
-#include "olcPixelGameEngine.h"
-#include "main.h"
+
+class Level;
+class Example;
 
 struct vec2D
 {
@@ -15,7 +16,7 @@ struct vec2D
 
 class Entity {
 private:
-  
+
   bool _bRedundant = false;
   string _name;
 
@@ -25,12 +26,10 @@ private:
   static int idPoint;
   int id;
 
-public:
-  Entity() {
-    id = idPoint++;
+  Level *level;
 
-    debug("Entity constructed");
-  }
+public:
+  Entity();
 
   virtual ~Entity() = default;
 
@@ -51,27 +50,25 @@ public:
 
   // Position manipulation
   template<typename T>
-  void setXPos(T newX) { xPos = newX; }
+  void setXPos(T newX);
   template<typename T>
-  void setYPos(T newY) { yPos = newY; };
+  void setYPos(T newY);
   template<typename T>
-  void addToXPos(T addedX) { xPos += addedX; }
+  void addToXPos(T addedX);
   template<typename T>
-  void addToYPos(T addedY) { yPos += addedY; }
+  void addToYPos(T addedY);
 
-  auto getXPos() const { return xPos; };
-  auto getYPos() const { return yPos; }
+  auto getXPos() const;
+  auto getYPos() const;
 
-  void setRedundant() { _bRedundant = true; }
-  bool isRedundant() const { return _bRedundant; }
+  void setRedundant();
+  bool isRedundant() const;
 
-  int getId() const { return id; }
+  int getId() const;
 };
 
-bool operator==(const Entity &one, const Entity &two) {
-  return one.getId() == two.getId();
-}
-
 int Entity::idPoint = 0;
+
+#include "level.h"
 
 #endif
