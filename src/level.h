@@ -35,23 +35,23 @@ public:
 
   Level(Player &p);
 
-  void add(Mob m);
+  void add(Mob *m);
 
-  void add(Projectile p);
+  void add(Projectile *p);
 
-  void remove(Mob m);
+  void remove(Mob *m);
 
-  void remove(Projectile p);
+  void remove(Projectile *p);
 
-  bool has(Mob m) const;
+  bool has(Mob *m) const;
 
-  bool has(Projectile p) const;
+  bool has(Projectile *p) const;
 
   //Loop through the list of mobs and return an iterator to the one you're looking for
-  std::vector<Mob>::iterator getIteratorToMob(Mob m);
+  std::vector<Mob>::iterator getIteratorToMob(Mob *m);
 
   //Loop through the list of projectiles and return an iterator to the one you're looking for
-  std::vector<Projectile>::iterator getIteratorToProjectile(Projectile p);
+  std::vector<Projectile>::iterator getIteratorToProjectile(Projectile *p);
 
   //Call update for everybody, handle spawns and despawns
   void update();

@@ -71,6 +71,8 @@ public:
 
 int Entity::idPoint = 0;
 
+bool operator==(const Entity &one, const Entity &two);
+
 #include "level.h"
 
 #endif
