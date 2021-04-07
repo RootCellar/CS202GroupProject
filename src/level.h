@@ -31,9 +31,12 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
+  //Test projectiles below
   Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
 
-  OrbitalProjectile test2 { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
+
+  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
 
 public:
 

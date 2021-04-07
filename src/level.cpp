@@ -105,6 +105,7 @@ void Level::update() {
   // Test Projectile
   testProjectile.update();
   test2.update();
+  test3.update();
 }
 
 void Level::renderEntities(olc::PixelGameEngine * gfx) const {
@@ -119,4 +120,5 @@ void Level::renderEntities(olc::PixelGameEngine * gfx) const {
   // Test Projectile
   testProjectile.drawSelf(gfx);
   test2.drawSelf(gfx);
+  test3.drawSelf(gfx);
 }

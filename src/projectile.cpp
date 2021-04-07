@@ -56,7 +56,7 @@ std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOf
 }
 
 OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
-Projectile(sPos, sPos + (sPos-centre).perp())
+Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
 {
 //    m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
     fireBall2 = std::make_shared<olc::Sprite>("fireBall.png");
@@ -79,8 +79,9 @@ void HomingProjectile::update() {
 }
 
 void OrbitalProjectile::update() {
-    _direction += _direction.perp() * .10;
+    _direction += _direction.perp() * _speed / radiusOrbital ;
     _direction = _direction.norm();
     Projectile::update();
+//    _position =
 }
 

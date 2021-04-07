@@ -52,8 +52,8 @@ std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int number
 
 class HomingProjectile : public Projectile {
 public:
-    Projectile * notPointerToEntity;// = nullptr;
-    HomingProjectile( olc::vd2d sPos, Projectile * ent ):
+    Entity * notPointerToEntity;// = nullptr;
+    HomingProjectile( olc::vd2d sPos, Entity * ent ):
     Projectile(sPos, ent->_position) , notPointerToEntity(ent) {
 //        notPointerToEntity = ent;
     }
@@ -65,7 +65,8 @@ public:
 class OrbitalProjectile: public Projectile {
 public:
     OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre );
-
+    double radiusOrbital ;
+    float fAngle = 0;
     virtual void update() override;
 };
 #endif
