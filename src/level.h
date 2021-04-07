@@ -32,6 +32,9 @@ private:
   std::vector<Projectile*> pendingProjectileRemovals;
 
   Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+
+  OrbitalProjectile test2 { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+
 public:
 
   Level(Player * p);

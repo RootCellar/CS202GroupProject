@@ -52,3 +52,33 @@ std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOf
     }
     return myBalls;
 }
+
+OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
+Projectile(sPos, sPos + (sPos-centre).perp())
+{
+//    m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+    fireBall2 = std::make_shared<olc::Sprite>("fireBall.png");
+    test2 = std::make_shared<olc::Decal> (fireBall2.get());
+}
+
+void HomingProjectile::update() {
+    // Get Final position from the object
+    // adjust direction to object
+    // adjust position
+//        _endPosition = olc::vi2d{notPointerToEntity->getXPos(), notPointerToEntity->getYPos()};
+    _endPosition = notPointerToEntity->_position;
+//        _endPosition = olc::vd2d{200, 400};
+    auto displacement = _endPosition - _position;
+    _position += _direction * _speed * .5 ;
+    _distance = displacement.mag();
+    _direction = displacement / _distance ;//*.5;
+    //_direction = _direction / _direction.mag();
+    _position +=  _direction * _speed * .5;
+}
+
+void OrbitalProjectile::update() {
+    _direction += _direction.perp() * .10;
+    _direction = _direction.norm();
+    Projectile::update();
+}
+
