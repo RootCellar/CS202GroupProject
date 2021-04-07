@@ -32,6 +32,8 @@ public:
 	Example(): level(player)
 	{
 		sAppName = "Example";
+
+		debug("Constructing the game...");
 	}
 
 

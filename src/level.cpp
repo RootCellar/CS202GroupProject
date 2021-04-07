@@ -2,6 +2,7 @@
 #include "chuck.h"
 
 Level::Level(Player &p): player(p) {
+  debug("Constructing the level...");
 }
 
 void Level::add(Mob *m) {

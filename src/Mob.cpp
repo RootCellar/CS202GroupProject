@@ -7,10 +7,18 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
+Mob::Mob() {
+	_mobPop++;
+}
+
 Mob::Mob(int health, int x, int y): _health(health) {
 	setXPos(x);
 	setYPos(y);
 	_mobPop++;
+}
+
+Mob::~Mob() {
+	_mobPop--;
 }
 
 int Mob::getHealth() const {

@@ -4,7 +4,7 @@
 #include <vector>
 #include <iterator>
 
-//#include "debug.h"
+#include "debug.h"
 
 class Player;
 class Mob;

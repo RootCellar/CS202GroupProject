@@ -5,7 +5,7 @@ int Entity::idPoint = 0;
 Entity::Entity() {
   id = idPoint++;
 
-  //debug("Entity constructed");
+  debug("Entity constructed");
 }
 
 Entity::Entity(double x, double y): _pos(x, y) {
@@ -28,7 +28,7 @@ gfx->DrawPartialDecal( // Sprite
 */
 
 // Position manipulation
-void Entity::setXPos(double newX) { _pos.x=newX; }
+void Entity::setXPos(double newX) { _pos.x = newX; }
 void Entity::setYPos(double newY) { _pos.y = newY; };
 void Entity::addToXPos(double addedX) { _pos.x += addedX; }
 void Entity::addToYPos(double addedY) { _pos.y += addedY; }

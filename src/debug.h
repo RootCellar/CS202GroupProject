@@ -2,16 +2,17 @@
 #define DEBUG_H
 
 #include <iostream>
+#include <string>
+
+using std::string;
+using std::to_string;
 
 //This line defines DEBUG, a preprocessor variable
 //Commenting this line out will disable debug printing
 #define DEBUG
 
 //If debug mode is enabled (DEBUG defined), print the debug message.
-void debug(const char* s) {
-    #ifdef DEBUG
-    std::cout << "[DEBUG] " << s << std::endl;
-    #endif
-}
+//Prototype
+void debug(const char* s);
 
 #endif

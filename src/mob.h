@@ -7,12 +7,11 @@ class Mob : public Entity {
 
 public:
 	using Entity::Entity;
-	//Mod shouldn't have a default constructor; nothing should ever be just a Mob
-/*
-	Mob() {
-		_mobPop++;
-	}
-*/
+
+	Mob();
+
+	~Mob();
+
 	Mob(int health, int x, int y);
 
 	int getHealth() const;
