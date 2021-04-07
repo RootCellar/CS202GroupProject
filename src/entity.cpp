@@ -2,7 +2,8 @@
 
 int Entity::idPoint = 0;
 
-Entity::Entity() {
+//Default construct an entity to be far outside the level bounds
+Entity::Entity(): _pos(-10000, -10000) {
   id = idPoint++;
 
   debug("Entity constructed");
