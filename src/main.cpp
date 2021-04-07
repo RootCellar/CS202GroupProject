@@ -58,8 +58,9 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
+        level->renderEntities(this);
 
-		fAccumulatedTime += fElapsedTime;
+        fAccumulatedTime += fElapsedTime;
 		if (fAccumulatedTime >= fTargetFrameTime)
 		{
 			fAccumulatedTime -= fTargetFrameTime;
@@ -87,7 +88,7 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
-		level->renderEntities(this);
+//		level->renderEntities(this);
 
 		//if( x > ScreenWidth() ) x=0;
 
