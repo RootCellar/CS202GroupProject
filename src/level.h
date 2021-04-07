@@ -5,10 +5,10 @@
 #include <iterator>
 #include "olcPixelGameEngine.h"
 //#include "debug.h"
-
-class Player;
-class Mob;
-class Projectile;
+#include "main.h"
+//class Player;
+//class Mob;
+//class Projectile;
 //class Example;
 
 //The world, bosses everyone else around but also serves them
@@ -31,6 +31,7 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
+  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
 public:
 
   Level(Player * p);

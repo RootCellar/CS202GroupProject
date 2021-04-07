@@ -102,6 +102,9 @@ void Level::update() {
     projectiles.erase( getIteratorToProjectile(p) );
   }
 
+  // Test Projectile
+  testProjectile.update();
+
 }
 
 void Level::renderEntities(olc::PixelGameEngine * gfx) const {
@@ -112,4 +115,7 @@ void Level::renderEntities(olc::PixelGameEngine * gfx) const {
   for(Mob *m : mobs) {
     m->drawSelf(gfx);
   }
+
+  // Test Projectile
+  testProjectile.drawSelf(gfx);
 }

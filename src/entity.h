@@ -69,6 +69,5 @@ public:
 
 bool operator==(const Entity &one, const Entity &two);
 
-#include "level.h"
 
 #endif
