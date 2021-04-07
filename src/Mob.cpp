@@ -11,9 +11,7 @@ Mob::Mob() {
 	_mobPop++;
 }
 
-Mob::Mob(int health, int x, int y): _health(health) {
-	setXPos(x);
-	setYPos(y);
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
 	_mobPop++;
 }
 
@@ -21,11 +19,11 @@ Mob::~Mob() {
 	_mobPop--;
 }
 
-int Mob::getHealth() const {
+double Mob::getHealth() const {
 		return _health;
 }
 
-void Mob::setHealth(int x) {
+void Mob::setHealth(double x) {
 		_health = x;
 }
 
@@ -35,13 +33,24 @@ int Mob::getCount() {
 
 void Mob::die() {
 	//_mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
-	
+
 }
 
-void Mob::takeDamage(int damage) {
+void Mob::takeDamage(double damage) {
+	if(damage < 0) damage *= -1;
 	_health -= damage;
-	if(_health <= 0)
-		die();
+	checkHp();
+}
+
+void Mob::heal(double amt) {
+	if(amt < 0) amt *= -1;
+	_health += amt;
+	checkHp();
+}
+
+void Mob::checkHp() {
+	if(_health > _maxHealth) _health = _maxHealth;
+	if(_health <= 0) die();
 }
 
 void Mob::update() {

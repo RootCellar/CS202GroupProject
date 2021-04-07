@@ -12,15 +12,19 @@ public:
 
 	~Mob();
 
-	Mob(int health, int x, int y);
+	Mob(double maxHealth, double x, double y);
 
-	int getHealth() const;
+	double getHealth() const;
 
-	void setHealth(int x);
+	void setHealth(double x);
 
 	static int getCount();
 
-	void takeDamage(int damage);
+	void takeDamage(double damage);
+
+	void heal(double amt);
+
+	void checkHp();
 
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
@@ -32,7 +36,8 @@ public:
 	void die();
 
 private:
-	int _health;
+	double _health;
+	double _maxHealth;
 
 	//Keeps track of the number of current constructed mobs in existence.
 	//if you want a counter to keep mob counts within a range in the level,
