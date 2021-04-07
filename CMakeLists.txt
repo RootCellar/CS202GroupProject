@@ -8,7 +8,7 @@ include_directories(src)
 add_executable(CS202GroupProject
         src/debug.h
         src/main.cpp
-        src/olcPixelGameEngine.h)
+        src/olcPixelGameEngine.h src/Mob.cpp)
 
 if (UNIX AND NOT APPLE)
     #do something

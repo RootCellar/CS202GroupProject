@@ -2,69 +2,65 @@
 #define LEVEL_H
 
 #include <vector>
+#include <iterator>
 
-#include "entity.h"
-#include "mob.h"
-#include "player.h"
-#include "projectile.h"
-#include "team.h"
+#include "debug.h"
+
+class Player;
+class Mob;
+class Projectile;
+class Example;
 
 //The world, bosses everyone else around but also serves them
 class Level {
 private:
 
-  Player player;
+  Player &player;
 
-  std::vector<Mob> mobs;
-  std::vector<Projectile> projectiles;
+  //Lists of mobs and projectiles in the level
 
-  std::vector<Mob> pendingMobSpawns;
-  std::vector<Mob> pendingMobRemovals;
+  std::vector<Mob*> mobs;
+  std::vector<Projectile*> projectiles;
 
-  std::vector<Projectile> pendingProjectileSpawns;
-  std::vector<Projectile> pendingProjectileRemovals;
+  //Lists of creatures to spawn and despawn
+  //Avoids certain bugs, and means mobs/projectiles can make actions on spawn/despawn
+
+  std::vector<Mob*> pendingMobSpawns;
+  std::vector<Mob*> pendingMobRemovals;
+
+  std::vector<Projectile*> pendingProjectileSpawns;
+  std::vector<Projectile*> pendingProjectileRemovals;
 
 public:
 
-  Level(Player p) {
-    player = p;
-  }
+  Level(Player &p);
 
-  void add(Mob m) {
+  void add(Mob *m);
 
-  }
+  void add(Projectile *p);
 
-  void add(Projectile p) {
+  void remove(Mob *m);
 
-  }
+  void remove(Projectile *p);
 
-  bool has(Mob m) {
-    for(Mob j : mobs) {
-      if( m == j ) return true;
-    }
-    return false;
-  }
+  bool has(Mob *m) const;
 
-  void update() {
+  bool has(Projectile *p) const;
 
-    for(Mob m : mobs) {
-      m.update();
-    }
+  //Loop through the list of mobs and return an iterator to the one you're looking for
+  std::vector<Mob*>::iterator getIteratorToMob(Mob *m);
 
-    for(Projectile p : projectiles) {
-      p.update();
-    }
+  //Loop through the list of projectiles and return an iterator to the one you're looking for
+  std::vector<Projectile*>::iterator getIteratorToProjectile(Projectile *p);
 
-    /*
-    while(pendingMobSpawns.size() > 0) {
-      //Mob m = pendingMobSpawns.get(0);
+  //Call update for everybody, handle spawns and despawns
+  void update();
 
-      if(!has(m)) mobs.push_back(m);
-    }
-    */
-
-  }
+  void renderEntities(Example &gfx) const;
 
 };
+
+#include "mob.h"
+#include "projectile.h"
 
 #endif

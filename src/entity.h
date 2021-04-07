@@ -4,7 +4,9 @@
 #define PI 3.14159265
 #include <string>
 using std::string;
-#include "olcPixelGameEngine.h"
+
+class Level;
+class Example;
 
 struct vec2D
 {
@@ -14,8 +16,9 @@ struct vec2D
 
 class Entity {
 private:
-    bool _bRedundant = false;
-    string _name;
+
+  bool _bRedundant = false;
+  string _name;
 
   int xPos;
   int yPos;
@@ -23,20 +26,20 @@ private:
   static int idPoint;
   int id;
 
-public:
-    olc::vd2d _position ;
+  Level *level;
 
-    Entity() {
-    id = idPoint++;
-  }
+public:
+  Entity();
 
   virtual ~Entity() = default;
+
+  virtual void setLevel(Level* l);
 
   virtual void update() = 0;
 
   // This may not need to be a virtual function or pure virtual function
   // Offsets x and y are for position on screen as opposed to on the map.
-//  virtual void drawSelf(olc::PixelGameEngine* gfx , double offsetx, double offsety) const = 0;
+  virtual void drawSelf(Example& gfx /*, float offsetx, float offsety*/) const = 0;
   /*
   // Should contain something like the following IF we are using sprites/decals
 
@@ -48,28 +51,22 @@ public:
   */
 
   // Position manipulation
-  template<typename T>
-  void setXPos(T newX) { xPos = newX; }
-  template<typename T>
-  void setYPos(T newY) { yPos = newY; };
-  template<typename T>
-  void addToXPos(T addedX) { xPos += addedX; }
-  template<typename T>
-  void addToYPos(T addedY) { yPos += addedY; }
+  void setXPos(int newX);
+  void setYPos(int newY);
+  void addToXPos(int addedX);
+  void addToYPos(int addedY);
 
-  auto getXPos() { return xPos; };
-  auto getYPos() { return yPos; }
+  auto getXPos() const;
+  auto getYPos() const;
 
-  void setRedundant() { _bRedundant = true; }
-  bool isRedundant() { return _bRedundant; }
+  void setRedundant();
+  bool isRedundant() const;
 
-  int getId() const { return id; }
+  int getId() const;
 };
 
-bool operator==(const Entity &one, const Entity &two) {
-  return one.getId() == two.getId();
-}
+bool operator==(const Entity &one, const Entity &two);
 
-int Entity::idPoint = 0;
+#include "level.h"
 
 #endif

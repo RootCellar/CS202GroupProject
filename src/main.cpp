@@ -10,67 +10,54 @@
  *
 */
 
-//Our Headers
-#include "debug.h"
-
-//#include "level.h"
-#include "entity.h"
-#include "mob.h"
-#include "projectile.h"
-#include "player.h"
-#include "spell.h"
-
-//C++ Headers
-#include <iostream>
-
-//Using statements
-using std::cout;
-using std::endl;
-
 #define OLC_PGE_APPLICATION
-#include "olcPixelGameEngine.h"
+#include "main.h"
 
 class Example : public olc::PixelGameEngine
 {
 public:
-	Example()
-	{
-		sAppName = "Example";
-	}
 
 	float fTargetFrameTime = 1.0f / 50.0f; // Virtual FPS of 50fps
   float fAccumulatedTime = 0.0f;
 
 	int x = 0;
 	int y = 0;
-//    std::unique_ptr <olc::Sprite> fireBall;
-//    olc::Sprite * spritePtr = nullptr;
+
+	Player player;
+
+	Level level;
+
 public:
+
+	Example(): level(player)
+	{
+		sAppName = "Example";
+	}
+
+
 	bool OnUserCreate() override
 	{
 		// Called once at the start, so create things here
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
-//        fireBall = std::make_unique<olc::Sprite>("fireBall.png");
-//        spritePtr = new olc::Sprite("fireBall.png");
-        m_pDecal = new olc::Decal(new olc::Sprite("test2.png"));
-//        myBalls = getMyBalls(olc::vd2d{200, 200} , 10);
-//        h = new HomingProjectile { olc::vd2d{300,0}, p};
-        p = std::make_unique< Projectile> ( olc::vd2d {200, 200}, olc::vd2d {300,300});
-		h = std::make_unique<HomingProjectile>(olc::vd2d{300,0}, p.get());
-        return true;
+
+		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 
+		fAccumulatedTime += fElapsedTime;
+		if (fAccumulatedTime >= fTargetFrameTime)
+		{
+			fAccumulatedTime -= fTargetFrameTime;
+			//fElapsedTime = fTargetFrameTime;
+		}
+		else
+			return true; // Don't do anything this frame
 
-
-		Clear(olc::BLACK);
-		DrawDecal(olc::vi2d{0, 0}, m_pDecal , {1,1});
-//        DrawRotatedDecal(olc::vi2d{0, 0}, m_pDecal , {10, 10});
-        // called once per frame
+		// called once per frame
 		/*
 		for (int x = 0; x < ScreenWidth(); x++)
 			for (int y = 0; y < ScreenHeight(); y++)
@@ -89,33 +76,8 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
-		// myBalls
-		p->update();
-        p->drawSelf(this, x, y);
-        h->update();
-        h->drawSelf(this, x, y);
+		level.renderEntities(*this);
 
-        this->SetPixelMode(olc::Pixel::ALPHA);
-
-        for ( const auto& ball : myBalls) {
-            ball->update();
-            ball->drawSelf(this, x, y);
-//            ball->update();
-//            DrawDecal({200,200}, ball->test2.get());
-        }
-
-        this->SetPixelMode(olc::Pixel::NORMAL);
-//        DrawSprite(olc::vi2d {x, y}, fireBall.get());
-
-
-        fAccumulatedTime += fElapsedTime;
-        if (fAccumulatedTime >= fTargetFrameTime)
-        {
-            fAccumulatedTime -= fTargetFrameTime;
-            //fElapsedTime = fTargetFrameTime;
-        }
-        else
-            return true; // Don't do anything this frame
 		//if( x > ScreenWidth() ) x=0;
 
 		if(GetKey(olc::A).bHeld) {
@@ -132,6 +94,7 @@ public:
 			y++;
 		}
 
+		level.update();
 
 		return true;
 	}
@@ -146,18 +109,9 @@ public:
 		yPos += (ScreenHeight() / 2);
 
 		Draw(xPos, yPos, olc::Pixel( r, g, b) );
-
 	}
 
-    std::unique_ptr <Projectile >p = nullptr ;
-    std::vector <std::unique_ptr<Projectile>> myBalls ; //= getMyBalls(olc::vd2d{200, 200} , 10);
-    olc::Decal* m_pDecal = nullptr;
-    std::unique_ptr<Projectile>  h = nullptr;
-//    std::unique_ptr<olc::Decal> m_pDecal = nullptr;
-    std::unique_ptr<olc::Sprite> myFireballSprite = nullptr;
-//    std::shared_ptr<olc::Sprite> myFireballSprite = nullptr;
 };
-
 
 int main()
 {
