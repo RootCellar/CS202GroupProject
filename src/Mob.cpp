@@ -36,7 +36,7 @@ void Mob::die() {
 
 }
 
-void Mob::takeDamage(double damage) {
+void Mob::damage(double damage) {
 	if(damage < 0) damage *= -1;
 	_health -= damage;
 	checkHp();

@@ -20,7 +20,7 @@ public:
 
 	static int getCount();
 
-	void takeDamage(double damage);
+	void damage(double damage);
 
 	void heal(double amt);
 
