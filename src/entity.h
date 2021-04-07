@@ -5,6 +5,8 @@
 #include <string>
 using std::string;
 
+#include "olcPixelGameEngine.h"
+
 class Level;
 class Example;
 
@@ -15,13 +17,13 @@ struct vec2D
 };
 
 class Entity {
+
 private:
 
   bool _bRedundant = false;
   string _name;
 
-  int xPos;
-  int yPos;
+  olc::vd2d _pos;
 
   static int idPoint;
   int id;
@@ -30,6 +32,8 @@ private:
 
 public:
   Entity();
+
+  Entity(double x, double y);
 
   virtual ~Entity() = default;
 
@@ -51,10 +55,10 @@ public:
   */
 
   // Position manipulation
-  void setXPos(int newX);
-  void setYPos(int newY);
-  void addToXPos(int addedX);
-  void addToYPos(int addedY);
+  void setXPos(double newX);
+  void setYPos(double newY);
+  void addToXPos(double addedX);
+  void addToYPos(double addedY);
 
   auto getXPos() const;
   auto getYPos() const;

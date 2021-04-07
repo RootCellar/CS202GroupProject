@@ -8,6 +8,11 @@ Entity::Entity() {
   //debug("Entity constructed");
 }
 
+Entity::Entity(double x, double y): _pos(x, y) {
+  id = idPoint++;
+
+}
+
 void Entity::setLevel(Level* l) {
   level = l;
 }
@@ -23,13 +28,13 @@ gfx->DrawPartialDecal( // Sprite
 */
 
 // Position manipulation
-void Entity::setXPos(int newX) { xPos = newX; }
-void Entity::setYPos(int newY) { yPos = newY; };
-void Entity::addToXPos(int addedX) { xPos += addedX; }
-void Entity::addToYPos(int addedY) { yPos += addedY; }
+void Entity::setXPos(double newX) { _pos.x=newX; }
+void Entity::setYPos(double newY) { _pos.y = newY; };
+void Entity::addToXPos(double addedX) { _pos.x += addedX; }
+void Entity::addToYPos(double addedY) { _pos.y += addedY; }
 
-auto Entity::getXPos() const { return xPos; }
-auto Entity::getYPos() const { return yPos; }
+auto Entity::getXPos() const { return _pos.x; }
+auto Entity::getYPos() const { return _pos.y; }
 
 void Entity::setRedundant() { _bRedundant = true; }
 bool Entity::isRedundant() const { return _bRedundant; }
