@@ -113,6 +113,19 @@ public:
 
 };
 
+double convertToAngle(const olc::vd2d components)
+{
+	if (components.x > 0)
+		return atanf(components.y / components.x);
+	else
+		return atanf((components.y / components.x) + PI);
+}
+
+double convertToMagnitude(const olc::vd2d components)
+{
+	return sqrt(components.x * components.x + components.y * components.y);
+}
+
 int main()
 {
 	Example demo;

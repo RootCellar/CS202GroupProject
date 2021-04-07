@@ -73,7 +73,10 @@ void Mob::manaRegen()
 
 void Mob::movement() // Has levelRef and members to determine speed and direction or if to stop
 {
-
+	if (_vel.x > 0)
+		_spriteRot = atanf(_vel.y / _vel.x);
+	else
+		_spriteRot = atanf((_vel.y / _vel.x) + PI);
 }
 
 bool Mob::inRange(const Mob& target) // Has levelRef and members to determine location

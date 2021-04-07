@@ -36,7 +36,7 @@ public:
 
 	bool inRange(const Mob& target);
 
-	void drawSelf(Example& gfx) const override;
+	void drawSelf(Example& gfx) override;
 
 	~Mob();
 
@@ -55,7 +55,7 @@ private:
 	double _mpPerFrame;
 
 	// Offense
-	bool _hasTarget
+	bool _hasTarget;
 	int _dmgDealt;
 	double _critModifier;
 	int _critChance;

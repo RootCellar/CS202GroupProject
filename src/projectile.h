@@ -38,7 +38,7 @@ public:
 
   }
 
-  virtual void drawSelf(Example& gfx) const override {
+  virtual void drawSelf(Example& gfx) override {
       // Drawing code here...
   }
 

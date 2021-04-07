@@ -21,4 +21,7 @@
 using std::cout;
 using std::endl;
 
+double convertToAngle(const olc::vd2d components);
+double convertToMagnitude(const olc::vd2d components);
+
 #endif
