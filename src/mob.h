@@ -13,7 +13,9 @@ public:
 		_mobPop++;
 	}
 */
-	Mob(int health, int x, int y);
+//	Mob(int health, int x, int y);
+
+	Mob(int health, const olc::vd2d &sPos);
 
 	int getHealth() const;
 
@@ -26,7 +28,7 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	void drawSelf(Example& gfx) const override {
+	virtual void drawSelf(olc::PixelGameEngine * gfx) const override {
 		// Drawing code here...
 	}
 

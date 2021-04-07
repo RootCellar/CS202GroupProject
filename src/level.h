@@ -3,19 +3,19 @@
 
 #include <vector>
 #include <iterator>
-
-#include "debug.h"
+#include "olcPixelGameEngine.h"
+//#include "debug.h"
 
 class Player;
 class Mob;
 class Projectile;
-class Example;
+//class Example;
 
 //The world, bosses everyone else around but also serves them
 class Level {
 private:
 
-  Player &player;
+  Player * player;
 
   //Lists of mobs and projectiles in the level
 
@@ -33,7 +33,7 @@ private:
 
 public:
 
-  Level(Player &p);
+  Level(Player * p);
 
   void add(Mob *m);
 
@@ -56,11 +56,8 @@ public:
   //Call update for everybody, handle spawns and despawns
   void update();
 
-  void renderEntities(Example &gfx) const;
+  void renderEntities(olc::PixelGameEngine * gfx) const;
 
 };
-
-#include "mob.h"
-#include "projectile.h"
 
 #endif

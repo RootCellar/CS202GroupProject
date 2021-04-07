@@ -5,9 +5,14 @@ int Entity::idPoint = 0;
 Entity::Entity() {
   id = idPoint++;
 
-  debug("Entity constructed");
+//  debug("Entity constructed");
 }
 
+Entity::Entity(const olc::vd2d &sPos): _position(sPos) {
+    id = idPoint++;
+
+//    debug("Entity constructed using vd2d");
+}
 void Entity::setLevel(Level* l) {
   level = l;
 }

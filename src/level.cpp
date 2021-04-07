@@ -1,7 +1,9 @@
 #include "level.h"
 #include "chuck.h"
+#include "mob.h"
+#include "projectile.h"
 
-Level::Level(Player &p): player(p) {
+Level::Level(Player * p): player(p) {
 }
 
 void Level::add(Mob *m) {
@@ -102,12 +104,12 @@ void Level::update() {
 
 }
 
-void Level::renderEntities(Example &gfx) const {
+void Level::renderEntities(olc::PixelGameEngine * gfx) const {
   for(Projectile *p : projectiles) {
-    (*p).drawSelf(gfx);
+    p->drawSelf(gfx);
   }
 
   for(Mob *m : mobs) {
-    (*m).drawSelf(gfx);
+    m->drawSelf(gfx);
   }
 }

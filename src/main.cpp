@@ -23,13 +23,16 @@ public:
 	int x = 0;
 	int y = 0;
 
-	Player player;
+	std::unique_ptr<Player> player = nullptr;
 
-	Level level;
+	std::unique_ptr<Level> level = nullptr;
 
+//    Player player;
+//
+//    Level level;
 public:
 
-	Example(): level(player)
+	Example()//: level(player)
 	{
 		sAppName = "Example";
 	}
@@ -41,6 +44,14 @@ public:
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
+
+		//////////////////////
+		// According to the olc wiki, says whatever we need to create here !!!
+		// So initializeing the pointers here
+		player = std::make_unique<Player> ();
+
+		level = std::make_unique<Level>(player.get());
+
 
 		return true;
 	}
@@ -76,7 +87,7 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
-		level.renderEntities(*this);
+		level->renderEntities(this);
 
 		//if( x > ScreenWidth() ) x=0;
 
@@ -94,7 +105,7 @@ public:
 			y++;
 		}
 
-		level.update();
+		level->update();
 
 		return true;
 	}

@@ -6,12 +6,13 @@
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
-
-Mob::Mob(int health, int x, int y): _health(health) {
-	setXPos(x);
-	setYPos(y);
-	_mobPop++;
+Mob::Mob(int health,const olc::vd2d &sPos): Entity(sPos), _health(health) {
+    _mobPop++;
 }
+//Mob::Mob(int health, int x, int y): Entity(olc::vd2d {x, y} ), _health(health),   {
+////	setXPos(x); // Note I used to set it up the other way
+////	setYPos(y);
+//}
 
 int Mob::getHealth() const {
 		return _health;
