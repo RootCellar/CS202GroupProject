@@ -5,7 +5,7 @@ int Entity::idPoint = 0;
 Entity::Entity() {
   id = idPoint++;
 
-  debug("Entity constructed");
+  //debug("Entity constructed");
 }
 
 void Entity::setLevel(Level* l) {
