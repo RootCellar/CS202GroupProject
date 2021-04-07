@@ -21,7 +21,9 @@ void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, 
         myAngle += PI;
     }
 //    gfx->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
-    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
+//    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
+    auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
+    gfx->DrawRotatedDecal(_position , test2.get(), myAngle, {0, 0}, {scale, scale});
 
 }
 
