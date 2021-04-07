@@ -29,6 +29,8 @@ public:
 		// Drawing code here...
 	}
 
+	void die();
+
 private:
 	int _health;
 
@@ -36,8 +38,6 @@ private:
 	//if you want a counter to keep mob counts within a range in the level,
 	//it needs to be done differently.
 	static int _mobPop;
-
-	void die();
 };
 #endif
 
