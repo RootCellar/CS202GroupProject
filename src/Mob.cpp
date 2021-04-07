@@ -34,9 +34,8 @@ int Mob::getCount() {
 }
 
 void Mob::die() {
-	_mobPop--;
-	// run a dying animation possibly
-	//
+	//_mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
+	
 }
 
 void Mob::takeDamage(int damage) {
