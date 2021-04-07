@@ -1,5 +1,8 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
+
+#include "entity.h"
+
 #include <memory>
 
 class Projectile : public Entity {
@@ -13,7 +16,7 @@ public:
     // Since, comparison of doulbes difficult, will be using the max distance to travel for life
     // time of projectile
 
-    double _speed = .005;//.0009; // 0 for testing
+    double _speed = .05;//.0009; // 0 for testing
     double _radius = 5;
 //    std::unique_ptr <olc::Sprite> fireBall = std::make_unique<olc::Sprite> ("fireBall.png");
 //    olc::Sprite* myBalls = fireBall->Duplicate(_position, olc::vi2d{50, 50});
@@ -123,24 +126,28 @@ std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int number
     return myBalls;
 }
 
-
 class HomingProjectile : public Projectile {
-    Entity &notPointerToEntity ;
-    HomingProjectile( olc::vd2d sPos, Entity &ent ):
-    Projectile(sPos, olc::vi2d{ent.getXPos(), ent.getYPos()}),
-    notPointerToEntity(ent) { }
+public:
+    Projectile * notPointerToEntity;// = nullptr;
+    HomingProjectile( olc::vd2d sPos, Projectile * ent ):
+    Projectile(sPos, ent->_position) , notPointerToEntity(ent) {
+//        notPointerToEntity = ent;
+    }
 
     virtual void update() override
     {
         // Get Final position from the object
         // adjust direction to object
         // adjust position
-        _endPosition = olc::vi2d{notPointerToEntity.getXPos(), notPointerToEntity.getYPos()};
+//        _endPosition = olc::vi2d{notPointerToEntity->getXPos(), notPointerToEntity->getYPos()};
+        _endPosition = notPointerToEntity->_position;
+//        _endPosition = olc::vd2d{200, 400};
         auto displacement = _endPosition - _position;
+        _position += _direction * _speed * .5 ;
         _distance = displacement.mag();
-        _direction += displacement / _distance *.5;
-        _direction = _direction / _direction.mag();
-        _position = _direction * _speed;
+        _direction = displacement / _distance ;//*.5;
+        //_direction = _direction / _direction.mag();
+        _position +=  _direction * _speed * .5;
     }
 
 };

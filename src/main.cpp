@@ -55,8 +55,11 @@ public:
 //        fireBall = std::make_unique<olc::Sprite>("fireBall.png");
 //        spritePtr = new olc::Sprite("fireBall.png");
         m_pDecal = new olc::Decal(new olc::Sprite("test2.png"));
-        myBalls = getMyBalls(olc::vd2d{200, 200} , 10);
-		return true;
+//        myBalls = getMyBalls(olc::vd2d{200, 200} , 10);
+//        h = new HomingProjectile { olc::vd2d{300,0}, p};
+        p = std::make_unique< Projectile> ( olc::vd2d {200, 200}, olc::vd2d {300,300});
+		h = std::make_unique<HomingProjectile>(olc::vd2d{300,0}, p.get());
+        return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
@@ -87,8 +90,10 @@ public:
 		drawPixel( 75, 75, 0, 255, 0 );
 
 		// myBalls
-		p.update();
-        p.drawSelf(this, x, y);
+		p->update();
+        p->drawSelf(this, x, y);
+        h->update();
+        h->drawSelf(this, x, y);
 
         this->SetPixelMode(olc::Pixel::ALPHA);
 
@@ -143,12 +148,14 @@ public:
 		Draw(xPos, yPos, olc::Pixel( r, g, b) );
 
 	}
-protected:
-    Projectile p { olc::vd2d {100, 100}, olc::vd2d {200,200}};
+
+    std::unique_ptr <Projectile >p = nullptr ;
     std::vector <std::unique_ptr<Projectile>> myBalls ; //= getMyBalls(olc::vd2d{200, 200} , 10);
     olc::Decal* m_pDecal = nullptr;
+    std::unique_ptr<Projectile>  h = nullptr;
 //    std::unique_ptr<olc::Decal> m_pDecal = nullptr;
     std::unique_ptr<olc::Sprite> myFireballSprite = nullptr;
+//    std::shared_ptr<olc::Sprite> myFireballSprite = nullptr;
 };
 
 

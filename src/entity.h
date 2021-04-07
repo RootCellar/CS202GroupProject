@@ -24,7 +24,9 @@ private:
   int id;
 
 public:
-  Entity() {
+    olc::vd2d _position ;
+
+    Entity() {
     id = idPoint++;
   }
 
