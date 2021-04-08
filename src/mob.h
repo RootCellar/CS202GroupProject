@@ -10,7 +10,7 @@ public:
 
 	Mob();
 
-	~Mob();
+	virtual ~Mob()= default;
 
 	Mob(double maxHealth, double x, double y);
 
@@ -33,7 +33,10 @@ public:
 		// Drawing code here...
 	}
 
-	void die();
+	virtual void die();
+
+	//each type of mob will have a different attack type & it is up to them to implement this
+	virtual void attack(Mob& target)= 0;
 
 private:
 	double _health;
@@ -49,5 +52,5 @@ private:
 /*
  * make a pure virtual function attack()
  * pass update() & drawSelf() onto the derived classes
- * create derived classes: anAcctualTank, gunThrower, spellCaster, tank, summoner, summonedMob
+ * create derived classes: anActualTank, gunThrower, spellCaster, tank, summoner, summonedMob
  */
