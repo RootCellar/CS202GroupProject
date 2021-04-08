@@ -55,7 +55,10 @@ std::vector<Projectile*>::iterator Level::getIteratorToProjectile(Projectile *p)
 
 //Call update for everybody, handle spawns and despawns
 void Level::update() {
-
+    // My balls
+    testProjectile.update();
+    test2.update();
+    test3.update();
   for(Mob *m : mobs) {
     (*m).update();
   }
@@ -104,6 +107,11 @@ void Level::update() {
 }
 
 void Level::renderEntities(olc::PixelGameEngine *gfx) const {
+    //Render these balls
+    testProjectile.drawSelf(gfx);
+    test2.drawSelf(gfx);
+    test3.drawSelf(gfx);
+
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
