@@ -1,5 +1,5 @@
 #include "entity.h"
-
+#include "debug.h"
 int Entity::idPoint = 0;
 
 //Default construct an entity to be far outside the level bounds
@@ -44,6 +44,10 @@ int Entity::getId() const { return id; }
 
 olc::vd2d Entity::getPos() const {
     return _pos;
+}
+
+void Entity::setPos(const olc::vd2d &newPos) {
+    _pos = newPos;
 }
 
 bool operator==(const Entity &one, const Entity &two) {

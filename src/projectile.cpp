@@ -5,7 +5,7 @@
 
 Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
-    auto displacement = _endPosition - this->get_pos;
+    auto displacement = _endPosition - getPos();
     _distance = displacement.mag();
     _direction = displacement / _distance; // (v2d / mag(v2d))
     /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
@@ -14,7 +14,7 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
 
 }
 
-void Projectile::drawSelf(Example& gfx) const //, double offsetx, double offsety) {
+void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
 {
     float myAngle = PI/2 + atan(_direction.y / _direction.x);
     if ( _direction.x < 0 ) {
@@ -23,13 +23,14 @@ void Projectile::drawSelf(Example& gfx) const //, double offsetx, double offsety
 //    gfx->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
 //    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
     auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
-    gfx.DrawRotatedDecal(_position , test2.get(), myAngle, {0, 0}, {scale, scale});
+    gfx->DrawRotatedDecal(getPos() , test2.get(), myAngle, {0, 0}, {scale, scale});
 
 }
 
 void Projectile::update() {
     // Updating position of projectile
-    _pos += _direction * _speed; //need offset if map moves around.
+    auto position = getPos();
+    setPos(position + _direction * _speed) ; //need offset if map moves around.
 
 }
 
@@ -68,14 +69,16 @@ void HomingProjectile::update() {
     // adjust direction to object
     // adjust position
 //        _endPosition = olc::vi2d{notPointerToEntity->getXPos(), notPointerToEntity->getYPos()};
-    _endPosition = notPointerToEntity->_position;
+    _endPosition = notPointerToEntity->getPos();
 //        _endPosition = olc::vd2d{200, 400};
-    auto displacement = _endPosition - _position;
-    _position += _direction * _speed * .5 ;
+    auto displacement = _endPosition - getPos();//_pos;
+//    _position += _direction * _speed * .5 ;
+
     _distance = displacement.mag();
     _direction = displacement / _distance ;//*.5;
     //_direction = _direction / _direction.mag();
     _position +=  _direction * _speed * .5;
+
 }
 
 void OrbitalProjectile::update() {

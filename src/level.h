@@ -4,12 +4,12 @@
 #include <vector>
 #include <iterator>
 #include "olcPixelGameEngine.h"
-//#include "debug.h"
+#include "debug.h"
 #include "main.h"
-//class Player;
-//class Mob;
-//class Projectile;
-//class Example;
+class Player;
+class Mob;
+class Projectile;
+class Example;
 
 //The world, bosses everyone else around but also serves them
 class Level {

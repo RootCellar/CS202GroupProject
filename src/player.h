@@ -10,9 +10,9 @@ class Player : public Mob {
 public:
 	using Mob::Mob;
 	Player() ;
-//	Player(int health, int x, int y): Mob(health,x,y) {
-//
-//	}
+	Player(int health, int x, int y): Mob(health,x,y) {
+
+	}
 
     Player(int health, const olc::vd2d &sPos);
 	const vector<Spell> * getSpellList();

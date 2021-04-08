@@ -6,16 +6,16 @@
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
-Mob::Mob(int health, double x, double y): Entity(x, y), _health(health) {
+Mob::Mob(double health, double x, double y): Entity(x, y), _health(health) {
     _mobPop++;
 }
 Mob::Mob() {
 	_mobPop++;
 }
 
-Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
-	_mobPop++;
-}
+//Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
+//	_mobPop++;
+//}
 
 Mob::~Mob() {
 	_mobPop--;

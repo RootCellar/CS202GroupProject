@@ -31,6 +31,7 @@ private:
   Level *level;
 
 public:
+
   Entity();
 
   Entity(double x, double y);
@@ -43,7 +44,7 @@ public:
 
   // This may not need to be a virtual function or pure virtual function
   // Offsets x and y are for position on screen as opposed to on the map.
-  virtual void drawSelf(Example& gfx /*, float offsetx, float offsety*/) const = 0;
+  virtual void drawSelf(olc::PixelGameEngine * gfx /*, float offsetx, float offsety*/) const = 0;
   /*
   // Should contain something like the following IF we are using sprites/decals
 
@@ -63,6 +64,7 @@ public:
   auto getXPos() const;
   auto getYPos() const;
   olc::vd2d getPos() const;
+  void setPos(const olc::vd2d &newPos) ;
 
   void setRedundant();
   bool isRedundant() const;
@@ -72,6 +74,6 @@ public:
 
 bool operator==(const Entity &one, const Entity &two);
 
-#include "level.h"
+//#include "level.h"
 
 #endif

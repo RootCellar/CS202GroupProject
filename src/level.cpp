@@ -1,7 +1,7 @@
 #include "level.h"
 #include "chuck.h"
 
-Level::Level(Player &p): player(p) {
+Level::Level(Player * p): player(p) {
   debug("Constructing the level...");
 }
 
@@ -103,7 +103,7 @@ void Level::update() {
 
 }
 
-void Level::renderEntities(Example &gfx) const {
+void Level::renderEntities(olc::PixelGameEngine *gfx) const {
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
