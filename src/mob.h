@@ -10,7 +10,7 @@ public:
 
 	Mob();
 
-	virtual ~Mob()= default;
+	virtual ~Mob();
 
 	Mob(double maxHealth, double x, double y);
 
