@@ -3,19 +3,19 @@
 
 #include <vector>
 #include <iterator>
-
-#include "debug.h"
-
-class Player;
-class Mob;
-class Projectile;
-class Example;
+#include "olcPixelGameEngine.h"
+//#include "debug.h"
+#include "main.h"
+//class Player;
+//class Mob;
+//class Projectile;
+//class Example;
 
 //The world, bosses everyone else around but also serves them
 class Level {
 private:
 
-  Player &player;
+  Player * player;
 
   //Lists of mobs and projectiles in the level
 
@@ -31,9 +31,16 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
+  //Test projectiles below
+  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+
+  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
+
+  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
+
 public:
 
-  Level(Player &p);
+  Level(Player * p);
 
   void add(Mob *m);
 
@@ -56,11 +63,8 @@ public:
   //Call update for everybody, handle spawns and despawns
   void update();
 
-  void renderEntities(Example &gfx) const;
+  void renderEntities(olc::PixelGameEngine * gfx) const;
 
 };
-
-#include "mob.h"
-#include "projectile.h"
 
 #endif
