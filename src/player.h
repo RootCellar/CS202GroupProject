@@ -4,30 +4,22 @@
 #include "mob.h"
 #include "spell.h"
 #include <vector>
-using std::vector;
+//using std::vector; //removed the using statement because it is propper practice not to have using statements in the header files
 
 class Player : public Mob {
 public:
 	using Mob::Mob;
-	Player() : Mob(400, 50, 50) {} // Values passed to Mob() are temporary for now.
-	Player(int health, int x, int y): Mob(health,x,y) {
+	Player();
+	Player(int health, int x, int y);
 
-	}
+	const std::vector<Spell> * getSpellList();
 
-	const vector<Spell> * getSpellList() {
-		return _AvailableSpells;
-	}
+	void setSpellSlot(int slotNum /*Spell type*/);
 
-	void setSpellSlot(int slotNum /*Spell type*/) {
-
-	}
-
-	void increaseMaxHealth(int mod) {
-		setHealth((mod *= getHealth()));
-	}
+	void increaseMaxHealth(double mod);
 
 private:
-	vector<Spell> _AvailableSpells[10];
+	std::vector<Spell> _AvailableSpells[10];
 };
 
 #endif
