@@ -39,7 +39,7 @@ public:
 //        delete myBalls;
         delete m_pDecal;
     }
-    virtual void drawSelf(olc::PixelGameEngine* gfx) const override;//, double offsetx, double offsety);
+    virtual void drawSelf(Example &gfx) const override;//, double offsetx, double offsety);
   //update the projectile, move it etc.
   virtual void update() override;
 
@@ -54,7 +54,7 @@ class HomingProjectile : public Projectile {
 public:
     Entity * notPointerToEntity;// = nullptr;
     HomingProjectile( olc::vd2d sPos, Entity * ent ):
-    Projectile(sPos, ent->_position) , notPointerToEntity(ent) {
+    Projectile(sPos, ent->_pos) , notPointerToEntity(ent) {
 //        notPointerToEntity = ent;
     }
 

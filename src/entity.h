@@ -62,6 +62,7 @@ public:
 
   auto getXPos() const;
   auto getYPos() const;
+  olc::vd2d getPos() const;
 
   void setRedundant();
   bool isRedundant() const;

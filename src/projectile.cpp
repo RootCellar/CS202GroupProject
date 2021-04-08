@@ -3,9 +3,9 @@
 //
 #include "projectile.h"
 
-Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos), _endPosition(ePos)
+Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
-    auto displacement = _endPosition - _position;
+    auto displacement = _endPosition - this->get_pos;
     _distance = displacement.mag();
     _direction = displacement / _distance; // (v2d / mag(v2d))
     /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
@@ -14,7 +14,7 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos), _endPosit
 
 }
 
-void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
+void Projectile::drawSelf(Example& gfx) const //, double offsetx, double offsety) {
 {
     float myAngle = PI/2 + atan(_direction.y / _direction.x);
     if ( _direction.x < 0 ) {
@@ -23,13 +23,13 @@ void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, 
 //    gfx->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
 //    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
     auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
-    gfx->DrawRotatedDecal(_position , test2.get(), myAngle, {0, 0}, {scale, scale});
+    gfx.DrawRotatedDecal(_position , test2.get(), myAngle, {0, 0}, {scale, scale});
 
 }
 
 void Projectile::update() {
     // Updating position of projectile
-    _position += _direction * _speed; //need offset if map moves around.
+    _pos += _direction * _speed; //need offset if map moves around.
 
 }
 

@@ -11,7 +11,7 @@ add_executable(CS202GroupProject
         src/level.cpp
         src/Mob.cpp
         #src/player.cpp
-        #src/projectile.cpp
+        src/projectile.cpp
         )
 
 if (UNIX AND NOT APPLE)

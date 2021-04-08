@@ -42,6 +42,10 @@ bool Entity::isRedundant() const { return _bRedundant; }
 
 int Entity::getId() const { return id; }
 
+olc::vd2d Entity::getPos() const {
+    return _pos;
+}
+
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }
