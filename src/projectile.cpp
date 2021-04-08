@@ -29,9 +29,10 @@ void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, 
 
 void Projectile::update() {
     // Updating position of projectile
-    auto position = getPos();
-    setPos(position + _direction * _speed) ; //need offset if map moves around.
-
+//    auto position = getPos();
+//    setPos(position + _direction * _speed) ; //need offset if map moves around.
+    auto displacement = _direction * _speed;
+    addToPos(displacement);
 }
 
 std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos) // fP only gives directions

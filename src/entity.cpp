@@ -50,6 +50,10 @@ void Entity::setPos(const olc::vd2d &newPos) {
     _pos = newPos;
 }
 
+void Entity::addToPos(const olc::vd2d &disp) {
+    _pos += disp;
+}
+
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }

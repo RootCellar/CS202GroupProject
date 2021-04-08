@@ -63,8 +63,10 @@ public:
 
   auto getXPos() const;
   auto getYPos() const;
+
   olc::vd2d getPos() const;
   void setPos(const olc::vd2d &newPos) ;
+  void addToPos(const olc::vd2d &disp) ;
 
   void setRedundant();
   bool isRedundant() const;
