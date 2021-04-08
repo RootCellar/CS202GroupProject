@@ -8,7 +8,7 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
     auto displacement = _endPosition - getPos();
     _distance = displacement.mag();
     _direction = displacement / _distance; // (v2d / mag(v2d))
-    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+//    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
     fireBall2 = std::make_shared<olc::Sprite>("test2.png");
     test2 = std::make_shared<olc::Decal> (fireBall2.get());
 
@@ -37,9 +37,6 @@ void Projectile::update() {
 
 std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos) // fP only gives directions
 {
-//    auto myBall = std::make_unique<Projectile>(sPos, fPos);
-//    //std::unique_ptr <Projectile> myProjectile std::make_unique<Projectile> {sPos, fPos};
-//    return myBall;
     return std::make_unique<Projectile>(sPos, fPos);
 }
 
@@ -69,16 +66,19 @@ void HomingProjectile::update() {
     // Get Final position from the object
     // adjust direction to object
     // adjust position
-//        _endPosition = olc::vi2d{notPointerToEntity->getXPos(), notPointerToEntity->getYPos()};
-    _endPosition = notPointerToEntity->getPos();
-//        _endPosition = olc::vd2d{200, 400};
-    auto displacement = _endPosition - getPos();//_pos;
-//    _position += _direction * _speed * .5 ;
 
+    auto changeToPos = _direction * _speed * .69;
+//    _position += _direction * _speed * .5 ;
+    addToPos(changeToPos);
+
+    _endPosition = notPointerToEntity->getPos();
+    auto displacement = _endPosition - getPos();
     _distance = displacement.mag();
     _direction = displacement / _distance ;//*.5;
     //_direction = _direction / _direction.mag();
-    _position +=  _direction * _speed * .5;
+    changeToPos =  _direction * _speed * .2;
+
+    addToPos(changeToPos);
 
 }
 

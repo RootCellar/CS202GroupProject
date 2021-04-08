@@ -23,16 +23,16 @@ public:
 	int x = 0;
 	int y = 0;
 
-	std::unique_ptr<Player> player = nullptr;
-
-	std::unique_ptr<Level> level = nullptr;
-
-//    Player player;
+//	std::unique_ptr<Player> player = nullptr;
 //
-//    Level level;
+//	std::unique_ptr<Level> level = nullptr;
+
+    Player player;
+
+    Level level;
 public:
 
-	Example()//: level(player)
+	Example(): level(&player)
 	{
 		sAppName = "Example";
 
@@ -50,9 +50,9 @@ public:
 		//////////////////////
 		// According to the olc wiki, says whatever we need to create here !!!
 		// So initializeing the pointers here
-		player = std::make_unique<Player> ();
+//		player = std::make_unique<Player> ();
 
-		level = std::make_unique<Level>(player.get());
+//		level = std::make_unique<Level>(player.get());
 
 
 		return true;
@@ -60,7 +60,7 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-        level->renderEntities(this);
+        level.renderEntities(this);
 
         fAccumulatedTime += fElapsedTime;
 		if (fAccumulatedTime >= fTargetFrameTime)
@@ -108,7 +108,7 @@ public:
 			y++;
 		}
 
-		level->update();
+		level.update();
 
 		return true;
 	}

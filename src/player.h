@@ -9,7 +9,9 @@ using std::vector;
 class Player : public Mob {
 public:
 	using Mob::Mob;
-	Player() ;
+	Player() {
+
+	}
 	Player(int health, int x, int y): Mob(health,x,y) {
 
 	}
