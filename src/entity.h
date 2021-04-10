@@ -24,7 +24,7 @@ private:
   string _name;
 
   olc::vd2d _pos;
-
+  olc::vd2d _direction;
   static int idPoint;
   int id;
 
@@ -33,6 +33,7 @@ private:
   // Sprite stuff following what I did for projectiles
   std::shared_ptr <olc::Sprite> _spritePtr = nullptr;
   std::shared_ptr <olc::Decal> _decalPtr = nullptr;
+  float _spriteOffset = 0;
   // Now we need getters and setters I made down, we may be able to replace with * but I don't want
   // to manage resources
 public:
@@ -72,7 +73,8 @@ public:
   olc::vd2d getPos() const;
   void setPos(const olc::vd2d &newPos) ;
   void addToPos(const olc::vd2d &disp) ;
-
+  olc::vd2d getDirection () const;
+  void setDirection(const olc::vd2d &newDirection);
   void setRedundant();
   bool isRedundant() const;
 
@@ -82,6 +84,8 @@ public:
   void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
   olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
+  float getSpriteRot () const;
+  void setSpriteOffset () ;
 };
 
 bool operator==(const Entity &one, const Entity &two);

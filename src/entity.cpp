@@ -55,6 +55,8 @@ void Entity::addToPos(const olc::vd2d &disp) {
 }
 
 void Entity::setDecal(std::string fileName) {
+    if (fileName == "test2.png")
+        _spriteOffset = PI/2;
     _spritePtr = std::make_shared<olc::Sprite> (fileName);
     _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 }
@@ -66,6 +68,18 @@ olc::Decal *Entity::getDecal() const {
 olc::vf2d Entity::getDecalScale(float pixels) const{
     float scale = pixels / _spritePtr->height;
     return {scale, scale};
+}
+
+olc::vd2d Entity::getDirection() const {
+    return _direction;
+}
+
+void Entity::setDirection(const olc::vd2d &destination) {
+    _direction = destination.norm();// .norm changes it into a unit vector.
+}
+
+float Entity::getSpriteRot() const {
+    return _spriteOffset + atan(_direction.y / _direction.x) + ( _direction.x < 0 ? PI : 0);
 }
 
 bool operator==(const Entity &one, const Entity &two) {
