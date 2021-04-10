@@ -38,6 +38,7 @@ private:
 
   HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
 
+  HomingProjectile followPlayer { olc::vd2d{200, 200}, player};
   // testing decalmap
 
 public:

@@ -59,6 +59,7 @@ void Level::update() {
     testProjectile.update();
     test2.update();
     test3.update();
+    followPlayer.update();
   for(Mob *m : mobs) {
     (*m).update();
   }
@@ -112,6 +113,7 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
     test2.drawSelf(gfx);
     test3.drawSelf(gfx);
     player->drawSelf(gfx);
+    followPlayer.drawSelf(gfx);
     // test text
     gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
   for(Projectile *p : projectiles) {
