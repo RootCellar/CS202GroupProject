@@ -5,7 +5,7 @@
 
 Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
-    setDirection(_endPosition - getDirection());
+    setDirection(_endPosition - getPos());
     setDecal("test2.png");
 }
 
@@ -50,17 +50,24 @@ void HomingProjectile::update() {
     // adjust direction to object
     // adjust position
 
-    auto changeToPos = getDirection() * _speed * .69;
-
-    addToPos(changeToPos);
-
+//    auto changeToPos = getDirection() * _speed * .97;
+//
+//    addToPos(changeToPos);
+//
+//    _endPosition = notPointerToEntity->getPos();
+//    setDirection(_endPosition - getPos());
+//
+//    changeToPos =  getDirection() * _speed * .01;
+//
+//    addToPos(changeToPos);
+//
+    auto oldDirection = getDirection();
     _endPosition = notPointerToEntity->getPos();
-    setDirection(_endPosition - getPos());
-
-    changeToPos =  getDirection() * _speed * .2;
-
-    addToPos(changeToPos);
-
+    auto directionToObject = (_endPosition - getPos()).norm();
+    auto newDirection = oldDirection * .96 + directionToObject * .04 ; // adjust multiplier for responsetimes.
+    // Bigger multiplier for oldDirection, slower response time.
+    setDirection(newDirection);
+    Projectile::update();
 }
 
 void OrbitalProjectile::update() {
