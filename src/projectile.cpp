@@ -5,33 +5,18 @@
 
 Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
-    auto displacement = _endPosition - getPos();
-    _distance = displacement.mag();
-    _direction = displacement / _distance; // (v2d / mag(v2d))
-//    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
-//    fireBall2 = std::make_shared<olc::Sprite>("test2.png");
-//    test2 = std::make_shared<olc::Decal> (fireBall2.get());
+    setDirection(_endPosition - getDirection());
     setDecal("test2.png");
 }
 
 void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
 {
-    float myAngle = PI/2 + atan(_direction.y / _direction.x);
-    if ( _direction.x < 0 ) {
-        myAngle += PI;
-    }
-//    gfx->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
-//    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
-//    auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
-    gfx->DrawRotatedDecal(getPos() , getDecal(), myAngle, {0, 0}, getDecalScale(10));
+    gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), {0, 0}, getDecalScale(10));
 
 }
 
 void Projectile::update() {
-    // Updating position of projectile
-//    auto position = getPos();
-//    setPos(position + _direction * _speed) ; //need offset if map moves around.
-    auto displacement = _direction * _speed;
+    auto displacement = getDirection() * _speed;
     addToPos(displacement);
 }
 
@@ -57,9 +42,6 @@ std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOf
 OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
 Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
 {
-//    m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
-//    fireBall2 = std::make_shared<olc::Sprite>("fireBall.png");
-//    test2 = std::make_shared<olc::Decal> (fireBall2.get());
     setDecal("fireBall.png");
 }
 
@@ -68,25 +50,25 @@ void HomingProjectile::update() {
     // adjust direction to object
     // adjust position
 
-    auto changeToPos = _direction * _speed * .69;
-//    _position += _direction * _speed * .5 ;
+    auto changeToPos = getDirection() * _speed * .69;
+
     addToPos(changeToPos);
 
     _endPosition = notPointerToEntity->getPos();
-    auto displacement = _endPosition - getPos();
-    _distance = displacement.mag();
-    _direction = displacement / _distance ;//*.5;
-    //_direction = _direction / _direction.mag();
-    changeToPos =  _direction * _speed * .2;
+    setDirection(_endPosition - getPos());
+
+    changeToPos =  getDirection() * _speed * .2;
 
     addToPos(changeToPos);
 
 }
 
 void OrbitalProjectile::update() {
-    _direction += _direction.perp() * _speed / radiusOrbital ;
-    _direction = _direction.norm();
+
+    auto direction = getDirection();
+    direction += direction.perp() * _speed / radiusOrbital;
+    setDirection(direction);
+
     Projectile::update();
-//    _position =
 }
 
