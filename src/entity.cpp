@@ -63,6 +63,11 @@ olc::Decal *Entity::getDecal() const {
     return _decalPtr.get();
 }
 
+olc::vf2d Entity::getDecalScale(float pixels) const{
+    float scale = pixels / _spritePtr->height;
+    return {scale, scale};
+}
+
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }

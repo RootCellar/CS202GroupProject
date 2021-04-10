@@ -9,9 +9,9 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
     _distance = displacement.mag();
     _direction = displacement / _distance; // (v2d / mag(v2d))
 //    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
-    fireBall2 = std::make_shared<olc::Sprite>("test2.png");
-    test2 = std::make_shared<olc::Decal> (fireBall2.get());
-
+//    fireBall2 = std::make_shared<olc::Sprite>("test2.png");
+//    test2 = std::make_shared<olc::Decal> (fireBall2.get());
+    setDecal("test2.png");
 }
 
 void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
@@ -22,8 +22,8 @@ void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, 
     }
 //    gfx->DrawRotatedDecal(_position - olc::vd2d{offsetx, offsety}, test2.get(), myAngle);
 //    gfx->DrawRotatedDecal(_position , test2.get(), myAngle);
-    auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
-    gfx->DrawRotatedDecal(getPos() , test2.get(), myAngle, {0, 0}, {scale, scale});
+//    auto scale = 10.f / fireBall2->width; //10.f represents the size in pixels we want
+    gfx->DrawRotatedDecal(getPos() , getDecal(), myAngle, {0, 0}, getDecalScale(10));
 
 }
 
@@ -58,8 +58,9 @@ OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &cen
 Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
 {
 //    m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
-    fireBall2 = std::make_shared<olc::Sprite>("fireBall.png");
-    test2 = std::make_shared<olc::Decal> (fireBall2.get());
+//    fireBall2 = std::make_shared<olc::Sprite>("fireBall.png");
+//    test2 = std::make_shared<olc::Decal> (fireBall2.get());
+    setDecal("fireBall.png");
 }
 
 void HomingProjectile::update() {
