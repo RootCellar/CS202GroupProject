@@ -50,7 +50,7 @@ public:
 		//////////////////////
 		// According to the olc wiki, says whatever we need to create here !!!
 		// So initializeing the pointers here
-		player = std::make_unique<Player> ();
+		player = std::make_unique<Player> ("test");
 
 		level = std::make_unique<Level>(player.get());
 
@@ -95,17 +95,21 @@ public:
 		//if( x > ScreenWidth() ) x=0;
 
 		if(GetKey(olc::A).bHeld) {
-			x--;
+//			x--;
+            player->move("left");
 		}
 		if(GetKey(olc::D).bHeld) {
-			x++;
+//			x++;
+            player->move("right");
 		}
 
 		if(GetKey(olc::W).bHeld) {
-			y--;
+//			y--;
+            player->move("up");
 		}
 		if(GetKey(olc::S).bHeld) {
-			y++;
+//			y++;
+            player->move("down");
 		}
 
 		level->update();

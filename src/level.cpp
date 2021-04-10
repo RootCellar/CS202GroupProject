@@ -111,7 +111,9 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
     testProjectile.drawSelf(gfx);
     test2.drawSelf(gfx);
     test3.drawSelf(gfx);
-
+    player->drawSelf(gfx);
+    // test text
+    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }

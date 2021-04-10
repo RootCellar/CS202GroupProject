@@ -15,7 +15,10 @@ public:
 	Player(int health, int x, int y): Mob(health,x,y) {
 
 	}
-
+    Player ( const std::string &text) : Mob( 100, 100, 100) {
+	    // test
+	    setDecal("Orb_Wizard_and_Staff.png");
+	}
     Player(int health, const olc::vd2d &sPos);
 	const vector<Spell> * getSpellList();
 
@@ -23,6 +26,19 @@ public:
 
 	void increaseMaxHealth(int mod);
 
+	void move (const std::string &direction) {
+	    olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
+	    if ( direction == "up")
+	        changeToPos = north;
+	    else if (direction == "down")
+	        changeToPos = north * (-1);
+	    else if (direction == "right")
+	        changeToPos = east;
+	    else if (direction == "left")
+	            changeToPos = east * (-1);
+
+        addToPos(changeToPos);
+	}
 private:
 	vector<Spell> _AvailableSpells[10];
 };

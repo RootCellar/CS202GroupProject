@@ -10,7 +10,7 @@ class Player;
 class Mob;
 class Projectile;
 class Example;
-
+//class DecalMap;
 //The world, bosses everyone else around but also serves them
 class Level {
 private:
@@ -37,6 +37,8 @@ private:
   OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
 
   HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
+
+  // testing decalmap
 
 public:
 
