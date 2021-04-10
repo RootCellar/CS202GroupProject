@@ -30,6 +30,11 @@ private:
 
   Level *level;
 
+  // Sprite stuff following what I did for projectiles
+  std::shared_ptr <olc::Sprite> _spritePtr = nullptr;
+  std::shared_ptr <olc::Decal> _decalPtr = nullptr;
+  // Now we need getters and setters I made down, we may be able to replace with * but I don't want
+  // to manage resources
 public:
 
   Entity();
@@ -72,6 +77,11 @@ public:
   bool isRedundant() const;
 
   int getId() const;
+
+  // Sprite stuff
+  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
+  olc::Decal * getDecal () const; // use .get() method in unique_ptr
+
 };
 
 bool operator==(const Entity &one, const Entity &two);

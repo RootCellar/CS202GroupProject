@@ -54,6 +54,15 @@ void Entity::addToPos(const olc::vd2d &disp) {
     _pos += disp;
 }
 
+void Entity::setDecal(std::string fileName) {
+    _spritePtr = std::make_shared<olc::Sprite> (fileName);
+    _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
+}
+
+olc::Decal *Entity::getDecal() const {
+    return _decalPtr.get();
+}
+
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }
