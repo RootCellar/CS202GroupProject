@@ -8,18 +8,16 @@ class Projectile : public Entity {
 private:
 
     olc::vd2d _endPosition;
-    olc::vd2d _direction ;
-//    double _distance;
 
     double _speed = .5;//.0009; // 0 for testing
     double _radius = 10;
 
     bool _hasHit = false;
-//    virtual void setlevel (Level * l ) override ;
+//    virtual void setlevel (Level * l ) override ; //idk how to use it
 public:
     Projectile(); ; // Random ??
     Projectile(olc::vd2d sPos, olc::vd2d ePos);
-    ~Projectile()=default;
+    ~Projectile()=default; // only worked after I did this
     virtual void drawSelf(olc::PixelGameEngine * gfx) const override;//, double offsetx, double offsety);
   //update the projectile, move it etc.
   virtual void update() override;
@@ -34,10 +32,10 @@ public:
 };
 std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos);
 
-
-
 std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int numberOfBalls);
 
+// HomingProjectile keeps reference to an entity
+// need a btter way to mitigate failure incase entity is removed from level. Maybe check with nullptr ?
 class HomingProjectile : public Projectile {
 public:
     Entity * notPointerToEntity;// = nullptr;
