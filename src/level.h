@@ -6,6 +6,8 @@
 #include "olcPixelGameEngine.h"
 #include "debug.h"
 #include "main.h"
+#include "team.h"
+
 class Player;
 class Mob;
 class Projectile;
@@ -67,6 +69,14 @@ public:
   void update();
 
   void renderEntities(olc::PixelGameEngine * gfx) const;
+  //Get mobs within range from some point
+  std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
+
+  //Get mobs within range from some point and not on the given team
+  //(So the returned list is only enemies)
+  std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
+
+  double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
 
 };
 

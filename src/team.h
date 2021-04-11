@@ -20,4 +20,8 @@ public:
   bool isAlone() const;
 };
 
+bool operator==(const Team& one, const Team& two);
+
+bool operator!=(const Team& one, const Team& two);
+
 #endif

@@ -1,4 +1,7 @@
+#include <cmath>
+
 #include "level.h"
+#include "team.h"
 #include "chuck.h"
 
 Level::Level(Player * p): player(p) {
@@ -105,6 +108,47 @@ void Level::update() {
     projectiles.erase( getIteratorToProjectile(p) );
   }
 
+}
+
+//Get mobs within range from some point
+std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius) {
+  std::vector<Mob*> toRet;
+
+  for(Mob* m : mobs) {
+
+    Mob j = *m;
+    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+
+    if(dist <= radius) {
+      toRet.push_back(m);
+    }
+
+  }
+
+  return toRet;
+}
+
+//Get mobs within range from some point and not on the given team
+//(So the returned list is only enemies)
+std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius, Team t) {
+  std::vector<Mob*> toRet;
+
+  for(Mob* m : mobs) {
+
+    Mob j = *m;
+    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+
+    if(dist <= radius && j.getTeam() != t) {
+      toRet.push_back(m);
+    }
+
+  }
+
+  return toRet;
+}
+
+double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
+  return sqrt( pow(xP2 - xP1, 2) + pow(yP2 - yP1, 2) );
 }
 
 void Level::renderEntities(olc::PixelGameEngine *gfx) const {

@@ -75,8 +75,8 @@ public:
   void addToXPos(double addedX);
   void addToYPos(double addedY);
 
-  auto getXPos() const;
-  auto getYPos() const;
+  double getXPos() const;
+  double getYPos() const;
 
   olc::vd2d getPos() const;
   void setPos(const olc::vd2d &newPos) ;

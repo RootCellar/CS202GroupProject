@@ -42,6 +42,10 @@ void Mob::die() {
 
 }
 
+void Mob::attack(Mob& target) {
+
+}
+
 void Mob::damage(double damage) {
 	if(damage < 0) damage *= -1;
 	_health -= damage;
@@ -62,3 +66,5 @@ void Mob::checkHp() {
 void Mob::update() {
 
 }
+
+Team& Mob::getTeam() { return _team; }

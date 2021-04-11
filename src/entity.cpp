@@ -34,8 +34,8 @@ void Entity::setYPos(double newY) { _pos.y = newY; };
 void Entity::addToXPos(double addedX) { _pos.x += addedX; }
 void Entity::addToYPos(double addedY) { _pos.y += addedY; }
 
-auto Entity::getXPos() const { return _pos.x; }
-auto Entity::getYPos() const { return _pos.y; }
+double Entity::getXPos() const { return _pos.x; }
+double Entity::getYPos() const { return _pos.y; }
 
 void Entity::setRedundant() { _bRedundant = true; }
 bool Entity::isRedundant() const { return _bRedundant; }
