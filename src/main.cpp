@@ -12,8 +12,8 @@
 
 #define OLC_PGE_APPLICATION
 #include "main.h"
-//#include "text.h"
-#include "text.cpp"
+#include "text.h"
+//#include "text.cpp"
 
 class Example : public olc::PixelGameEngine
 {
@@ -143,78 +143,6 @@ double convertToMagnitude(const olc::vd2d components)
 {
 	return sqrt(components.x * components.x + components.y * components.y);
 }
-
-//void addText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration, std::vector<Text>& vDec, olc::Decal* decalptr)
-//{
-//	char temp;
-//
-//	float charW = 9.0f + 3.0f; // Character width
-//	float charH = 12.0f + 3.0f; // and hieght
-//	float offsetRow = 0.0f;
-//	float offsetCol = 0.0f;
-//
-//	float charSpacing = 1.0f;
-//	float charString = 0.0f; // Add to 
-//
-//	for (int i = 0; i < str.size(); i++)
-//	{
-//		offsetRow = 0.0f;
-//		offsetCol = 0.0f;
-//
-//		temp = str[i];
-//
-//		switch (temp)
-//		{
-//		case ' ': // Space
-//			charString += (charW - 2.0f) * scale.x;
-//			continue;
-//		case '!': // Period
-//			offsetCol = 11.0f;
-//			offsetRow = 2.0f;
-//			break;
-//		case '.': // Period
-//			offsetCol = 12.0f;
-//			offsetRow = 2.0f;
-//			break;
-//		case '?': // Period
-//			offsetCol = 10.0f;
-//			offsetRow = 2.0f;
-//			break;
-//		case '0': // "0" - "9" = numbers
-//		case '1':
-//		case '2':
-//		case '3':
-//		case '4':
-//		case '5':
-//		case '6':
-//		case '7':
-//		case '8':
-//		case '9':
-//			offsetRow = 0.0f + float(int(temp) - 48);
-//			offsetCol = 2.0f;
-//			break;
-//		default:
-//			break;
-//		}
-//
-//		if (temp >= 'A' && temp <= 'z')
-//		{
-//			if (temp > 'Z')
-//				temp -= 32;
-//			temp -= 'A';
-//			offsetCol = float(temp % 13);
-//			offsetRow = float(temp / 13);
-//		}
-//
-//		Text t(purpose, decalptr, { offsetCol * charW, offsetRow * charH }, { charString, 0.0f }, frameDuration);
-//		t._scale = scale;
-//		t._color = color;
-//		vDec.push_back(t);
-//		charString += (charW - 2.0f) * scale.x;
-//	}
-//}
-
-
 
 int main()
 {

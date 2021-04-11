@@ -29,7 +29,7 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
+	virtual void drawSelf(Example& gfx) const override {
 		// Drawing code here...
 	}
 

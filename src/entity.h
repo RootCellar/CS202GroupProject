@@ -18,13 +18,25 @@ private:
   string _name;
 
   olc::vd2d _pos;
+  olc::vd2d _vel = { 0.0, 0.0 };
 
-  // Decal/Sprite
-  olc::Decal* _decal;
-  int _facingDirection;
-  int _graphicState;
-  // How many frames until we change the step
-  int _graphicStepTimer;
+
+  // Decal/Sprite variables
+  olc::Decal* _decal = nullptr;
+  olc::vf2d _spriteDimensions;
+  olc::vi2d _spriteSheetOffset;
+  olc::vi2d _spriteSourceSize = { 16, 16 };
+  olc::vf2d _spriteScaling = { 1.0f, 1.0f };
+
+  bool _singleSprite = false; // If it's single image that we rotate set to true
+  bool _useRotaions; // If we want the sprite to be rotated
+  double _spriteRot = 0.0; // Rotation of sprite
+  double _spriteRotOffset = 0.0;
+  int _graphicState; // The specfic state of motion in the given faced direction
+  int _graphicStateCount = 2; // Number of states per direction faced
+  // How many frames until we change the state
+  int _graphicStateTimer = 25;
+  int _frameCount = 0;
 
   static int idPoint;
   int id;
@@ -44,7 +56,17 @@ public:
 
   // This may not need to be a virtual function or pure virtual function
   // Offsets x and y are for position on screen as opposed to on the map.
-  virtual void drawSelf(olc::PixelGameEngine& gfx) const = 0;
+  virtual void drawSelf(Example& gfx) const = 0;
+  // Graphics related functions
+  //virtual void drawSelf(olc::PixelGameEngine& gfx, olc::vd2d offset);
+
+  //void setDecal(string sFilename);
+  //void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
+  //void setSpriteRot(double angle); // Sets the angle the sprite is rotated to
+
+  //bool getIfSpriteRot();  // Maybe not need
+
+  //void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
 
   // Position manipulation
   void setXPos(double newX);

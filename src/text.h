@@ -70,19 +70,4 @@ private:
     map<string, olc::Decal*> _mapDecals;
 };
 
-DecalMap::DecalMap() {}
-DecalMap::~DecalMap() {}
-
-void DecalMap::loadDecals()
-{
-    auto load = [&](string sName, string sFilename)
-    {
-        olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
-        _mapDecals[sName] = d;
-    };
-
-    // Text
-    load("Text", "Alphabet.png");
-}
-
 #endif // !TEXT_HPP

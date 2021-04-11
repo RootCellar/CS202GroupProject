@@ -122,3 +122,19 @@ void drawText(olc::PixelGameEngine* gfx, const std::vector<Text>& vDec)
     for (auto& i : vDec)
         gfx->DrawPartialDecal(i._pos, i._decal, i._sourceOffset, i._sourceSize, i._scale, i._color);
 }
+
+
+DecalMap::DecalMap() {}
+DecalMap::~DecalMap() {}
+
+void DecalMap::loadDecals()
+{
+    auto load = [&](string sName, string sFilename)
+    {
+        olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
+        _mapDecals[sName] = d;
+    };
+
+    // Text
+    load("Text", "Alphabet.png");
+}
