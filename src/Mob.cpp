@@ -7,11 +7,11 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
-Mob::Mob() {
+Mob::Mob(): _team(true) {
 	_mobPop++;
 }
 
-Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _team(true) {
 	_mobPop++;
 }
 

@@ -2,6 +2,7 @@
 #define MOB_H
 
 #include "entity.h"
+#include "team.h"
 
 class Mob : public Entity {
 
@@ -41,6 +42,8 @@ public:
 private:
 	double _health;
 	double _maxHealth;
+
+	Team _team;
 
 	//Keeps track of the number of current constructed mobs in existence.
 	//if you want a counter to keep mob counts within a range in the level,
