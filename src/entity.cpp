@@ -1,9 +1,17 @@
 #include "entity.h"
 
-Entity::Entity() {
+int Entity::idPoint = 0;
+
+//Default construct an entity to be far outside the level bounds
+Entity::Entity(): _pos(-10000, -10000) {
   id = idPoint++;
 
   debug("Entity constructed");
+}
+
+Entity::Entity(double x, double y): _pos(x, y) {
+  id = idPoint++;
+
 }
 
 void Entity::setLevel(Level* l) {
@@ -61,17 +69,13 @@ void Entity::spriteStateManager(bool isAlive)
 
 
 // Position manipulation
-template<typename T>
-void Entity::setXPos(T newX) { xPos = newX; }
-template<typename T>
-void Entity::setYPos(T newY) { yPos = newY; };
-template<typename T>
-void Entity::addToXPos(T addedX) { xPos += addedX; }
-template<typename T>
-void Entity::addToYPos(T addedY) { yPos += addedY; }
+void Entity::setXPos(double newX) { _pos.x = newX; }
+void Entity::setYPos(double newY) { _pos.y = newY; };
+void Entity::addToXPos(double addedX) { _pos.x += addedX; }
+void Entity::addToYPos(double addedY) { _pos.y += addedY; }
 
-auto Entity::getXPos() const { return xPos; }
-auto Entity::getYPos() const { return yPos; }
+auto Entity::getXPos() const { return _pos.x; }
+auto Entity::getYPos() const { return _pos.y; }
 
 
 void Entity::setRedundant() { _bRedundant = true; }

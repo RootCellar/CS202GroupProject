@@ -7,64 +7,50 @@ class Mob : public Entity {
 
 public:
 	using Entity::Entity;
-	//Mod shouldn't have a default constructor; nothing should ever be just a Mob
-/*
-	Mob() {
-		_mobPop++;
-	}
-*/
-	Mob(int health, int x, int y);
 
-	int getHealth() const;
+	Mob();
 
-	void setHealth(int x);
+	virtual ~Mob();
+
+	Mob(double maxHealth, double x, double y);
+
+	double getHealth() const;
+
+	void setHealth(double x);
 
 	static int getCount();
 
-	void takeDamage(int damage);
+	void damage(double damage);
+
+	void heal(double amt);
+
+	void checkHp();
 
 	// update function needs to have the same parameters as the update function it inherits/overrides
-	void update(/*int xPosMod, int yPosMod*/) override;
+	void update() override;
 
-	// Any sort of health regeneration that needs to be called
-	void healthRegen();
+	void drawSelf(Example& gfx) const override {
+		// Drawing code here...
+	}
 
-	// Any sort of mana regeneration that needs to be called
-	void manaRegen();
+	virtual void die();
 
-	void movement();
-
-	bool inRange(const Mob& target);
-
-	void drawSelf(Example& gfx) override;
-
-	~Mob();
+	//each type of mob will have a different attack type & it is up to them to implement this
+	virtual void attack(Mob& target)= 0;
 
 private:
-	// Personal State
-	bool _isAlive = true;
+	double _health;
+	double _maxHealth;
 
-	// Health
-	int _health;
-	int _maxHealth;
-	double _hpPerFrame;
-
-	// Mana
-	int _mana;
-	int _maxMana;
-	double _mpPerFrame;
-
-	// Offense
-	bool _hasTarget;
-	int _dmgDealt;
-	double _critModifier;
-	int _critChance;
-	double _range;
-	double _distFromTarget;
-
+	//Keeps track of the number of current constructed mobs in existence.
+	//if you want a counter to keep mob counts within a range in the level,
+	//it needs to be done differently.
 	static int _mobPop;
-
-	//Functions
-	void die();
 };
 #endif
+
+/*
+ * make a pure virtual function attack()
+ * pass update() & drawSelf() onto the derived classes
+ * create derived classes: anActualTank, gunThrower, spellCaster, tank, summoner, summonedMob
+ */

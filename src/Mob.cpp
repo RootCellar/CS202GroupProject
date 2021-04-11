@@ -7,17 +7,23 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
-Mob::Mob(int health, int x, int y): _health(health) {
-	setXPos(x);
-	setYPos(y);
+Mob::Mob() {
 	_mobPop++;
 }
 
-int Mob::getHealth() const {
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
+	_mobPop++;
+}
+
+Mob::~Mob() {
+	_mobPop--;
+}
+
+double Mob::getHealth() const {
 		return _health;
 }
 
-void Mob::setHealth(int x) {
+void Mob::setHealth(double x) {
 		_health = x;
 }
 
@@ -26,69 +32,27 @@ int Mob::getCount() {
 }
 
 void Mob::die() {
-	_mobPop--;
-	// run a dying animation possibly
-	//
+	//_mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
+
 }
 
-void Mob::takeDamage(int damage) {
+void Mob::damage(double damage) {
+	if(damage < 0) damage *= -1;
 	_health -= damage;
-	if(_health <= 0)
-		die();
+	checkHp();
 }
 
-// update function needs to have the same parameters as the update function it inherits/overrides
-void Mob::update(/*int xPosMod, int yPosMod*/) override {
-	//addToXPos(xPosMod);
-	//addToYPos(yPosMod);
-	healthRegen();
-	manaRegen(); // Maybe not this one for everything
+void Mob::heal(double amt) {
+	if(amt < 0) amt *= -1;
+	_health += amt;
+	checkHp();
 }
 
-// Any sort of health regeneration that needs to be called
-void Mob::healthRegen()
-{
-	if (_isAlive) // Regenerate health
-	{
-		if (_health < _maxHealth)
-			_health += _hpPerFrame;
-		if (_health > _maxHealth)
-			_health = _maxHealth;
-	}
-	// Additional code for abilities that regen health
+void Mob::checkHp() {
+	if(_health > _maxHealth) _health = _maxHealth;
+	if(_health <= 0) die();
 }
 
-// Any sort of mana regeneration that needs to be called
-void Mob::manaRegen()
-{
-	if (_isAlive) // Regenerate mana
-	{
-		if (_mana < _maxMana)
-			_mana += _mpPerFrame;
-		if (_mana > _maxMana)
-			_mana = _maxMana;
-	}
-	// Additional code for abilities that regen mana
-}
+void Mob::update() {
 
-void Mob::movement() // Has levelRef and members to determine speed and direction or if to stop
-{
-	if (_vel.x > 0)
-		_spriteRot = atanf(_vel.y / _vel.x);
-	else
-		_spriteRot = atanf((_vel.y / _vel.x) + PI);
-}
-
-bool Mob::inRange(const Mob& target) // Has levelRef and members to determine location
-{
-	
-}
-
-
-void Mob::drawSelf(Example& gfx) const override {
-	// Drawing code here...
-}
-
-Mob::~Mob() {
-	_mobPop--;
 }

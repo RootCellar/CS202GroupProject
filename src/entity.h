@@ -2,44 +2,29 @@
 #define ENTITY_H
 
 #define PI 3.14159265
-//#include "level.h"
-//#include"olcPixelGameEngine.h"
-#include"main.h"
 #include <string>
 using std::string;
 
-//class Level;
-//class Example;
+#include "olcPixelGameEngine.h"
+
+class Level;
+class Example;
 
 class Entity {
-protected:
-    // Specifically for the graphics
-    enum { SOUTH = 0, WEST = 1, NORTH = 2, EAST = 3 } _facingDirection;
+
 private:
 
   bool _bRedundant = false;
   string _name;
 
   olc::vd2d _pos;
-  olc::vd2d _vel = { 0.0, 0.0 };
 
-
-  // Decal/Sprite variables
-  olc::Decal* _decal = nullptr;
-  olc::vf2d _spriteDimensions;
-  olc::vi2d _spriteSheetOffset;
-  olc::vi2d _spriteSourceSize = { 16, 16 };
-  olc::vf2d _spriteScaling = {1.0f, 1.0f};
-
-  bool _singleSprite = false; // If it's single image that we rotate set to true
-  bool _useRotaions; // If we want the sprite to be rotated
-  double _spriteRot = 0.0; // Rotation of sprite
-  double _spriteRotOffset = 0.0;
-  int _graphicState; // The specfic state of motion in the given faced direction
-  int _graphicStateCount = 2; // Number of states per direction faced
-  // How many frames until we change the state
-  int _graphicStateTimer = 25;
-  int _frameCount = 0;
+  // Decal/Sprite
+  olc::Decal* _decal;
+  int _facingDirection;
+  int _graphicState;
+  // How many frames until we change the step
+  int _graphicStepTimer;
 
   static int idPoint;
   int id;
@@ -49,34 +34,32 @@ private:
 public:
   Entity();
 
+  Entity(double x, double y);
+
   virtual ~Entity() = default;
 
   virtual void setLevel(Level* l);
 
   virtual void update() = 0;
 
+  // This may not need to be a virtual function or pure virtual function
+  // Offsets x and y are for position on screen as opposed to on the map.
+  virtual void drawSelf(Example& gfx /*, float offsetx, float offsety*/) const = 0;
+  /*
+  // Should contain something like the following IF we are using sprites/decals
 
-  // Graphics related functions
-  virtual void drawSelf(olc::PixelGameEngine& gfx, olc::vd2d offset);
-
-  void setDecal(string sFilename);
-  void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
-  //void setSpriteRot(double angle); // Sets the angle the sprite is rotated to
-
-  //bool getIfSpriteRot();  // Maybe not need
-
-  void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
-
+  olc::Decal* m_pDecal = new olc::Decal(new olc::Sprite(sFilename));
+  gfx->DrawPartialDecal( // Sprite
+        { (_posx - offsetx) * unitSize, (_posy - offsety) * untiSize }, // x and y with unitSize = size of the map's unit increment (unit or tile)
+        m_pDecal, { nSheetOffsetX, nSheetOffsetY }, { 16, 16 }, // The sprite as a decal, offsets into the sprite sheet, and the pixel size of the sprite
+        { scaleX, scaleY }); // scaling in x and y
+  */
 
   // Position manipulation
-  template<typename T>
-  void setXPos(T newX);
-  template<typename T>
-  void setYPos(T newY);
-  template<typename T>
-  void addToXPos(T addedX);
-  template<typename T>
-  void addToYPos(T addedY);
+  void setXPos(double newX);
+  void setYPos(double newY);
+  void addToXPos(double addedX);
+  void addToYPos(double addedY);
 
   auto getXPos() const;
   auto getYPos() const;
@@ -87,8 +70,8 @@ public:
   int getId() const;
 };
 
-int Entity::idPoint = 0;
+bool operator==(const Entity &one, const Entity &two);
 
-//#include "level.h"
+#include "level.h"
 
 #endif
