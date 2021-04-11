@@ -6,43 +6,31 @@
 
 class Projectile : public Entity {
 private:
-public:
-//    olc::vd2d _position ;
+
     olc::vd2d _endPosition;
     olc::vd2d _direction ;
-    //olc::vd2d _displacement; // to make it easier. //
-    double _distance;
-    // Since, comparison of doulbes difficult, will be using the max distance to travel for life
-    // time of projectile
+//    double _distance;
 
     double _speed = .5;//.0009; // 0 for testing
-    double _radius = 5;
-//    std::unique_ptr <olc::Sprite> fireBall = std::make_unique<olc::Sprite> ("fireBall.png");
-//    olc::Sprite* myBalls = fireBall->Duplicate(_position, olc::vi2d{50, 50});
-//    std::unique_ptr <olc::Decal> ballPtr = std::make_unique<olc::Decal> (fireBall.get());
-    olc::Decal * m_pDecal = nullptr;
-//    /*olc::Decal*  */ m_pDecal = new olc::Decal(new olc::Sprite("fireBall.png"));
+    double _radius = 10;
 
-    std::shared_ptr <olc::Sprite> fireBall2 = nullptr;
-    std::shared_ptr <olc::Decal> test2 = nullptr;
-    float kurtAngle = 0;
-
+    bool _hasHit = false;
 //    virtual void setlevel (Level * l ) override ;
 public:
-    Projectile():Entity()
-    {
-
-    } ; // Random ??
+    Projectile(); ; // Random ??
     Projectile(olc::vd2d sPos, olc::vd2d ePos);
-    ~Projectile()
-    {
-//        delete myBalls;
-        delete m_pDecal;
-    }
+    ~Projectile()=default;
     virtual void drawSelf(olc::PixelGameEngine * gfx) const override;//, double offsetx, double offsety);
   //update the projectile, move it etc.
   virtual void update() override;
 
+  void setEndPosition (const olc::vd2d &newEndPosition);
+  olc::vd2d getEndPosition() const;
+  double getRadius () const;
+
+  double getSpeed () const;
+  bool getHasHit() const;
+  void setHasHit() ;
 };
 std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos);
 
@@ -53,10 +41,7 @@ std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int number
 class HomingProjectile : public Projectile {
 public:
     Entity * notPointerToEntity;// = nullptr;
-    HomingProjectile( olc::vd2d sPos, Entity * ent ):
-    Projectile(sPos, ent->getPos()) , notPointerToEntity(ent) {
-//        notPointerToEntity = ent;
-    }
+    HomingProjectile( olc::vd2d sPos, Entity * ent );
 
     virtual void update() override;
 

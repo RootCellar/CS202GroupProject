@@ -3,6 +3,11 @@
 //
 #include "projectile.h"
 
+Projectile::Projectile() :Entity()
+{
+    // Probably don't need it but just keeping here
+}
+
 Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
     setDirection(_endPosition - getPos());
@@ -11,14 +16,46 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
 
 void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
 {
-    gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+    if ( !_hasHit)
+        gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+    else
+        gfx->DrawStringDecal(getPos(), "BOOM", olc::RED);
 
 }
 
 void Projectile::update() {
-    auto displacement = getDirection() * _speed;
-    addToPos(displacement);
+    if (!_hasHit) {
+        auto displacement = getDirection() * _speed;
+        addToPos(displacement);
+    } else {
+        // do nothing
+    }
 }
+
+void Projectile::setEndPosition(const olc::vd2d &newEndPosition) {
+    _endPosition = newEndPosition;
+}
+
+olc::vd2d Projectile::getEndPosition() const {
+    return _endPosition;
+}
+
+double Projectile::getSpeed() const {
+    return _speed;
+}
+
+void Projectile::setHasHit() {
+    _hasHit = true;
+}
+
+bool Projectile::getHasHit() const {
+    return _hasHit;
+}
+
+double Projectile::getRadius() const {
+    return _radius;
+}
+
 
 std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos) // fP only gives directions
 {
@@ -39,30 +76,37 @@ std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOf
     return myBalls;
 }
 
-OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
-Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
-{
-    setDecal("fireBall.png");
+HomingProjectile::HomingProjectile(olc::vd2d sPos, Entity *ent) :
+        Projectile(sPos, ent->getPos()) , notPointerToEntity(ent) {
 }
 
 void HomingProjectile::update() {
     // Get Final position from the object
     // adjust direction to object
     // adjust position
+    if ( !getHasHit()) {
+        auto oldDirection = getDirection();
+        setEndPosition(notPointerToEntity->getPos());
+        auto directionToObject = (getEndPosition() - getPos()).norm();
+        auto newDirection = oldDirection * .96 + directionToObject * .04; // adjust multiplier for responsetimes.
+        // Bigger multiplier for oldDirection, slower response time.
+        setDirection(newDirection);
+        Projectile::update();
+    } else {
+        // do nothing
+    }
+}
 
-    auto oldDirection = getDirection();
-    _endPosition = notPointerToEntity->getPos();
-    auto directionToObject = (_endPosition - getPos()).norm();
-    auto newDirection = oldDirection * .96 + directionToObject * .04 ; // adjust multiplier for responsetimes.
-    // Bigger multiplier for oldDirection, slower response time.
-    setDirection(newDirection);
-    Projectile::update();
+OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
+        Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
+{
+    setDecal("fireBall.png");
 }
 
 void OrbitalProjectile::update() {
 
     auto direction = getDirection();
-    direction += direction.perp() * _speed / radiusOrbital;
+    direction += direction.perp() * getSpeed() / radiusOrbital;
     setDirection(direction);
 
     Projectile::update();
