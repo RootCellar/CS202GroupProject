@@ -30,6 +30,7 @@ public:
 //    Player player;
 //
 //    Level level;
+    std::unique_ptr<Projectile> testProjectile, test2, test3, followPlayer;
 public:
 
 	Example()//: level(&player)
@@ -53,8 +54,18 @@ public:
 		player = std::make_unique<Player> ("test");
 
 		level = std::make_unique<Level>(player.get());
+		testProjectile = std::make_unique<Projectile> ( olc::vd2d {75, 75}, olc::vd2d{ 80, 80});
 
+		test2  =  std::make_unique<OrbitalProjectile>( olc::vd2d {50, 50}, olc::vd2d{ 126, 110});
 
+		test3 =  std::make_unique<HomingProjectile>( olc::vd2d{100, 100}, test2.get());
+
+		followPlayer = std::make_unique<HomingProjectile>( olc::vd2d{200, 200}, player.get());
+
+		level->add(testProjectile.get());
+		level->add(test2.get());
+		level->add(test3.get());
+		level->add(followPlayer.get());
 		return true;
 	}
 
