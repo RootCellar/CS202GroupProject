@@ -31,7 +31,8 @@ public:
 
 	void drawSelf(olc::PixelGameEngine* gfx) const override {
 		// Drawing code here...
-		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
+//		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
+		gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
 	}
 
 	void die();

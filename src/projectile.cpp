@@ -11,7 +11,7 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
 
 void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
 {
-    gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), {0, 0}, getDecalScale(10));
+    gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
 
 }
 
@@ -50,17 +50,6 @@ void HomingProjectile::update() {
     // adjust direction to object
     // adjust position
 
-//    auto changeToPos = getDirection() * _speed * .97;
-//
-//    addToPos(changeToPos);
-//
-//    _endPosition = notPointerToEntity->getPos();
-//    setDirection(_endPosition - getPos());
-//
-//    changeToPos =  getDirection() * _speed * .01;
-//
-//    addToPos(changeToPos);
-//
     auto oldDirection = getDirection();
     _endPosition = notPointerToEntity->getPos();
     auto directionToObject = (_endPosition - getPos()).norm();

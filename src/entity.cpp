@@ -82,6 +82,11 @@ float Entity::getSpriteRot() const {
     return _spriteOffset + atan(_direction.y / _direction.x) + ( _direction.x < 0 ? PI : 0);
 }
 
+//Returns the center of the decal using the size. ie, half the width, and half the height of the sprite size
+olc::vd2d Entity::getDecalCenter() const{
+    return olc::vd2d(_spritePtr->width/2.0, _spritePtr->height/2.0);
+}
+
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }

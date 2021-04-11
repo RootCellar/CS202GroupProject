@@ -86,6 +86,7 @@ public:
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;
   void setSpriteOffset () ;
+  olc::vd2d getDecalCenter () const;
 };
 
 bool operator==(const Entity &one, const Entity &two);
