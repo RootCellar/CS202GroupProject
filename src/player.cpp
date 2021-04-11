@@ -12,7 +12,8 @@ Player::Player(int health, int x, int y): Mob(health,x,y) {
 
 }
 Player::Player(const string &text) : Mob( 100, 100, 100) {
-    // test
+    // test player if you use text as parameter
+    // notice that constructor also sets decal
     setDecal("Orb_Wizard_and_Staff.png");
 }
 const std::vector<Spell> *Player::getSpellList() {
@@ -45,7 +46,8 @@ void Player::die(){
 	//respawn in the starting location for the level
 	_lives--;
 }
-
+// Uses the PGE's way to take input implemented at main.cpp
+// gets the string and moves player position corresponding direction
 void Player::move(const string &direction) {
     olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
     if ( direction == "up")
@@ -56,7 +58,7 @@ void Player::move(const string &direction) {
         changeToPos = east;
     else if (direction == "left")
         changeToPos = east * (-1);
-
+    // note may use a multiplier to influence the amount of change
     addToPos(changeToPos);
 }
 
