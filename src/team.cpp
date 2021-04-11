@@ -24,4 +24,8 @@ bool operator==(const Team& one, const Team& two) {
   return one.getId() == two.getId();
 }
 
+bool operator!=(const Team& one, const Team& two) {
+  return !(one == two);
+}
+
 int Team::idPoint = 0;

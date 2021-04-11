@@ -67,8 +67,8 @@ public:
   void addToXPos(double addedX);
   void addToYPos(double addedY);
 
-  auto getXPos() const;
-  auto getYPos() const;
+  double getXPos() const;
+  double getYPos() const;
 
   void setRedundant();
   bool isRedundant() const;

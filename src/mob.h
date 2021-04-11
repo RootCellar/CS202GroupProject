@@ -37,7 +37,9 @@ public:
 	virtual void die();
 
 	//each type of mob will have a different attack type & it is up to them to implement this
-	virtual void attack(Mob& target)= 0;
+	virtual void attack(Mob& target);
+
+	Team& getTeam();
 
 private:
 	double _health;
