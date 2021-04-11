@@ -12,6 +12,7 @@ add_executable(CS202GroupProject
         src/Mob.cpp
         src/projectile.cpp
         src/debug.cpp
+        #src/DecalMap.h
         )
 
 if (UNIX AND NOT APPLE)
