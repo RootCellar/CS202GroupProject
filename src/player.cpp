@@ -5,10 +5,9 @@
 #include "spell.h"
 #include <vector>
 
-int Player::_lives = 3;
-Player::Player(): Mob(400, 50, 50) {}// Values passed to Mob() are temporary for now.
+Player::Player(): Mob(400, 50, 50), _lives(3) {}// Values passed to Mob() are temporary for now.
 
-Player::Player(int health, int x, int y): Mob(health,x,y) {
+Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 
 }
 
@@ -27,11 +26,18 @@ void Player::increaseMaxHealth(double mod) {
 	setHealth((mod *= getHealth()));
 }
 
-void Player::attack(Mob &target) {
-	//code to have the player select a spell or melee
+void Player::update() {
+	regen();
 
-	//target takes damage if the attack hits
-	//target.damage(/*amount of damage dealt*/);
+
+}
+
+//This is called on every player update,
+//note that updates happen 50 times per second.
+//Choose/balance this number wisely!
+//(Making it relative to maxHP makes it more like a percentage)
+void Player::regen() {
+	heal(getMaxHp() * 0.001);
 }
 
 void Player::die(){

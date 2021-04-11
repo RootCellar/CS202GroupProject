@@ -19,6 +19,8 @@ public:
 
 	void setHealth(double x);
 
+	double getMaxHp() const;
+
 	static int getCount();
 
 	void damage(double damage);

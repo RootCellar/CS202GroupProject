@@ -23,6 +23,10 @@ double Mob::getHealth() const {
 		return _health;
 }
 
+double Mob::getMaxHp() const {
+	return _maxHealth;
+}
+
 void Mob::setHealth(double x) {
 		_health = x;
 }
