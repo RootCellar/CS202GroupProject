@@ -10,15 +10,9 @@ class Player : public Mob {
 public:
 	using Mob::Mob;
 	Player();
-	Player(int health, int x, int y): Mob(health,x,y) {
-
-	}
-    Player ( const std::string &text) : Mob( 100, 100, 100) {
-	    // test
-	    setDecal("Orb_Wizard_and_Staff.png");
-	}
+	Player(int health, int x, int y);
+    Player ( const std::string &text);
     Player(int health, const olc::vd2d &sPos);
-	const vector<Spell> * getSpellList();
 	const std::vector<Spell> * getSpellList();
 
 	void setSpellSlot(int slotNum /*Spell type*/);
@@ -28,19 +22,7 @@ public:
 	void increaseMaxHealth(int mod);
 	void attack(Mob& target) override;
 
-	void move (const std::string &direction) {
-	    olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
-	    if ( direction == "up")
-	        changeToPos = north;
-	    else if (direction == "down")
-	        changeToPos = north * (-1);
-	    else if (direction == "right")
-	        changeToPos = east;
-	    else if (direction == "left")
-	            changeToPos = east * (-1);
-
-        addToPos(changeToPos);
-	}
+	void move (const std::string &direction);
 	virtual void die() override;
 private:
 	std::vector<Spell> _AvailableSpells[10];

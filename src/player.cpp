@@ -11,7 +11,10 @@ Player::Player(): Mob(400, 50, 50) {}// Values passed to Mob() are temporary for
 Player::Player(int health, int x, int y): Mob(health,x,y) {
 
 }
-
+Player::Player(const string &text) : Mob( 100, 100, 100) {
+    // test
+    setDecal("Orb_Wizard_and_Staff.png");
+}
 const std::vector<Spell> *Player::getSpellList() {
 	return _AvailableSpells;
 }
@@ -42,3 +45,20 @@ void Player::die(){
 	//respawn in the starting location for the level
 	_lives--;
 }
+
+void Player::move(const string &direction) {
+    olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
+    if ( direction == "up")
+        changeToPos = north;
+    else if (direction == "down")
+        changeToPos = north * (-1);
+    else if (direction == "right")
+        changeToPos = east;
+    else if (direction == "left")
+        changeToPos = east * (-1);
+
+    addToPos(changeToPos);
+}
+
+
+
