@@ -40,7 +40,7 @@ void Mob::die() {
 
 }
 
-void Mob::attack(Mob& target) {
+void Mob::attack(Mob* target) {
 
 }
 

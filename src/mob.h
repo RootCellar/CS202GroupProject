@@ -39,7 +39,7 @@ public:
 	virtual void die();
 
 	//each type of mob will have a different attack type & it is up to them to implement this
-	virtual void attack(Mob& target);
+	virtual void attack(Mob* target);
 
 	Team& getTeam();
 
