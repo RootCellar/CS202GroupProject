@@ -31,29 +31,41 @@ gfx->DrawPartialDecal( // Sprite
 // Position manipulation
 void Entity::setXPos(double newX) { _pos.x = newX; }
 void Entity::setYPos(double newY) { _pos.y = newY; };
+
 void Entity::addToXPos(double addedX) { _pos.x += addedX; }
 void Entity::addToYPos(double addedY) { _pos.y += addedY; }
 
 double Entity::getXPos() const { return _pos.x; }
 double Entity::getYPos() const { return _pos.y; }
 
+////////////////////////
+// Position getters setters and add using vd2d
+void Entity::setPos(const olc::vd2d &newPos) {
+    _pos = newPos;
+}
+void Entity::addToPos(const olc::vd2d &disp) {
+    _pos += disp;
+}
+olc::vd2d Entity::getPos() const {
+    return _pos;
+}
+olc::vd2d Entity::getDirection() const {
+    return _direction;
+}
+
+void Entity::setDirection(const olc::vd2d &destination) {
+    _direction = destination.norm();// .norm changes it into a unit vector.
+}
+
+/////////////////////
+
 void Entity::setRedundant() { _bRedundant = true; }
 bool Entity::isRedundant() const { return _bRedundant; }
 
 int Entity::getId() const { return id; }
 
-olc::vd2d Entity::getPos() const {
-    return _pos;
-}
-
-void Entity::setPos(const olc::vd2d &newPos) {
-    _pos = newPos;
-}
-
-void Entity::addToPos(const olc::vd2d &disp) {
-    _pos += disp;
-}
-
+//////////////////
+// For sprite and decals
 void Entity::setDecal(std::string fileName) {
     if (fileName == "test2.png")
         _spriteOffset = PI/2;
@@ -70,14 +82,6 @@ olc::vf2d Entity::getDecalScale(float pixels) const{
     return {scale, scale};
 }
 
-olc::vd2d Entity::getDirection() const {
-    return _direction;
-}
-
-void Entity::setDirection(const olc::vd2d &destination) {
-    _direction = destination.norm();// .norm changes it into a unit vector.
-}
-
 float Entity::getSpriteRot() const {
     return _spriteOffset + atan(_direction.y / _direction.x) + ( _direction.x < 0 ? PI : 0);
 }
@@ -86,7 +90,7 @@ float Entity::getSpriteRot() const {
 olc::vd2d Entity::getDecalCenter() const{
     return olc::vd2d(_spritePtr->width/2.0, _spritePtr->height/2.0);
 }
-
+//////////////
 bool operator==(const Entity &one, const Entity &two) {
   return one.getId() == two.getId();
 }

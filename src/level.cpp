@@ -65,15 +65,16 @@ void Level::update() {
 //    test3.update();
 //    followPlayer.update();
   for(Mob *m : mobs) {
-    (*m).update();
+    m->update();
   }
 
   for(Projectile *p : projectiles) {
       std::vector <Mob * > mir;
       mir = getMobsInRange(p->getPos(), p->getRadius());
+      // If there were no mobs in range, then it hasn't hit. I know long way but still...
       if ( !mir.empty())
           p->setHasHit();
-    (*p).update();
+    p->update();
   }
 
   //Spawn mobs and projectiles from our lists
@@ -132,6 +133,7 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
 
   return toRet;
 }
+// getMobsInRange adapted to use olc::vd2d
 std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) {
     std::vector<Mob*> toRet;
 
@@ -167,6 +169,7 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
 
   return toRet;
 }
+//getMobsInRange adapted to use vd2d
 std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, Team t) {
     std::vector<Mob*> toRet;
 
@@ -187,6 +190,8 @@ std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, T
 double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
   return sqrt( pow(xP2 - xP1, 2) + pow(yP2 - yP1, 2) );
 }
+
+//getDistanceBetween adapted to use olc::vd2d .mag()
 double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2) {
     return (point1 - point2).mag();
 }
