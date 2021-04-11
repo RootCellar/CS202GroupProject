@@ -12,6 +12,8 @@
 
 #define OLC_PGE_APPLICATION
 #include "main.h"
+#include "text.h"
+//#include "text.cpp"
 
 class Example : public olc::PixelGameEngine
 {
@@ -24,6 +26,7 @@ public:
 	int y = 0;
 
 	std::unique_ptr<Player> player = nullptr;
+	std::vector<Text> _vText;
 
 	std::unique_ptr<Level> level = nullptr;
 
@@ -44,6 +47,8 @@ public:
 	bool OnUserCreate() override
 	{
 		// Called once at the start, so create things here
+		DecalMap::get().loadDecals();
+
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
@@ -66,6 +71,11 @@ public:
 		level->add(test2.get());
 		level->add(test3.get());
 		level->add(followPlayer.get());
+
+		//addText(string("Hi! This is my trial text."), "TextTrial", { 0.5f, 0.5f }, { 255, 0, 255 }, -1, _vText, DecalMap::get().getDecal("Text"));
+
+		addText("Do I have this working?", "Testing", olc::vf2d{ 1.0f, 0.5f }, olc::Pixel{255, 255, 255}, 300, _vText, DecalMap::get().getDecal("Text"));
+		moveTextPos("Testing", {5,5}, _vText);
 		return true;
 	}
 
@@ -73,7 +83,9 @@ public:
 	{
         level->renderEntities(this);
 
-        fAccumulatedTime += fElapsedTime;
+		drawText(this, _vText);
+
+		fAccumulatedTime += fElapsedTime;
 		if (fAccumulatedTime >= fTargetFrameTime)
 		{
 			fAccumulatedTime -= fTargetFrameTime;
@@ -81,6 +93,9 @@ public:
 		}
 		else
 			return true; // Don't do anything this frame
+
+
+		updateTextLifetimes(_vText);
 
 		// called once per frame
 		/*

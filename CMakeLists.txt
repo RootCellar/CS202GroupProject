@@ -14,6 +14,7 @@ add_executable(CS202GroupProject
         src/projectile.cpp
         src/debug.cpp
         src/team.cpp
+        src/text.cpp
         )
 
 if (UNIX AND NOT APPLE)

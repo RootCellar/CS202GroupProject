@@ -30,7 +30,7 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	void drawSelf(olc::PixelGameEngine* gfx) const override {
+	virtual void drawSelf(olc::PixelGameEngine* gfx) const override {
 		// Drawing code here...
 //		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
 		gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
