@@ -10,9 +10,9 @@ add_executable(CS202GroupProject
         src/entity.cpp
         src/level.cpp
         src/Mob.cpp
+        src/player.cpp
         src/projectile.cpp
         src/debug.cpp
-        #src/DecalMap.h
         )
 
 if (UNIX AND NOT APPLE)

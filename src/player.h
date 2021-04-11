@@ -4,14 +4,12 @@
 #include "mob.h"
 #include "spell.h"
 #include <vector>
-using std::vector;
+//using std::vector; //removed the using statement because it is propper practice not to have using statements in the header files
 
 class Player : public Mob {
 public:
 	using Mob::Mob;
-	Player() {
-
-	}
+	Player();
 	Player(int health, int x, int y): Mob(health,x,y) {
 
 	}
@@ -21,10 +19,14 @@ public:
 	}
     Player(int health, const olc::vd2d &sPos);
 	const vector<Spell> * getSpellList();
+	const std::vector<Spell> * getSpellList();
 
 	void setSpellSlot(int slotNum /*Spell type*/);
 
+	void increaseMaxHealth(double mod);
+
 	void increaseMaxHealth(int mod);
+	void attack(Mob& target) override;
 
 	void move (const std::string &direction) {
 	    olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
@@ -39,8 +41,10 @@ public:
 
         addToPos(changeToPos);
 	}
+	virtual void die() override;
 private:
-	vector<Spell> _AvailableSpells[10];
+	std::vector<Spell> _AvailableSpells[10];
+	static int _lives;
 };
 
 

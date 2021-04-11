@@ -25,6 +25,14 @@ private:
 
   olc::vd2d _pos;
   olc::vd2d _direction;
+
+  // Decal/Sprite
+  olc::Decal* _decal;
+  int _facingDirection;
+  int _graphicState;
+  // How many frames until we change the step
+  int _graphicStepTimer;
+
   static int idPoint;
   int id;
 

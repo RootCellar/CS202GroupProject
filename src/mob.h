@@ -2,6 +2,7 @@
 #define MOB_H
 
 #include "entity.h"
+#include "team.h"
 
 class Mob : public Entity {
 
@@ -10,7 +11,7 @@ public:
 
 	Mob();
 
-	~Mob();
+	virtual ~Mob();
 
 	Mob(double maxHealth, double x, double y);
 
@@ -35,11 +36,16 @@ public:
 		gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
 	}
 
-	void die();
+	virtual void die();
+
+	//each type of mob will have a different attack type & it is up to them to implement this
+	virtual void attack(Mob& target)= 0;
 
 private:
 	double _health;
 	double _maxHealth;
+
+	Team _team;
 
 	//Keeps track of the number of current constructed mobs in existence.
 	//if you want a counter to keep mob counts within a range in the level,
@@ -51,5 +57,5 @@ private:
 /*
  * make a pure virtual function attack()
  * pass update() & drawSelf() onto the derived classes
- * create derived classes: anAcctualTank, gunThrower, spellCaster, tank, summoner, summonedMob
+ * create derived classes: anActualTank, gunThrower, spellCaster, tank, summoner, summonedMob
  */
