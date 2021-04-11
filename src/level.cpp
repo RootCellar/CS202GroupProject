@@ -6,6 +6,7 @@
 
 Level::Level(Player * p): player(p) {
   debug("Constructing the level...");
+  add(p);
 }
 
 void Level::add(Mob *m) {
@@ -59,15 +60,19 @@ std::vector<Projectile*>::iterator Level::getIteratorToProjectile(Projectile *p)
 //Call update for everybody, handle spawns and despawns
 void Level::update() {
     // My balls
-    testProjectile.update();
-    test2.update();
-    test3.update();
-    followPlayer.update();
+//    testProjectile.update();
+//    test2.update();
+//    test3.update();
+//    followPlayer.update();
   for(Mob *m : mobs) {
     (*m).update();
   }
 
   for(Projectile *p : projectiles) {
+      std::vector <Mob * > mir;
+      mir = getMobsInRange(p->getPos(), p->getRadius());
+      if ( !mir.empty())
+          p->setHasHit();
     (*p).update();
   }
 
@@ -127,6 +132,22 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
 
   return toRet;
 }
+std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) {
+    std::vector<Mob*> toRet;
+
+    for(Mob* m : mobs) {
+
+//        Mob j = *m;
+        double dist = getDistanceBetween(point, m->getPos());
+
+        if(dist <= radius) {
+            toRet.push_back(m);
+        }
+
+    }
+
+    return toRet;
+}
 
 //Get mobs within range from some point and not on the given team
 //(So the returned list is only enemies)
@@ -146,20 +167,38 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
 
   return toRet;
 }
+std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, Team t) {
+    std::vector<Mob*> toRet;
+
+    for(Mob* m : mobs) {
+
+//        Mob j = *m; // this may not be good, because this creates another mob.
+        double dist = getDistanceBetween(point , m->getPos());
+
+        if(dist <= radius && m->getTeam() != t) {
+            toRet.push_back(m);
+        }
+
+    }
+
+    return toRet;
+}
 
 double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
   return sqrt( pow(xP2 - xP1, 2) + pow(yP2 - yP1, 2) );
 }
-
+double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2) {
+    return (point1 - point2).mag();
+}
 void Level::renderEntities(olc::PixelGameEngine *gfx) const {
     //Render these balls
-    testProjectile.drawSelf(gfx);
-    test2.drawSelf(gfx);
-    test3.drawSelf(gfx);
+//    testProjectile.drawSelf(gfx);
+//    test2.drawSelf(gfx);
+//    test3.drawSelf(gfx);
     player->drawSelf(gfx);
-    followPlayer.drawSelf(gfx);
+//    followPlayer.drawSelf(gfx);
     // test text
-    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
+//    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
@@ -168,3 +207,4 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
     (*m).drawSelf(gfx);
   }
 }
+

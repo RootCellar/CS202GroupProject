@@ -34,13 +34,13 @@ private:
   std::vector<Projectile*> pendingProjectileRemovals;
 
   //Test projectiles below
-  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
-
-  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
-
-  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
-
-  HomingProjectile followPlayer { olc::vd2d{200, 200}, player};
+//  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+//
+//  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
+//
+//  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
+//
+//  HomingProjectile followPlayer { olc::vd2d{200, 200}, player};
   // testing decalmap
 
 public:
@@ -71,12 +71,15 @@ public:
   void renderEntities(olc::PixelGameEngine * gfx) const;
   //Get mobs within range from some point
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
+    std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);
 
-  //Get mobs within range from some point and not on the given team
+    //Get mobs within range from some point and not on the given team
   //(So the returned list is only enemies)
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
+    std::vector<Mob *> getMobsInRange(const olc::vd2d &point, double radius, Team t);
 
   double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
+    double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
 
 };
 
