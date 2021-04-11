@@ -38,7 +38,7 @@ public:
 
   }
 
-  virtual void drawSelf(Example& gfx) override {
+  virtual void drawSelf(olc::PixelGameEngine& gfx) const override {
       // Drawing code here...
   }
 

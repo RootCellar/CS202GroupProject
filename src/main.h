@@ -5,7 +5,7 @@
 #include "olcPixelGameEngine.h"
 
 //Our Headers
-#include "debug.h"
+//#include "debug.h"
 
 #include "entity.h"
 #include "mob.h"

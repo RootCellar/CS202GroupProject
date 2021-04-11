@@ -44,16 +44,7 @@ public:
 
   // This may not need to be a virtual function or pure virtual function
   // Offsets x and y are for position on screen as opposed to on the map.
-  virtual void drawSelf(Example& gfx /*, float offsetx, float offsety*/) const = 0;
-  /*
-  // Should contain something like the following IF we are using sprites/decals
-
-  olc::Decal* m_pDecal = new olc::Decal(new olc::Sprite(sFilename));
-  gfx->DrawPartialDecal( // Sprite
-        { (_posx - offsetx) * unitSize, (_posy - offsety) * untiSize }, // x and y with unitSize = size of the map's unit increment (unit or tile)
-        m_pDecal, { nSheetOffsetX, nSheetOffsetY }, { 16, 16 }, // The sprite as a decal, offsets into the sprite sheet, and the pixel size of the sprite
-        { scaleX, scaleY }); // scaling in x and y
-  */
+  virtual void drawSelf(olc::PixelGameEngine& gfx) const = 0;
 
   // Position manipulation
   void setXPos(double newX);
