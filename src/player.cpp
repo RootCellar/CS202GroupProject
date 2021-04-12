@@ -41,7 +41,7 @@ void Player::regen() {
 	heal(getMaxHp() * 0.001);
 }
 
-void Player::drawSelf(Example& gfx) {
+void Player::drawSelf(Example& gfx) const {
 	gfx.drawPixel( getXPos(), getYPos(), 255, 0, 0);
 }
 

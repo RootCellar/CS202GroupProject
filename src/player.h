@@ -24,7 +24,7 @@ public:
 
 	void die() override;
 
-	void drawSelf(Example& gfx);
+	void drawSelf(Example& gfx) const override;
 private:
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;
