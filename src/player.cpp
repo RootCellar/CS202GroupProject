@@ -3,12 +3,15 @@
 //
 #include "player.h"
 #include "spell.h"
+#include "main.h"
 #include <vector>
 
-Player::Player(): Mob(400, 50, 50), _lives(3) {}// Values passed to Mob() are temporary for now.
+Player::Player(): Mob(400, 50, 50), _lives(3) {
+	setSpeed(1);
+}
 
 Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
-
+	setSpeed(1);
 }
 
 const std::vector<Spell> *Player::getSpellList() {
@@ -28,8 +31,6 @@ void Player::increaseMaxHealth(double mod) {
 
 void Player::update() {
 	regen();
-
-
 }
 
 //This is called on every player update,
@@ -38,6 +39,10 @@ void Player::update() {
 //(Making it relative to maxHP makes it more like a percentage)
 void Player::regen() {
 	heal(getMaxHp() * 0.001);
+}
+
+void Player::drawSelf(Example& gfx) {
+	gfx.drawPixel( getXPos(), getYPos(), 255, 0, 0);
 }
 
 void Player::die(){

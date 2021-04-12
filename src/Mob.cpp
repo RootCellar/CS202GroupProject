@@ -7,11 +7,11 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
-Mob::Mob(): _team(true) {
+Mob::Mob(): _speed(1), _team(true) {
 	_mobPop++;
 }
 
-Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _team(true) {
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _speed(1), _team(true) {
 	_mobPop++;
 }
 
@@ -66,3 +66,6 @@ void Mob::update() {
 }
 
 Team& Mob::getTeam() { return _team; }
+
+double Mob::getSpeed() const { return _speed; }
+void Mob::setSpeed(double i) { _speed = i; }

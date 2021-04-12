@@ -23,6 +23,8 @@ public:
 	void regen();
 
 	void die() override;
+
+	void drawSelf(Example& gfx);
 private:
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;

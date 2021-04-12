@@ -43,9 +43,14 @@ public:
 
 	Team& getTeam();
 
+	double getSpeed() const;
+	void setSpeed(double);
+
 private:
 	double _health;
 	double _maxHealth;
+
+	double _speed;
 
 	Team _team;
 

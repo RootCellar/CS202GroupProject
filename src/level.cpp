@@ -3,6 +3,7 @@
 #include "level.h"
 #include "team.h"
 #include "chuck.h"
+#include "debug.h"
 
 Level::Level(Player &p): player(p) {
   debug("Constructing the level...");
@@ -10,6 +11,8 @@ Level::Level(Player &p): player(p) {
 
 void Level::add(Mob *m) {
   if(!has(m)) pendingMobSpawns.push_back(m);
+
+  debug("Adding a mob to pending spawns");
 }
 
 void Level::add(Projectile *p) {
@@ -72,7 +75,10 @@ void Level::update() {
   while(pendingMobSpawns.size() > 0) {
     Mob *m = pendingMobSpawns.at(0);
     pendingMobSpawns.erase( pendingMobSpawns.begin() );
-    if(!has(m)) mobs.push_back(m);
+    if(!has(m)) {
+      mobs.push_back(m);
+      debug("Spawning a mob from list");
+    }
   }
 
   while(pendingProjectileSpawns.size() > 0) {
@@ -148,6 +154,7 @@ double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2)
 }
 
 void Level::renderEntities(Example &gfx) const {
+
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
