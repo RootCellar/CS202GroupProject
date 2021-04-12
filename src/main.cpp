@@ -13,7 +13,12 @@
 #define OLC_PGE_APPLICATION
 #include "main.h"
 #include "text.h"
-//#include "text.cpp"
+
+void call()
+{
+	Text::addText("Call test", "CallTest", { 0.6, 0.6 }, { 255, 255, 255 }, 80);
+	Text::setTextPos("CallTest", { 5,5 });
+}
 
 class Example : public olc::PixelGameEngine
 {
@@ -25,7 +30,7 @@ public:
 	int x = 0;
 	int y = 0;
 
-	std::vector<Text> _vText;
+	int counter = 0;
 
 	//Player player;
 
@@ -44,24 +49,20 @@ public:
 	bool OnUserCreate() override
 	{
 		// Called once at the start, so create things here
-		DecalMap::get().loadDecals();
-
+		//DecalMap::get().loadDecals();
+		Text::loadTextDecal();
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
 
-
-		//addText(string("Hi! This is my trial text."), "TextTrial", { 0.5f, 0.5f }, { 255, 0, 255 }, -1, _vText, DecalMap::get().getDecal("Text"));
-
-		addText("Do I have this working?", "Testing", olc::vf2d{ 1.0f, 0.5f }, olc::Pixel{255, 255, 255}, 300, _vText, DecalMap::get().getDecal("Text"));
-		moveTextPos("Testing", {5,5}, _vText);
+		Text::addText("Testing testing 1 2 3...", "Testing", { 0.5f, 0.5f }, {51, 255, 255}, -1);
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 
-		drawText(this, _vText);
+		Text::drawText(this); // Still flickers when called after the fAccumulatedTime
 
 		fAccumulatedTime += fElapsedTime;
 		if (fAccumulatedTime >= fTargetFrameTime)
@@ -72,8 +73,17 @@ public:
 		else
 			return true; // Don't do anything this frame
 
-		
-		updateTextLifetimes(_vText);
+		counter++;
+		if (counter == 100)
+		{
+			Text::concatenateText("Many Additions", "Testing", false, { 55.0f, 80.0f });
+			call();
+		}
+
+		Text::setTextPos("Testing", { 150 - x,150 - y });
+		//Text::addToTextPos("Testing", { 1 , 1 });
+		Text::updateTextLifetimes();
+
 
 		// called once per frame
 		/*
