@@ -23,7 +23,7 @@ public:
 
 	void regen();
 	void increaseMaxHealth(int mod);
-	virtual void attack(Mob& target) override;
+	void attack(Mob& target) ;
 
 	void move (const std::string &direction);
 	virtual void die() override;
