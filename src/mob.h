@@ -30,7 +30,7 @@ public:
 
 	void checkHp();
 
-	
+	bool isAlive() const {return _isAlive;}
 	void healthRegen(); //Any sort of health regeneration that needs to be called
 	void manaRegen();// Any sort of mana regeneration that needs to be called
 
@@ -130,6 +130,7 @@ public:
     ChaserMob ();
     ChaserMob (double x, double y);
     virtual void update() override;
+    virtual void drawSelf(olc::PixelGameEngine * gfx) const override;
 };
 #endif
 

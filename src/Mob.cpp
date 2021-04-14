@@ -16,6 +16,7 @@ Mob::Mob(double maxHealth, double x, double y) : Entity(x, y), _health(maxHealth
                                                  _team(true) {
     setSpeed(1);
     setDecal("test.png");
+    setDirection({0,0});
     _mobPop++;
 }
 
@@ -234,6 +235,20 @@ void ChaserMob::update() {
 
 ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
     setDecal("Spider_Scaled_up.png");
+    setSpriteSourceSize( olc::vi2d {64, 64});
+    setSpriteRotOffset(PI/2);
 //    setDecal("test2.png");
+}
+
+void ChaserMob::drawSelf(olc::PixelGameEngine *gfx) const{
+//    if (isAlive())
+//        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
+                        //     getSpriteSourceSize() , getDecalScale(30));
+
+//    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize() ,
+//                          getDecalScale(30));
+    gfx->DrawPartialRotatedDecal(getPos(), getDecal(),getSpriteRot() , getSpriteSourceSize()/2, olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize(),
+                                 getDecalScale(30));
+
 }
 

@@ -19,7 +19,7 @@ private:
   olc::vd2d _pos;
   olc::vd2d _vel = { 0.0, 0.0 };
 
-    olc::vd2d _direction = {.6, .8};
+    olc::vd2d _direction;// = {.6, .8};
     double _speed;
   // Decal/Sprite variables
   olc::Decal* _decal = nullptr;
@@ -123,6 +123,8 @@ public:
   float getSpriteRot () const;
   void setSpriteOffset () ;
   olc::vd2d getDecalCenter () const;
+  void setSpriteSourceSize (const olc::vi2d&);
+  olc::vi2d getSpriteSourceSize() const;
 };
 
 bool operator==(const Entity &one, const Entity &two);

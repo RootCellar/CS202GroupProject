@@ -144,7 +144,7 @@ int Entity::getId() const { return id; }
 
 void Entity::setDecal(std::string fileName) {
     if (fileName == "test2.png")
-        _spriteOffset = PI/2;
+        _spriteRotOffset = PI/2;
     _spritePtr = std::make_shared<olc::Sprite> (fileName);
     _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 }
@@ -159,12 +159,20 @@ olc::vf2d Entity::getDecalScale(float pixels) const {
 }
 
 float Entity::getSpriteRot() const {
-    return _spriteOffset + atan(_direction.y / _direction.x) + (_direction.x < 0 ? PI : 0);
+    return _spriteRotOffset + atan(_direction.y / _direction.x) + (_direction.x < 0 ? PI : 0);
 }
 
 //Returns the center of the decal using the size. ie, half the width, and half the height of the sprite size
 olc::vd2d Entity::getDecalCenter() const {
     return olc::vd2d(_spritePtr->width / 2.0, _spritePtr->height / 2.0);
+}
+
+void Entity::setSpriteSourceSize(const olc::vi2d &s) {
+    _spriteSourceSize = s;
+}
+
+olc::vi2d Entity::getSpriteSourceSize() const{
+    return _spriteSourceSize;
 }
 
 //////////////
