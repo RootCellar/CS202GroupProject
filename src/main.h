@@ -14,6 +14,9 @@
 #include "player.h"
 #include "level.h"
 
+//Mobs
+#include "Soldier.h"
+
 //Class Example
 class Example : public olc::PixelGameEngine
 {
