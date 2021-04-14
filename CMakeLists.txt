@@ -10,10 +10,13 @@ add_executable(CS202GroupProject
         src/entity.cpp
         src/level.cpp
         src/Mob.cpp
-        #src/player.cpp
+        src/player.cpp
         #src/projectile.cpp
         src/debug.cpp
-        src/player.cpp)
+        src/player.cpp
+        src/random.cpp
+        src/team.cpp
+        )
 
 if (UNIX AND NOT APPLE)
     #do something
