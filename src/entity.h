@@ -3,9 +3,11 @@
 
 #define PI 3.14159265
 #include <string>
-using std::string;
 
 #include "olcPixelGameEngine.h"
+
+double convertToAngle(const olc::vd2d components);
+double convertToMagnitude(const olc::vd2d components);
 
 class Level;
 class Example;
@@ -15,7 +17,7 @@ class Entity {
 private:
 
   bool _bRedundant = false;
-  string _name;
+  std::string _name;
 
   olc::vd2d _pos;
   olc::vd2d _vel = { 0.0, 0.0 };
@@ -28,15 +30,26 @@ private:
   olc::vi2d _spriteSourceSize = { 16, 16 };
   olc::vf2d _spriteScaling = { 1.0f, 1.0f };
 
+  olc::vf2d _spriteDeadOffset = { 0.0f, 0.0f };
+  olc::vf2d _spriteAttackOffset = { 0.0f, 0.0f };
+
+  bool _useRotations = true; // Sprites will rotate based on velocity direction
   bool _singleSprite = false; // If it's single image that we rotate set to true
-  bool _useRotaions; // If we want the sprite to be rotated
+  bool _attackAnimation = false; // Display upon launching an attack
+
   double _spriteRot = 0.0; // Rotation of sprite
   double _spriteRotOffset = 0.0;
+
   int _graphicState; // The specfic state of motion in the given faced direction
   int _graphicStateCount = 2; // Number of states per direction faced
+
+  bool _graphicFlicker = false;
+  int _flickerStart = 0;
+  int _flickerEnd = 0;
   // How many frames until we change the state
   int _graphicStateTimer = 25;
   int _frameCount = 0;
+
 
   static int idPoint;
   int id;
@@ -54,19 +67,23 @@ public:
 
   virtual void update() = 0;
 
-  // This may not need to be a virtual function or pure virtual function
-  // Offsets x and y are for position on screen as opposed to on the map.
-  virtual void drawSelf(Example& gfx) const = 0;
   // Graphics related functions
-  //virtual void drawSelf(olc::PixelGameEngine& gfx, olc::vd2d offset);
+  virtual void drawSelf(Example& gfx) const = 0;
 
-  //void setDecal(string sFilename);
-  //void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
-  //void setSpriteRot(double angle); // Sets the angle the sprite is rotated to
+  void setDecal(std::string sFilename);
 
-  //bool getIfSpriteRot();  // Maybe not need
+  void setDeadSpriteSource(olc::vf2d source);
+  void setAttackSpriteSource(olc::vf2d source);
 
-  //void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
+  void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
+  auto getGraphicState();
+
+  void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
+  void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states
+
+  void setSpriteRotOffset(double angle); // Sets the angle the sprite is rotated to
+  auto getSpriteRotOffset();
+  void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
 
   // Position manipulation
   void setXPos(double newX);
