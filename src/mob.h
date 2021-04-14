@@ -56,8 +56,8 @@ public:
 
 	Team& getTeam();
 
-	double getSpeed() const;
-	void setSpeed(double);
+//	double getSpeed() const;
+//	void setSpeed(double);
 
 private:
 	// Personal State
@@ -116,7 +116,7 @@ private:
 
 
 
-	double _speed;
+//	double _speed;
 
 	Team _team;
 
@@ -126,6 +126,12 @@ private:
 	static int _mobPop;
 };
 
+class FollowingMob: public Mob {
+private:
+
+public:
+    virtual void update() override;
+};
 #endif
 
 /*

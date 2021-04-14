@@ -4,7 +4,6 @@
 #define PI 3.14159265
 #include <string>
 using std::string;
-
 #include "olcPixelGameEngine.h"
 
 class Level;
@@ -21,7 +20,7 @@ private:
   olc::vd2d _vel = { 0.0, 0.0 };
 
     olc::vd2d _direction;
-
+    double _speed;
   // Decal/Sprite variables
   olc::Decal* _decal = nullptr;
   olc::vf2d _spriteDimensions;
@@ -77,7 +76,7 @@ public:
 
 //  virtual void drawSelf(Example& gfx) const = 0;
 
-  void setDecal(std::string sFilename);
+  //void setDecal(std::string sFilename);
 
   void setDeadSpriteSource(olc::vf2d source);
   void setAttackSpriteSource(olc::vf2d source);
@@ -111,12 +110,14 @@ public:
   olc::vd2d getDirection () const;
   void setDirection(const olc::vd2d &newDirection);
 
+    void setSpeed(double s);
+    double getSpeed () const;
 
 
   int getId() const;
 
   // Sprite stuff
-//  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
+  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
   olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;

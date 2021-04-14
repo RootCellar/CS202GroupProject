@@ -1,5 +1,6 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
+
 #include <memory>
 //#include "olcPixelGameEngine.h"
 #include "entity.h"
@@ -9,47 +10,54 @@ private:
 
     olc::vd2d _endPosition;
 
-    double _speed = .5;//.0009; // 0 for testing
+    //double _speed = .5;//.0009; // 0 for testing
     double _radius = 10;
 
     bool _hasHit = false;
 //    virtual void setlevel (Level * l ) override ; //idk how to use it
 public:
-    Projectile(); ; // Random ??
+    Projectile();; // Random ??
     Projectile(olc::vd2d sPos, olc::vd2d ePos);
-    ~Projectile()=default; // only worked after I did this
-    virtual void drawSelf(olc::PixelGameEngine * gfx) const override;//, double offsetx, double offsety);
-  //update the projectile, move it etc.
-  virtual void update() override;
 
-  void setEndPosition (const olc::vd2d &newEndPosition);
-  olc::vd2d getEndPosition() const;
-  double getRadius () const;
+    ~Projectile() = default; // only worked after I did this
+    virtual void drawSelf(olc::PixelGameEngine *gfx) const override;//, double offsetx, double offsety);
+    //update the projectile, move it etc.
+    virtual void update() override;
 
-  double getSpeed () const;
-  bool getHasHit() const;
-  void setHasHit() ;
+    void setEndPosition(const olc::vd2d &newEndPosition);
+
+    olc::vd2d getEndPosition() const;
+
+    double getRadius() const;
+
+    bool getHasHit() const;
+
+    void setHasHit();
 };
-std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos);
 
-std::vector <std::unique_ptr<Projectile>> getMyBalls (olc::vd2d sPos, int numberOfBalls);
+std::unique_ptr<Projectile> projectileFactory(olc::vd2d sPos, olc::vd2d fPos);
+
+std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOfBalls);
 
 // HomingProjectile keeps reference to an entity
 // need a btter way to mitigate failure incase entity is removed from level. Maybe check with nullptr ?
 class HomingProjectile : public Projectile {
 public:
-    Entity * notPointerToEntity;// = nullptr;
-    HomingProjectile( olc::vd2d sPos, Entity * ent );
+    Entity *notPointerToEntity;// = nullptr;
+    HomingProjectile(olc::vd2d sPos, Entity *ent);
 
     virtual void update() override;
 
 };
 
-class OrbitalProjectile: public Projectile {
+class OrbitalProjectile : public Projectile {
 public:
-    OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre );
-    double radiusOrbital ;
+    OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre);
+
+    double radiusOrbital;
     float fAngle = 0;
+
     virtual void update() override;
 };
+
 #endif

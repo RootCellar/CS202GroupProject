@@ -11,6 +11,7 @@ Projectile::Projectile() :Entity()
 Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
 {
     setDirection(_endPosition - getPos());
+    setSpeed(0.5);
     setDecal("test2.png");
 }
 
@@ -25,7 +26,7 @@ void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, 
 
 void Projectile::update() {
     if (!_hasHit) {
-        auto displacement = getDirection() * _speed;
+        auto displacement = getDirection() * getSpeed();
         addToPos(displacement);
     } else {
         // do nothing
@@ -40,9 +41,9 @@ olc::vd2d Projectile::getEndPosition() const {
     return _endPosition;
 }
 
-double Projectile::getSpeed() const {
-    return _speed;
-}
+//double Projectile::getSpeed() const {
+//    return _speed;
+//}
 
 void Projectile::setHasHit() {
     _hasHit = true;
