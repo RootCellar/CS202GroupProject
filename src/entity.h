@@ -75,7 +75,7 @@ public:
   // Offsets x and y are for position on screen as opposed to on the map.
   virtual void drawSelf(olc::PixelGameEngine * gfx /*, float offsetx, float offsety*/) const = 0;
 
-  virtual void drawSelf(Example& gfx) const = 0;
+//  virtual void drawSelf(Example& gfx) const = 0;
 
   void setDecal(std::string sFilename);
 
@@ -116,7 +116,7 @@ public:
   int getId() const;
 
   // Sprite stuff
-  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
+//  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
   olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;

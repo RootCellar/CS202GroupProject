@@ -119,13 +119,14 @@ int Entity::getId() const { return id; }
 
 //////////////////
 // For sprite and decals
+/*
 void Entity::setDecal(std::string fileName) {
     if (fileName == "test2.png")
         _spriteOffset = PI/2;
     _spritePtr = std::make_shared<olc::Sprite> (fileName);
     _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 }
-
+*/
 olc::Decal *Entity::getDecal() const {
     return _decalPtr.get();
 }
