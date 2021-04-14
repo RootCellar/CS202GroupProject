@@ -40,6 +40,10 @@ void Mob::die() {
 
 }
 
+void Mob::revive() {
+	setRedundant(false);
+}
+
 void Mob::attack(Mob* target) {
 
 }

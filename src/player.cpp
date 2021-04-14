@@ -48,6 +48,8 @@ void Player::drawSelf(Example& gfx) const {
 void Player::die(){
 	if(_lives < 0){
 		//end the game & display a game over screen
+		setRedundant();
+		return;
 	}
 	//display dying animation or sprite
 	//respawn in the starting location for the level

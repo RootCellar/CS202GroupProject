@@ -37,6 +37,7 @@ public:
 	}
 
 	virtual void die();
+	virtual void revive();
 
 	//each type of mob will have a different attack type & it is up to them to implement this
 	virtual void attack(Mob* target);
@@ -59,6 +60,7 @@ private:
 	//it needs to be done differently.
 	static int _mobPop;
 };
+
 #endif
 
 /*

@@ -38,6 +38,7 @@ double Entity::getXPos() const { return _pos.x; }
 double Entity::getYPos() const { return _pos.y; }
 
 void Entity::setRedundant() { _bRedundant = true; }
+void Entity::setRedundant(bool b) { _bRedundant = b; }
 bool Entity::isRedundant() const { return _bRedundant; }
 
 int Entity::getId() const { return id; }

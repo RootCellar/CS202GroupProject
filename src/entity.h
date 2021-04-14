@@ -70,6 +70,7 @@ public:
   double getXPos() const;
   double getYPos() const;
 
+  void setRedundant(bool b);
   void setRedundant();
   bool isRedundant() const;
 
