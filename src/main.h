@@ -15,7 +15,7 @@
 #include "level.h"
 
 //Mobs
-#include "Soldier.h"
+//#include "Soldier.h" //Currently does not compile
 
 //Class Example
 class Example : public olc::PixelGameEngine
