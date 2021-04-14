@@ -40,6 +40,7 @@ public:
 //
 //    Level level;
     std::unique_ptr<Projectile> testProjectile, test2, test3, followPlayer;
+    std::unique_ptr<Mob> spiderSplat;
 public:
 
 	Example()//: level(player)
@@ -76,11 +77,13 @@ public:
 
 		followPlayer = std::make_unique<HomingProjectile>( olc::vd2d{200, 200}, player.get());
 
+		spiderSplat = std::make_unique<ChaserMob> (100, 200);
+
 		level->add(testProjectile.get());
 		level->add(test2.get());
 		level->add(test3.get());
 		level->add(followPlayer.get());
-
+        level->add(spiderSplat.get());
 		//addText(string("Hi! This is my trial text."), "TextTrial", { 0.5f, 0.5f }, { 255, 0, 255 }, -1, _vText, DecalMap::get().getDecal("Text"));
 
 		//addText("Do I have this working?", "Testing", olc::vf2d{ 1.0f, 0.5f }, olc::Pixel{255, 255, 255}, 300, _vText, DecalMap::get().getDecal("Text"));

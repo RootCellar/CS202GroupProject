@@ -11,12 +11,13 @@ Level::Level(Player * p): player(p) {
 
 void Level::add(Mob *m) {
   if(!has(m)) pendingMobSpawns.push_back(m);
-
+  m->setLevel(this);
   debug("Adding a mob to pending spawns");
 }
 
 void Level::add(Projectile *p) {
   if(!has(p)) pendingProjectileSpawns.push_back(p);
+  p->setLevel(this);
 }
 
 void Level::remove(Mob *m) {
@@ -43,9 +44,10 @@ bool Level::has(Projectile *p) const {
 
 //Loop through the list of mobs and return an iterator to the one you're looking for
 std::vector<Mob*>::iterator Level::getIteratorToMob(Mob *m) {
-  for(size_t i=0; i<mobs.size(); i++) {
-    Mob *j = mobs.at(i);
-    if( (*m) == (*j) ) return mobs.begin() + i;
+  // for(size_t i=0; i<mobs.size(); i++) {
+  for ( auto it = mobs.begin() ; it != mobs.end() ; ++it) {
+    //Mob *j = mobs.at(i);
+    if( (**it) == (*m) ) return it;
   }
   return mobs.end();
 }
@@ -216,4 +218,9 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
   for(Mob *m : mobs) {
     (*m).drawSelf(gfx);
   }
+}
+
+olc::vd2d Level::getPlayerPosition() const{
+    return player->getPos();
+
 }

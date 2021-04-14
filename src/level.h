@@ -81,6 +81,7 @@ public:
   double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
     double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
 
+    olc::vd2d getPlayerPosition () const;
 };
 
 #endif

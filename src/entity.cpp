@@ -4,7 +4,7 @@
 int Entity::idPoint = 0;
 
 //Default construct an entity to be far outside the level bounds
-Entity::Entity() : _pos(-10000, -10000) {
+Entity::Entity() : _pos(400, 400) {
     id = idPoint++;
 
     debug("Entity constructed");
@@ -18,6 +18,11 @@ Entity::Entity(double x, double y) : _pos(x, y) {
 void Entity::setLevel(Level *l) {
     level = l;
 }
+
+Level *Entity::getLevel() const{
+    return level;
+}
+
 
 //void Entity::setDecal(string sFilename) { _decal = new olc::Decal(new olc::Sprite(sFilename)); }
 
@@ -161,7 +166,6 @@ float Entity::getSpriteRot() const {
 olc::vd2d Entity::getDecalCenter() const {
     return olc::vd2d(_spritePtr->width / 2.0, _spritePtr->height / 2.0);
 }
-
 
 //////////////
 bool operator==(const Entity &one, const Entity &two) {

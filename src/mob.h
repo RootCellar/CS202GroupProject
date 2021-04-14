@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "team.h"
+//#include "level.h"
 
 class Mob : public Entity {
 
@@ -11,7 +12,7 @@ public:
 
 	Mob();
 
-	virtual ~Mob();
+	~Mob() = default ;
 
 	Mob(double maxHealth, double x, double y);
 
@@ -37,11 +38,7 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	virtual void drawSelf(olc::PixelGameEngine* gfx) const override {
-		// Drawing code here...
-//		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
-		gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
-	}
+	virtual void drawSelf(olc::PixelGameEngine* gfx) const override;
 
 	virtual void die();
 	virtual void revive();
@@ -126,10 +123,12 @@ private:
 	static int _mobPop;
 };
 
-class FollowingMob: public Mob {
+class ChaserMob: public Mob {
 private:
 
 public:
+    ChaserMob ();
+    ChaserMob (double x, double y);
     virtual void update() override;
 };
 #endif

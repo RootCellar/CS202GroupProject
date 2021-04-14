@@ -2,7 +2,7 @@
 // Created by aleks on 04/06/21.
 //
 #include "mob.h"
-
+#include "level.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -15,12 +15,13 @@ Mob::Mob() : Entity(), _team(true) {
 Mob::Mob(double maxHealth, double x, double y) : Entity(x, y), _health(maxHealth), _maxHealth(maxHealth),
                                                  _team(true) {
     setSpeed(1);
+    setDecal("test.png");
     _mobPop++;
 }
 
-Mob::~Mob() {
-    _mobPop--;
-}
+//Mob::~Mob() {
+//    _mobPop--;
+//}
 
 double Mob::getHealth() const {
     return _health;
@@ -39,7 +40,7 @@ int Mob::getCount() {
 }
 
 void Mob::die() {
-    //_mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
+    _mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
 
 }
 
@@ -93,7 +94,7 @@ void Mob::manaRegen() {
 
 
 void Mob::update() {
-
+    addToPos(getDirection() * getSpeed());
 }
 
 // Increase Hp by hpPlus
@@ -210,10 +211,29 @@ void Mob::setAttackRange(double attackRange) {
 
 Team &Mob::getTeam() { return _team; }
 
+void Mob::drawSelf(olc::PixelGameEngine *gfx) const {
+    // Drawing code here...
+//		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
+    gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
+}
+
 //double Mob::getSpeed() const { return _speed; }
 
 //void Mob::setSpeed(double i) { _speed = i; }
 
-void FollowingMob::update() {
+ChaserMob::ChaserMob():Mob() {
+    setDecal("Spider_Scaled_up.png");
+}
+
+void ChaserMob::update() {
+    auto oldDirection = getDirection();
+    Level * x = getLevel();
+    setDirection(x->getPlayerPosition() - getPos());
     Mob::update();
 }
+
+ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
+    setDecal("Spider_Scaled_up.png");
+//    setDecal("test2.png");
+}
+

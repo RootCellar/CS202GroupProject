@@ -19,7 +19,7 @@ private:
   olc::vd2d _pos;
   olc::vd2d _vel = { 0.0, 0.0 };
 
-    olc::vd2d _direction;
+    olc::vd2d _direction = {.6, .8};
     double _speed;
   // Decal/Sprite variables
   olc::Decal* _decal = nullptr;
@@ -67,7 +67,7 @@ public:
   virtual ~Entity() = default;
 
   virtual void setLevel(Level* l);
-
+  Level * getLevel() const;
   virtual void update() = 0;
 
   // This may not need to be a virtual function or pure virtual function
