@@ -75,6 +75,9 @@ void Level::update() {
   for(Projectile *p : projectiles) {
       std::vector <Mob * > mir;
       mir = getMobsInRange(p->getPos(), p->getRadius());
+      for ( auto x : mir) {
+          x->die();
+      }
       // If there were no mobs in range, then it hasn't hit. I know long way but still...
       if ( !mir.empty())
           p->setHasHit();

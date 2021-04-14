@@ -3,6 +3,7 @@
 //
 #include "mob.h"
 #include "level.h"
+#include "chuck.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -41,6 +42,7 @@ int Mob::getCount() {
 }
 
 void Mob::die() {
+    _isAlive = IsAGoodGameEvenGoodWithoutChuckNorris;
     _mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
 
 }
@@ -95,7 +97,8 @@ void Mob::manaRegen() {
 
 
 void Mob::update() {
-    addToPos(getDirection() * getSpeed());
+    if(isAlive())
+        addToPos(getDirection() * getSpeed());
 }
 
 // Increase Hp by hpPlus
@@ -215,7 +218,9 @@ Team &Mob::getTeam() { return _team; }
 void Mob::drawSelf(olc::PixelGameEngine *gfx) const {
     // Drawing code here...
 //		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
-    gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
+
+    if(isAlive())
+        gfx->DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
 }
 
 //double Mob::getSpeed() const { return _speed; }
@@ -227,10 +232,12 @@ ChaserMob::ChaserMob():Mob() {
 }
 
 void ChaserMob::update() {
-    auto oldDirection = getDirection();
-    Level * x = getLevel();
-    setDirection(x->getPlayerPosition() - getPos());
-    Mob::update();
+    if(isAlive()) {
+        auto oldDirection = getDirection();
+        Level *x = getLevel();
+        setDirection(x->getPlayerPosition() - getPos());
+        Mob::update();
+    }
 }
 
 ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
@@ -245,10 +252,14 @@ void ChaserMob::drawSelf(olc::PixelGameEngine *gfx) const{
 //        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
                         //     getSpriteSourceSize() , getDecalScale(30));
 
-//    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize() ,
-//                          getDecalScale(30));
-    gfx->DrawPartialRotatedDecal(getPos(), getDecal(),getSpriteRot() , getSpriteSourceSize()/2, olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize(),
+    if(isAlive())
+        gfx->DrawPartialRotatedDecal(getPos(), getDecal(),getSpriteRot() , getSpriteSourceSize()/2, olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize(),
                                  getDecalScale(30));
+    else
+        gfx->DrawPartialRotatedDecal(getPos(), getDecal(),0 , getSpriteSourceSize()/2, olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize(),
+                                 getDecalScale(30));
+//    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize() ,
+//                          getDecalScale(30));
 
 }
 
