@@ -86,6 +86,7 @@ void Entity::setDirection(const olc::vd2d &destination) {
 
 
 void Entity::setRedundant() { _bRedundant = true; }
+void Entity::setRedundant(bool b) { _bRedundant = b; }
 bool Entity::isRedundant() const { return _bRedundant; }
 
 int Entity::getId() const { return id; }

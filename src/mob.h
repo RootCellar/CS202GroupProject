@@ -19,6 +19,8 @@ public:
 
 	void setHealth(double x);
 
+	double getMaxHp() const;
+
 	static int getCount();
 
 	void damage(double damage);
@@ -37,15 +39,21 @@ public:
 	}
 
 	virtual void die();
+	virtual void revive();
 
 	//each type of mob will have a different attack type & it is up to them to implement this
-	virtual void attack(Mob& target);
+	virtual void attack(Mob* target);
 
 	Team& getTeam();
+
+	double getSpeed() const;
+	void setSpeed(double);
 
 private:
 	double _health;
 	double _maxHealth;
+
+	double _speed;
 
 	Team _team;
 
@@ -54,6 +62,7 @@ private:
 	//it needs to be done differently.
 	static int _mobPop;
 };
+
 #endif
 
 /*

@@ -46,8 +46,8 @@ public:
 	{
 		sAppName = "Example";
 
-		debug("Constructing the game...");
-	}
+	debug("Constructing the game...");
+}
 
 
 	bool OnUserCreate() override
@@ -55,6 +55,8 @@ public:
 		// Called once at the start, so create things here
 		//DecalMap::get().loadDecals();
 		Text::loadTextDecal();
+
+	// Called once at the start, so create things here
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;

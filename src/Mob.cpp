@@ -6,20 +6,14 @@
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
-//Mob::Mob(double health, double x, double y): Entity(x, y), _health(health) {
-//    _mobPop++;
-//}
-Mob::Mob(): _team(true) {
+
+Mob::Mob(): _speed(1), _team(true) {
 	_mobPop++;
 }
 
-Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _team(true) {
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _speed(1), _team(true) {
 	_mobPop++;
 }
-
-//Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
-//	_mobPop++;
-//}
 
 Mob::~Mob() {
 	_mobPop--;
@@ -27,6 +21,10 @@ Mob::~Mob() {
 
 double Mob::getHealth() const {
 		return _health;
+}
+
+double Mob::getMaxHp() const {
+	return _maxHealth;
 }
 
 void Mob::setHealth(double x) {
@@ -42,7 +40,11 @@ void Mob::die() {
 
 }
 
-void Mob::attack(Mob& target) {
+void Mob::revive() {
+	setRedundant(false);
+}
+
+void Mob::attack(Mob* target) {
 
 }
 
@@ -68,3 +70,6 @@ void Mob::update() {
 }
 
 Team& Mob::getTeam() { return _team; }
+
+double Mob::getSpeed() const { return _speed; }
+void Mob::setSpeed(double i) { _speed = i; }

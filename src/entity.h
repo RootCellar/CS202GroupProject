@@ -45,7 +45,6 @@ private:
   // Now we need getters and setters I made down, we may be able to replace with * but I don't want
   // to manage resources
 public:
-
   Entity();
 
   Entity(double x, double y);
@@ -78,13 +77,16 @@ public:
   double getXPos() const;
   double getYPos() const;
 
+  void setRedundant(bool b);
+  bool isRedundant() const;
+
   olc::vd2d getPos() const;
   void setPos(const olc::vd2d &newPos) ;
   void addToPos(const olc::vd2d &disp) ;
   olc::vd2d getDirection () const;
   void setDirection(const olc::vd2d &newDirection);
-  void setRedundant();
-  bool isRedundant() const;
+
+
 
   int getId() const;
 

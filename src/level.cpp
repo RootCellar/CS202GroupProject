@@ -11,6 +11,8 @@ Level::Level(Player * p): player(p) {
 
 void Level::add(Mob *m) {
   if(!has(m)) pendingMobSpawns.push_back(m);
+
+  debug("Adding a mob to pending spawns");
 }
 
 void Level::add(Projectile *p) {
@@ -82,7 +84,10 @@ void Level::update() {
   while(pendingMobSpawns.size() > 0) {
     Mob *m = pendingMobSpawns.at(0);
     pendingMobSpawns.erase( pendingMobSpawns.begin() );
-    if(!has(m)) mobs.push_back(m);
+    if(!has(m)) {
+      mobs.push_back(m);
+      debug("Spawning a mob from list");
+    }
   }
 
   while(pendingProjectileSpawns.size() > 0) {
@@ -212,4 +217,3 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
     (*m).drawSelf(gfx);
   }
 }
-

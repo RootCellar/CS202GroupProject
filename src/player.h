@@ -19,16 +19,18 @@ public:
 
 	void increaseMaxHealth(double mod);
 
+	void update() override;
+
+	void regen();
 	void increaseMaxHealth(int mod);
-	void attack(Mob& target) override;
+	virtual void attack(Mob& target) override;
 
 	void move (const std::string &direction);
 	virtual void die() override;
 private:
 	std::vector<Spell> _AvailableSpells[10];
-	static int _lives;
+	int _lives;
 };
-
 
 #endif
 /*
