@@ -5,18 +5,121 @@ This is the cpp file for the text classes and functions.
 
 #include "text.h"
 
-//olc::Decal* Text::_decal = new olc::Decal(new olc::Sprite("Alphabet.png"));
+olc::Decal* Text::_decal = nullptr;
+std::map<std::string, textData> Text::_mText = {}; // Holds the text information
+olc::vf2d Text::_sourceSize = { 9.0f, 12.0f }; // Size of character on the sprite sheet
 
-//void Text::loadTextDecal(std::string sFilename)
-//{
-//    _decal = new olc::Decal(new olc::Sprite(sFilename));
-//}
+void Text::loadTextDecal(std::string sFilename)
+{
+    _decal = new olc::Decal(new olc::Sprite(sFilename));
+}
 
 Text::Text() {}
-Text::Text(const std::string purpose, olc::Decal* decal, const olc::vf2d sourceOffset, const olc::vf2d position, const int Lifetime)
-    : _purpose{ purpose }, _decal{ decal }, _sourceOffset{ sourceOffset }, _pos{ position }, _Lifetime{ Lifetime } {}
+Text::Text(const olc::vf2d sourceOffset, const olc::vf2d position)
+    : _sourceOffset{ sourceOffset }, _posOffSet{ position }{}
 
-void addText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration, std::vector<Text>& vDec, olc::Decal* decalptr)
+void Text::addText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+{
+    if (_mText.count(purpose))
+    {
+        std::cout << "Tried to use the already used text key: " << purpose << std::endl;
+        return;
+    }
+    _mText[purpose]._color = color;
+    _mText[purpose]._Lifetime = frameDuration;
+    _mText[purpose]._scale = scale;
+
+    textArranger(str, purpose, scale, _mText);
+}
+
+// Adds text to an already present piece of text data
+void Text::concatenateText(std::string str, const std::string& purpose, const bool addToEnd, olc::vf2d offSet)
+{
+    if (!_mText.count(purpose))
+    {
+        std::cout << "Tried to concatenate text with an invalid text key: " << purpose << std::endl;
+        return;
+    }
+    else
+    {
+        if (addToEnd)
+            offSet = _mText[purpose]._vText.back()._posOffSet + olc::vf2d{ _sourceSize.x, 0.0f };
+
+        textArranger(str, purpose, _mText[purpose]._scale, _mText, offSet);
+    }
+}
+
+
+// Edits a text already added
+void Text::editText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+{
+    // Need input on how to approach
+}
+
+
+// Updates the lifetimes of all text
+void Text::updateTextLifetimes()
+{
+    std::vector<std::string> deletionQue; // Store keys of the data to be deleted
+
+    for (auto& [key, data] : _mText)
+    {
+        if (data._Lifetime == -1)
+            continue;
+        else
+            data._Lifetime--;
+
+        if (data._Lifetime == 0)
+            deletionQue.push_back(key);
+    }
+
+    // Remove key data pair if lifetime reaches zero
+    for (auto& i : deletionQue)
+        removeText(i);
+}
+
+// Sets the text to the specified position
+void Text::setTextPos(const std::string& purpose, olc::vi2d newPos)
+{
+    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
+        _mText[purpose]._pos = newPos;
+    else
+        std::cout << "Tried to set position of invalid text key: " << purpose << std::endl;
+}
+
+// Moves the text by a specified offset from the position
+void Text::addToTextPos(const std::string& purpose, olc::vi2d Offset)
+{
+    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
+        _mText[purpose]._pos += Offset;
+    else
+        std::cout << "Tried to change position of invalid text key: " << purpose << std::endl;
+
+}
+
+// Removes the specified text
+void Text::removeText(const std::string& purpose)
+{
+    // Remove key data pair
+
+    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
+        _mText.erase(purpose);
+    else
+        std::cout << "Tried to erase invalid text key: " << purpose << std::endl;
+}
+
+// Draws all the text stored in the _mText map
+void Text::drawText(olc::PixelGameEngine* gfx)
+{
+    for (const auto& [key, data] : _mText)
+    {
+        for (auto& letter : data._vText)
+            gfx->DrawPartialDecal(data._pos + letter._posOffSet, _decal, letter._sourceOffset, letter._sourceSize, data._scale, data._color);
+    }
+}
+
+// Does the assembling of the characters
+void textArranger(std::string str, const std::string& purpose, const olc::vf2d scale, std::map<std::string, textData>& mText, olc::vf2d linePos)
 {
     char temp;
 
@@ -25,8 +128,9 @@ void addText(std::string str, const std::string& purpose, const olc::vf2d scale,
     float offsetRow = 0.0f;
     float offsetCol = 0.0f;
 
-    float charSpacing = 1.0f;
     float charString = 0.0f; // Add to 
+
+    charString = linePos.x;
 
     for (int i = 0; i < str.size(); i++)
     {
@@ -40,7 +144,7 @@ void addText(std::string str, const std::string& purpose, const olc::vf2d scale,
         case ' ': // Space
             charString += (charW - 2.0f) * scale.x;
             continue;
-        case '!': // Period
+        case '!': // Exclamation mark
             offsetCol = 11.0f;
             offsetRow = 2.0f;
             break;
@@ -48,7 +152,7 @@ void addText(std::string str, const std::string& purpose, const olc::vf2d scale,
             offsetCol = 12.0f;
             offsetRow = 2.0f;
             break;
-        case '?': // Period
+        case '?': // Question mark
             offsetCol = 10.0f;
             offsetRow = 2.0f;
             break;
@@ -62,8 +166,8 @@ void addText(std::string str, const std::string& purpose, const olc::vf2d scale,
         case '7':
         case '8':
         case '9':
-            offsetRow = 0.0f + float(int(temp) - 48);
-            offsetCol = 2.0f;
+            offsetCol = 0.0f + float(int(temp) - 48);
+            offsetRow = 2.0f;
             break;
         default:
             break;
@@ -78,50 +182,13 @@ void addText(std::string str, const std::string& purpose, const olc::vf2d scale,
             offsetRow = float(temp / 13);
         }
 
-        Text t(purpose, decalptr, { offsetCol * charW, offsetRow * charH }, { charString, 0.0f }, frameDuration);
-        t._scale = scale;
-        t._color = color;
-        vDec.push_back(t);
+        Text t({ offsetCol * charW, offsetRow * charH }, { charString, linePos.y });
+        mText[purpose]._vText.push_back(t); // Add the new letter to the given key's (purpose's) vector
         charString += (charW - 2.0f) * scale.x;
     }
 }
 
-void updateTextLifetimes(std::vector<Text>& vDec)
-{
-    for (auto& i : vDec)
-    {
-        if (i._Lifetime == -1)
-            continue;
-        else
-            i._Lifetime--;
-    }
 
-    vDec.erase(remove_if(vDec.begin(), vDec.end(),
-        [](const Text a) {return a._Lifetime == 0; }), vDec.end());
-}
-
-void moveTextPos(const std::string& purpose, olc::vi2d Offset, std::vector<Text>& vDec)
-{
-    bool ret = false;
-    for (auto& i : vDec)
-    {
-        if (i._purpose == purpose)
-        {
-            i._pos += Offset;
-            ret = true;
-        }
-    }
-    if (ret)
-        return;
-    else
-        cout << purpose << " move FAILURE!" << endl;
-}
-
-void drawText(olc::PixelGameEngine* gfx, const std::vector<Text>& vDec)
-{
-    for (auto& i : vDec)
-        gfx->DrawPartialDecal(i._pos, i._decal, i._sourceOffset, i._sourceSize, i._scale, i._color);
-}
 
 
 DecalMap::DecalMap() {}
@@ -129,7 +196,7 @@ DecalMap::~DecalMap() {}
 
 void DecalMap::loadDecals()
 {
-    auto load = [&](string sName, string sFilename)
+    auto load = [&](std::string sName, std::string sFilename)
     {
         olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
         _mapDecals[sName] = d;

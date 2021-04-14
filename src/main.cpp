@@ -13,7 +13,12 @@
 #define OLC_PGE_APPLICATION
 #include "main.h"
 #include "text.h"
-//#include "text.cpp"
+
+void call()
+{
+	Text::addText("Call test", "CallTest", { 0.6, 0.6 }, { 255, 255, 255 }, 80);
+	Text::setTextPos("CallTest", { 5,5 });
+}
 
 class Example : public olc::PixelGameEngine
 {
@@ -27,6 +32,7 @@ public:
 
 	std::unique_ptr<Player> player = nullptr;
 	std::vector<Text> _vText;
+	int counter = 0;
 
 	std::unique_ptr<Level> level = nullptr;
 
@@ -36,7 +42,7 @@ public:
     std::unique_ptr<Projectile> testProjectile, test2, test3, followPlayer;
 public:
 
-	Example()//: level(&player)
+	Example()//: level(player)
 	{
 		sAppName = "Example";
 
@@ -47,12 +53,13 @@ public:
 	bool OnUserCreate() override
 	{
 		// Called once at the start, so create things here
-		DecalMap::get().loadDecals();
-
+		//DecalMap::get().loadDecals();
+		Text::loadTextDecal();
 
 		x = ScreenWidth() / 2;
 		y = ScreenHeight() / 2;
 
+		Text::addText("Testing testing 1 2 3...", "Testing", { 0.5f, 0.5f }, {51, 255, 255}, -1);
 		//////////////////////
 		// According to the olc wiki, says whatever we need to create here !!!
 		// So initializeing the pointers here
@@ -74,8 +81,8 @@ public:
 
 		//addText(string("Hi! This is my trial text."), "TextTrial", { 0.5f, 0.5f }, { 255, 0, 255 }, -1, _vText, DecalMap::get().getDecal("Text"));
 
-		addText("Do I have this working?", "Testing", olc::vf2d{ 1.0f, 0.5f }, olc::Pixel{255, 255, 255}, 300, _vText, DecalMap::get().getDecal("Text"));
-		moveTextPos("Testing", {5,5}, _vText);
+		//addText("Do I have this working?", "Testing", olc::vf2d{ 1.0f, 0.5f }, olc::Pixel{255, 255, 255}, 300, _vText, DecalMap::get().getDecal("Text"));
+		//moveTextPos("Testing", {5,5}, _vText);
 		return true;
 	}
 
@@ -83,7 +90,7 @@ public:
 	{
         level->renderEntities(this);
 
-		drawText(this, _vText);
+		Text::drawText(this); // Still flickers when called after the fAccumulatedTime
 
 		fAccumulatedTime += fElapsedTime;
 		if (fAccumulatedTime >= fTargetFrameTime)
@@ -94,8 +101,16 @@ public:
 		else
 			return true; // Don't do anything this frame
 
+		counter++;
+		if (counter == 100)
+		{
+			Text::concatenateText("Many Additions", "Testing", false, { 55.0f, 80.0f });
+			call();
+		}
 
-		updateTextLifetimes(_vText);
+		Text::setTextPos("Testing", { 150 - x,150 - y });
+		//Text::addToTextPos("Testing", { 1 , 1 });
+		Text::updateTextLifetimes();
 
 		// called once per frame
 		/*
@@ -116,7 +131,7 @@ public:
 		drawPixel(x, y, 255, 0, 0 );
 		drawPixel( 75, 75, 0, 255, 0 );
 
-//		level->renderEntities(this);
+		//level.renderEntities(*this);
 
 		//if( x > ScreenWidth() ) x=0;
 
