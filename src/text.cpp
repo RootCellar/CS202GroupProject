@@ -18,9 +18,9 @@ Text::Text() {}
 Text::Text(const olc::vf2d sourceOffset, const olc::vf2d position)
     : _sourceOffset{ sourceOffset }, _posOffSet{ position }{}
 
-void Text::addText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+void Text::addText(std::string str, const std::string& purpose, const olc::Pixel color, const int frameDuration, const olc::vf2d scale)
 {
-    if (_mText.count(purpose))
+    if (doesTextExist(purpose))
     {
         std::cout << "Tried to use the already used text key: " << purpose << std::endl;
         return;
@@ -35,7 +35,7 @@ void Text::addText(std::string str, const std::string& purpose, const olc::vf2d 
 // Adds text to an already present piece of text data
 void Text::concatenateText(std::string str, const std::string& purpose, const bool addToEnd, olc::vf2d offSet)
 {
-    if (!_mText.count(purpose))
+    if (!doesTextExist(purpose))
     {
         std::cout << "Tried to concatenate text with an invalid text key: " << purpose << std::endl;
         return;
@@ -52,16 +52,17 @@ void Text::concatenateText(std::string str, const std::string& purpose, const bo
 // Edits a text already added
 bool Text::overWriteText(std::string str, const std::string& purpose)
 {
-    if (!_mText.count(purpose))
-    {
-        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
-        return false;
-    }
-    else
+    if (doesTextExist(purpose))
     {
         _mText[purpose]._vText.clear(); // Empty the vector of letters
         textArranger(str, purpose, _mText[purpose]._scale, _mText); // Write new letters
         return true;
+    }
+    else
+    {
+        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
+        return false;
+
     }
 }
 
@@ -77,7 +78,7 @@ bool Text::overWriteText(std::string str, const std::string& purpose, const olc:
 }
 
 // Edits a text already added
-bool Text::overWriteText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+bool Text::overWriteText(std::string str, const std::string& purpose, const olc::Pixel color, const int frameDuration, const olc::vf2d scale)
 {
     if (overWriteText(str, purpose, color))
         _mText[purpose]._Lifetime = frameDuration;
@@ -110,25 +111,46 @@ void Text::updateTextLifetimes()
 // Sets the text to the specified position
 void Text::setTextPos(const std::string& purpose, olc::vf2d newPos)
 {
-    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
+    if (doesTextExist(purpose)) // Check if the key, purpose, is in _mText
         _mText[purpose]._pos = newPos;
     else
         std::cout << "Tried to set position of invalid text key: " << purpose << std::endl;
 }
 
+// Changes an existing text's color with the same given purpose
+void Text::editTextColor(const std::string& purpose, const olc::Pixel color)
+{
+    if (doesTextExist(purpose))
+        _mText[purpose]._color = color;
+}
+
+// Returns true if a text with the given purpose exists
+bool Text::doesTextExist(const std::string& purpose)
+{
+    return _mText.count(purpose); // Check if the key, purpose, is in _mText
+}
+
+// Removes the specified text
+void Text::removeText(const std::string& purpose)
+{
+    // Remove key data pair
+    if (doesTextExist(purpose)) // Check if the key, purpose, is in _mText
+        _mText.erase(purpose);
+    else
+        std::cout << "Tried to erase invalid text key: " << purpose << std::endl;
+}
+
 // Flips the _stuckOnScreen bool
 void  Text::flipStuckToScreen(const std::string& purpose) {
-    if (!_mText.count(purpose))
+    if (doesTextExist(purpose))
     {
-        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
-    }
-    else
-    {
-        if(_mText[purpose]._stuckOnScreen)
+        if (_mText[purpose]._stuckOnScreen)
             _mText[purpose]._stuckOnScreen = false;
         else
             _mText[purpose]._stuckOnScreen = true;
     }
+    else
+        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
 }
 
 // Updates the positions of all text that move with the game world
@@ -149,32 +171,19 @@ void Text::updateTextPositions(const olc::vf2d& playerPosDelta)
 // Moves the text by a specified offset from the position
 void Text::addToTextPos(const std::string& purpose, olc::vf2d Offset)
 {
-    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
+    if (doesTextExist(purpose)) // Check if the key, purpose, is in _mText
         _mText[purpose]._pos += Offset;
     else
         std::cout << "Tried to change position of invalid text key: " << purpose << std::endl;
 
 }
 
-// Removes the specified text
-void Text::removeText(const std::string& purpose)
-{
-    // Remove key data pair
-
-    if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
-        _mText.erase(purpose);
-    else
-        std::cout << "Tried to erase invalid text key: " << purpose << std::endl;
-}
-
 // Draws all the text stored in the _mText map
 void Text::drawText(olc::PixelGameEngine* gfx)
 {
     for (const auto& [key, data] : _mText)
-    {
         for (auto& letter : data._vText)
             gfx->DrawPartialDecal(data._pos + letter._posOffSet, _decal, letter._sourceOffset, letter._sourceSize, data._scale, data._color);
-    }
 }
 
 // Does the assembling of the characters

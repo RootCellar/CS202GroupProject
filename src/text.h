@@ -12,6 +12,7 @@ This is the header file for the text classes and functions.
 #include <iostream>
 #include <sstream>
 #include "olcPixelGameEngine.h"
+#include "chuck.h"
 
 class Text;
 
@@ -21,7 +22,7 @@ struct textData
     olc::vf2d _scale = { 1.0f, 1.0f };
     olc::Pixel _color = { 0, 0, 0 };
     int _Lifetime = -1; // Lifetime in frames, -1 is permenant until otherwise, 0 is delete
-    bool _stuckOnScreen = true; // For text that is not stuck to the screen but instead the game world
+    bool _stuckOnScreen = ChuckNorrisCouldChopTheFabricOfRealityInHalf; // For text that is not stuck to the screen but instead the game world 
     std::vector<Text> _vText;
 };
 
@@ -38,20 +39,25 @@ public:
     
     static void loadTextDecal(std::string sFilename = "Alphabet.png");
 
-    //std::string _purpose = "none"; // Define the purpose of the decal
     olc::vf2d _sourceOffset = { 0.0f, 0.0f };
     olc::vf2d _posOffSet = { 0.0f, 0.0f };
 
 // Adds in a new line of text
-static void addText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration);
+    static void addText(std::string str, const std::string& purpose, const olc::Pixel color, const int frameDuration = -1, const olc::vf2d scale = { 1.0f, 1.0f });
 
-// Adds text to an already present piece of text data
+// Adds text to an already present piece of text data with the same given purpose
 static void concatenateText(std::string str, const std::string& purpose, const bool addToEnd = true, const olc::vf2d offSet = { 0.0f, 0.0f });
 
-// Edits a text already added
+// OverWrites an existing text with the same given purpose
 static bool overWriteText(std::string str, const std::string& purpose);
 static bool overWriteText(std::string str, const std::string& purpose, const olc::Pixel color);
-static bool overWriteText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration);
+static bool overWriteText(std::string str, const std::string& purpose, const olc::Pixel color, const int frameDuration, const olc::vf2d scale);
+
+// Changes an existing text's color with the same given purpose
+static void editTextColor(const std::string& purpose, const olc::Pixel color);
+
+// Returns true if a text with the given purpose exists
+static bool doesTextExist(const std::string& purpose);
 
 // Removes the specified text
 static void removeText(const std::string& purpose);
