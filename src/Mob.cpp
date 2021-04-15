@@ -4,6 +4,8 @@
 #include "mob.h"
 #include "level.h"
 #include "chuck.h"
+#include <chrono>
+#include "random.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -263,3 +265,27 @@ void ChaserMob::drawSelf(olc::PixelGameEngine *gfx) const{
 
 }
 
+ScatterMob::ScatterMob(double x, double y) : Mob(100, x, y) {
+
+//    std::uniform_real_distribution();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    std::mt19937 generator (seed);
+//    generator = random1.getGen();
+    auto theta = generator();
+    setDirection(olc::vd2d(cos(theta), sin(theta)));
+}
+
+void ScatterMob::update() {
+    ++counter;
+    if ( counter > 50) {
+        // new dirction ?
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+        std::mt19937 generator (seed);
+        auto theta = generator();
+        setDirection(olc::vd2d(cos(theta), sin(theta)));
+        counter = 0;
+    }
+    Mob::update();
+}

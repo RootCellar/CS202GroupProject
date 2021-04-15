@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "team.h"
+#include "random.h"
 //#include "level.h"
 
 class Mob : public Entity {
@@ -55,7 +56,7 @@ public:
 
 //	double getSpeed() const;
 //	void setSpeed(double);
-
+    int counter = 0;
 private:
 	// Personal State
 	bool _isAlive = true;
@@ -131,6 +132,17 @@ public:
     ChaserMob (double x, double y);
     virtual void update() override;
     virtual void drawSelf(olc::PixelGameEngine * gfx) const override;
+};
+
+
+class ScatterMob: public Mob {
+private:
+//    Random random1;
+//    std::mt19937 generator;
+public:
+    ScatterMob(double x, double y);
+
+    virtual void update() override;
 };
 #endif
 
