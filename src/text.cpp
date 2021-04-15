@@ -49,13 +49,42 @@ void Text::concatenateText(std::string str, const std::string& purpose, const bo
     }
 }
 
-
 // Edits a text already added
-void Text::editText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+bool Text::overWriteText(std::string str, const std::string& purpose)
 {
-    // Need input on how to approach
+    if (!_mText.count(purpose))
+    {
+        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
+        return false;
+    }
+    else
+    {
+        _mText[purpose]._vText.clear(); // Empty the vector of letters
+        textArranger(str, purpose, _mText[purpose]._scale, _mText); // Write new letters
+        return true;
+    }
 }
 
+// Edits a text already added
+bool Text::overWriteText(std::string str, const std::string& purpose, const olc::Pixel color)
+{   
+    if (overWriteText(str, purpose))
+        _mText[purpose]._color = color;
+    else
+        return false;
+    return true;
+
+}
+
+// Edits a text already added
+bool Text::overWriteText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration)
+{
+    if (overWriteText(str, purpose, color))
+        _mText[purpose]._Lifetime = frameDuration;
+    else
+        return false;
+    return true;
+};
 
 // Updates the lifetimes of all text
 void Text::updateTextLifetimes()
@@ -188,7 +217,12 @@ void textArranger(std::string str, const std::string& purpose, const olc::vf2d s
     }
 }
 
-
+std::string valueToString(double value)
+{
+    std::stringstream s;
+    s << value;
+    return s.str();
+}
 
 
 DecalMap::DecalMap() {}

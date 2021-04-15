@@ -6,11 +6,11 @@ This is the header file for the text classes and functions.
 #ifndef TEXT_HPP
 #define TEXT_HPP
 
-
 #include <string>
 #include <vector>
 #include <map>
 #include <iostream>
+#include <sstream>
 #include "olcPixelGameEngine.h"
 
 class Text;
@@ -48,7 +48,9 @@ static void addText(std::string str, const std::string& purpose, const olc::vf2d
 static void concatenateText(std::string str, const std::string& purpose, const bool addToEnd = true, const olc::vf2d offSet = { 0.0f, 0.0f });
 
 // Edits a text already added
-static void editText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration);
+static bool overWriteText(std::string str, const std::string& purpose);
+static bool overWriteText(std::string str, const std::string& purpose, const olc::Pixel color);
+static bool overWriteText(std::string str, const std::string& purpose, const olc::vf2d scale, const olc::Pixel color, const int frameDuration);
 
 // Removes the specified text
 static void removeText(const std::string& purpose);
@@ -70,6 +72,8 @@ static void drawText(olc::PixelGameEngine* gfx);
 
 // Does the assembling of the characters
 void textArranger(std::string str, const std::string& purpose, const olc::vf2d scale, std::map<std::string, textData>& mText, olc::vf2d linePos = { 0.0f, 0.0f });
+
+std::string valueToString(double value);
 
 
 class DecalMap
