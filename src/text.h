@@ -21,6 +21,7 @@ struct textData
     olc::vf2d _scale = { 1.0f, 1.0f };
     olc::Pixel _color = { 0, 0, 0 };
     int _Lifetime = -1; // Lifetime in frames, -1 is permenant until otherwise, 0 is delete
+    bool _stuckOnScreen = true; // For text that is not stuck to the screen but instead the game world
     std::vector<Text> _vText;
 };
 
@@ -55,16 +56,20 @@ static bool overWriteText(std::string str, const std::string& purpose, const olc
 // Removes the specified text
 static void removeText(const std::string& purpose);
 
-// Can be transitioned to a more abstract class (probably)
-
 // Updates the lifetimes of all text
 static void updateTextLifetimes();
 
+// Updates the positions of all text that move with the game world
+static void updateTextPositions(const olc::vf2d& playerPos);
+
 // Sets the text to the specified position
-static void setTextPos(const std::string& purpose, olc::vi2d Offset);
+static void setTextPos(const std::string& purpose, olc::vf2d Offset);
+
+// Flips the _stuckOnScreen bool
+static void flipStuckToScreen(const std::string& purpose);
 
 // Moves the text by a specified offset from the position
-static void addToTextPos(const std::string& purpose, olc::vi2d Offset);
+static void addToTextPos(const std::string& purpose, olc::vf2d Offset);
 
 // Draws all the text stored in the _mText map
 static void drawText(olc::PixelGameEngine* gfx);

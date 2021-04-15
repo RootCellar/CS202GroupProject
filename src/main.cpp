@@ -44,6 +44,9 @@ public:
 	double health = 500.0;
 	double maxHealth = 500.0;
 
+	double mana = 500.0;
+	double maxMana = 500.0;
+
 	//Player player;
 
 	//Level level;
@@ -70,14 +73,20 @@ public:
 
 		Text::addText("Testing testing 1 2 3...", "Testing", { 0.5f, 0.5f }, {51, 255, 255}, 200);
 		Text::addText("HP " + valueToString(health), "HP", { 0.5f, 0.5f }, { 255, 25, 25 }, -1);
-		return true;
+		Text::setTextPos("HP", { 50, 220});
+
+		Text::addText("MP " + valueToString(mana), "MP", { 0.5f, 0.5f }, { 255, 25, 25 }, -1);
+		Text::setTextPos("MP", { 50, 210 });
+		return true;	
+
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 		_timeStart = steady_clock::now(); // Get time stamp at start
 
-		Text::drawText(this); // Still flickers when called after the fAccumulatedTime
+	
+		Text::drawText(this);
 
 		//fAccumulatedTime += fElapsedTime;
 		//if (fAccumulatedTime >= fTargetFrameTime)
@@ -90,17 +99,32 @@ public:
 
 		if (IsFocused())
 		{
+			if (GetKey(olc::V).bPressed)
+			{
+				Text::flipStuckToScreen("HP");
+				Text::flipStuckToScreen("MP");
+			}
 			if (inputCounter >= updateAfterCount)
 			{
 				if (GetKey(olc::G).bHeld)
-					health -= 10.1;
+					health -= 22.1;
 				if (GetKey(olc::H).bHeld)
-					health += 10.1287;
-
+					health += 22.1287;
+							   
 				if (health < 0.0)
 					health = 0.0;
 				if (health > maxHealth)
 					health = maxHealth;
+
+				if (GetKey(olc::B).bHeld)
+					mana -= 18.1;
+				if (GetKey(olc::N).bHeld)
+					mana += 19.1287;
+
+				if (mana < 0.0)
+					mana = 0.0;
+				if (mana > maxMana)
+					mana = maxMana;
 
 				inputCounter = 0;
 			}
@@ -108,24 +132,14 @@ public:
 				inputCounter++;
 		}
 
-		DrawPartialDecal({ 10.0f, 220.0f }, m_pDecal_HealthBar, { 0.0f, 120.0f - 4.0f * int(health / maxHealth * 30.0) }, { 32.0f, 5.0f });
 
-		Text::setTextPos("HP", { 50, 220});
-
+		DrawPartialDecal({ 10.0f, 220.0f }, m_pDecal_HealthBar, { 0.0f, 120.0f - 4.0f * std::ceil(float(health / maxHealth * 30.0)) }, { 32.0f, 5.0f });
 		Text::overWriteText("HP " + valueToString(health), "HP", olc::PixelF(1.0 - health / maxHealth, health / maxHealth, 0));
 
+		DrawPartialDecal({ 10.0f, 210.0f }, m_pDecal_HealthBar, { 33.0f, 120.0f - 4.0f * std::ceil(float(mana / maxMana * 30.0)) }, { 32.0f, 5.0f });
+		Text::overWriteText("MP " + valueToString(mana), "MP", olc::PixelF(1.0 - (mana / maxMana) * 0.7 - 0.3, 1.0 - (mana / maxMana) * 0.7 - 0.3, 1.0));
 
-		/*counter++;
-		if (counter == 100)
-		{
-			Text::concatenateText("Many Additions", "Testing", false, { 55.0f, 80.0f });
-			call();
-		}*/
-
-		//Text::setTextPos("Testing", { 150 - x,150 - y });
-		//Text::addToTextPos("Testing", { 1 , 1 });
 		Text::updateTextLifetimes();
-
 
 		// called once per frame
 		/*
@@ -134,9 +148,10 @@ public:
 				Draw(x, y, olc::Pixel(rand() % 255, rand() % 255, rand()% 255));
 		*/
 
-		for (int x = 0; x < ScreenWidth(); x++)
+		Clear(olc::DARK_CYAN/*olc::Pixel{0, 255, 255}*/);
+		/*for (int x = 0; x < ScreenWidth(); x++)
 			for (int y = 0; y < ScreenHeight(); y++)
-				Draw(x, y, olc::Pixel(0, 0, 0));
+				Draw(x, y, olc::Pixel(0, 0, 0));*/
 
 		for (int x = 0; x < 1000; x+=50)
 			for (int y = 0; y < 1000; y+=50)
@@ -152,16 +167,20 @@ public:
 
 		if(GetKey(olc::A).bHeld) {
 			x--;
+			Text::updateTextPositions({ -1.0f, 0.0f });
 		}
 		if(GetKey(olc::D).bHeld) {
 			x++;
+			Text::updateTextPositions({ 1.0f, 0.0f });
 		}
 
 		if(GetKey(olc::W).bHeld) {
 			y--;
+			Text::updateTextPositions({ 0.0f, -1.0f });
 		}
 		if(GetKey(olc::S).bHeld) {
 			y++;
+			Text::updateTextPositions({ 0.0f, 1.0f });
 		}
 
 		//level.update();

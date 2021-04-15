@@ -108,7 +108,7 @@ void Text::updateTextLifetimes()
 }
 
 // Sets the text to the specified position
-void Text::setTextPos(const std::string& purpose, olc::vi2d newPos)
+void Text::setTextPos(const std::string& purpose, olc::vf2d newPos)
 {
     if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
         _mText[purpose]._pos = newPos;
@@ -116,8 +116,38 @@ void Text::setTextPos(const std::string& purpose, olc::vi2d newPos)
         std::cout << "Tried to set position of invalid text key: " << purpose << std::endl;
 }
 
+// Flips the _stuckOnScreen bool
+void  Text::flipStuckToScreen(const std::string& purpose) {
+    if (!_mText.count(purpose))
+    {
+        std::cout << "Tried to overwrite an invalid text key: " << purpose << std::endl;
+    }
+    else
+    {
+        if(_mText[purpose]._stuckOnScreen)
+            _mText[purpose]._stuckOnScreen = false;
+        else
+            _mText[purpose]._stuckOnScreen = true;
+    }
+}
+
+// Updates the positions of all text that move with the game world
+void Text::updateTextPositions(const olc::vf2d& playerPosDelta)
+{
+    for (auto& [key, data] : _mText)
+    {
+        if (data._stuckOnScreen)
+            continue;
+        else
+        {
+            //addToTextPos(key, -playerPosDelta/5.0f);
+            setTextPos(key, (data._pos - playerPosDelta));
+        };
+    }
+}
+
 // Moves the text by a specified offset from the position
-void Text::addToTextPos(const std::string& purpose, olc::vi2d Offset)
+void Text::addToTextPos(const std::string& purpose, olc::vf2d Offset)
 {
     if (_mText.count(purpose)) // Check if the key, purpose, is in _mText
         _mText[purpose]._pos += Offset;
