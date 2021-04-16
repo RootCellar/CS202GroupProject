@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <iterator>
-
+#include "olcPixelGameEngine.h"
 #include "debug.h"
 #include "team.h"
 
@@ -57,20 +57,20 @@ public:
   //Call update for everybody, handle spawns and despawns
   void update();
 
+  void renderEntities(Example& gfx) const;
   //Get mobs within range from some point
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
+    std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);
 
-  //Get mobs within range from some point and not on the given team
+    //Get mobs within range from some point and not on the given team
   //(So the returned list is only enemies)
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
+    std::vector<Mob *> getMobsInRange(const olc::vd2d &point, double radius, Team t);
 
   double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
+    double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
 
-  void renderEntities(Example &gfx) const;
-
+    olc::vd2d getPlayerPosition () const;
 };
-
-#include "mob.h"
-#include "projectile.h"
 
 #endif

@@ -3,20 +3,23 @@
 #include "level.h"
 #include "team.h"
 #include "chuck.h"
-#include "debug.h"
+#include "main.h"
 
-Level::Level(Player &p): player(p) {
-  debug("Constructing the level...");
+Level::Level(Player& p):player(p) {
+    debug("Constructing the level...");
+
+    add(&p);
 }
 
 void Level::add(Mob *m) {
   if(!has(m)) pendingMobSpawns.push_back(m);
-
+  m->setLevel(this);
   debug("Adding a mob to pending spawns");
 }
 
 void Level::add(Projectile *p) {
   if(!has(p)) pendingProjectileSpawns.push_back(p);
+  p->setLevel(this);
 }
 
 void Level::remove(Mob *m) {
@@ -67,7 +70,15 @@ void Level::update() {
   }
 
   for(Projectile *p : projectiles) {
-    (*p).update();
+      std::vector <Mob * > mir;
+      mir = getMobsInRange(p->getPos(), p->getRadius());
+      for ( auto x : mir) {
+          x->die();
+      }
+      // If there were no mobs in range, then it hasn't hit. I know long way but still...
+      if ( !mir.empty())
+          p->setHasHit();
+    p->update();
   }
 
   //Spawn mobs and projectiles from our lists
@@ -129,6 +140,23 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
 
   return toRet;
 }
+// getMobsInRange adapted to use olc::vd2d
+std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) {
+    std::vector<Mob*> toRet;
+
+    for(Mob* m : mobs) {
+
+//        Mob j = *m;
+        double dist = getDistanceBetween(point, m->getPos());
+
+        if(dist <= radius) {
+            toRet.push_back(m);
+        }
+
+    }
+
+    return toRet;
+}
 
 //Get mobs within range from some point and not on the given team
 //(So the returned list is only enemies)
@@ -148,13 +176,41 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
 
   return toRet;
 }
+//getMobsInRange adapted to use vd2d
+std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, Team t) {
+    std::vector<Mob*> toRet;
+
+    for(Mob* m : mobs) {
+
+//        Mob j = *m; // this may not be good, because this creates another mob.
+        double dist = getDistanceBetween(point , m->getPos());
+
+        if(dist <= radius && m->getTeam() != t) {
+            toRet.push_back(m);
+        }
+
+    }
+
+    return toRet;
+}
 
 double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
   return sqrt( pow(xP2 - xP1, 2) + pow(yP2 - yP1, 2) );
 }
 
-void Level::renderEntities(Example &gfx) const {
-
+//getDistanceBetween adapted to use olc::vd2d .mag()
+double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2) {
+    return (point1 - point2).mag();
+}
+void Level::renderEntities(Example& gfx) const {
+    //Render these balls
+//    testProjectile.drawSelf(gfx);
+//    test2.drawSelf(gfx);
+//    test3.drawSelf(gfx);
+    player.drawSelf(gfx);
+//    followPlayer.drawSelf(gfx);
+    // test text
+//    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
@@ -162,4 +218,9 @@ void Level::renderEntities(Example &gfx) const {
   for(Mob *m : mobs) {
     (*m).drawSelf(gfx);
   }
+}
+
+olc::vd2d Level::getPlayerPosition() const{
+    return player.getPos();
+
 }

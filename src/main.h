@@ -13,6 +13,8 @@
 #include "spell.h"
 #include "player.h"
 #include "level.h"
+#include "text.h"
+#include <chrono>
 
 //Mobs
 //#include "Soldier.h" //Currently does not compile

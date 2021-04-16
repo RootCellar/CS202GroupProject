@@ -64,19 +64,23 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	//if( x > ScreenWidth() ) x=0;
 
-	if(GetKey(olc::A).bHeld) {
-		player.addToXPos(-1 * player.getSpeed());
-	}
-	if(GetKey(olc::D).bHeld) {
-		player.addToXPos(player.getSpeed());
-	}
+		if(GetKey(olc::A).bHeld) {
+//			x--;
+            player.move("left");
+		}
+		if(GetKey(olc::D).bHeld) {
+//			x++;
+            player.move("right");
+		}
 
-	if(GetKey(olc::W).bHeld) {
-		player.addToYPos(-1 * player.getSpeed());
-	}
-	if(GetKey(olc::S).bHeld) {
-		player.addToYPos(player.getSpeed());
-	}
+		if(GetKey(olc::W).bHeld) {
+//			y--;
+            player.move("up");
+		}
+		if(GetKey(olc::S).bHeld) {
+//			y++;
+            player.move("down");
+		}
 
 	xOffs = player.getXPos();
 	yOffs = player.getYPos();
