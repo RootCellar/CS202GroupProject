@@ -3,7 +3,6 @@
 //
 #include "player.h"
 #include "spell.h"
-#include "main.h"
 #include <vector>
 
 Player::Player(): Mob(400, 50, 50), _lives(3) {
@@ -13,7 +12,11 @@ Player::Player(): Mob(400, 50, 50), _lives(3) {
 Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 	setSpeed(1);
 }
-
+Player::Player(const string &text) : Mob( 100, 100, 100) {
+    // test player if you use text as parameter
+    // notice that constructor also sets decal
+    setDecal("Orb_Wizard_and_Staff.png");
+}
 const std::vector<Spell> *Player::getSpellList() {
 	return _AvailableSpells;
 }
@@ -41,17 +44,35 @@ void Player::regen() {
 	heal(getMaxHp() * 0.001);
 }
 
-void Player::drawSelf(Example& gfx) const {
-	gfx.drawPixel( getXPos(), getYPos(), 255, 0, 0);
-}
+//void Player::drawSelf(Example& gfx) const {
+//	gfx.drawPixel( getXPos(), getYPos(), 255, 0, 0);
+//}
 
 void Player::die(){
 	if(_lives < 0){
 		//end the game & display a game over screen
-		setRedundant();
+		setRedundant(0); // ?
 		return;
 	}
 	//display dying animation or sprite
 	//respawn in the starting location for the level
 	_lives--;
 }
+// Uses the PGE's way to take input implemented at main.cpp
+// gets the string and moves player position corresponding direction
+void Player::move(const string &direction) {
+    olc::vd2d north = {0, -1}, east = {1, 0}, changeToPos;
+    if ( direction == "up")
+        changeToPos = north;
+    else if (direction == "down")
+        changeToPos = north * (-1);
+    else if (direction == "right")
+        changeToPos = east;
+    else if (direction == "left")
+        changeToPos = east * (-1);
+    // note may use a multiplier to influence the amount of change
+    addToPos(changeToPos);
+}
+
+
+

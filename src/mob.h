@@ -3,6 +3,8 @@
 
 #include "entity.h"
 #include "team.h"
+#include "random.h"
+//#include "level.h"
 
 class Mob : public Entity {
 
@@ -11,7 +13,7 @@ public:
 
 	Mob();
 
-	virtual ~Mob();
+	~Mob() = default ;
 
 	Mob(double maxHealth, double x, double y);
 
@@ -29,7 +31,7 @@ public:
 
 	void checkHp();
 
-	
+	bool isAlive() const {return _isAlive;}
 	void healthRegen(); //Any sort of health regeneration that needs to be called
 	void manaRegen();// Any sort of mana regeneration that needs to be called
 
@@ -37,9 +39,7 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	virtual void drawSelf(Example& gfx) const override {
-		// Drawing code here...
-	}
+	virtual void drawSelf(olc::PixelGameEngine* gfx) const override;
 
 	virtual void die();
 	virtual void revive();
@@ -54,9 +54,9 @@ public:
 
 	Team& getTeam();
 
-	double getSpeed() const;
-	void setSpeed(double);
-
+//	double getSpeed() const;
+//	void setSpeed(double);
+    int counter = 0;
 private:
 	// Personal State
 	bool _isAlive = true;
@@ -114,7 +114,7 @@ private:
 
 
 
-	double _speed;
+//	double _speed;
 
 	Team _team;
 
@@ -124,6 +124,26 @@ private:
 	static int _mobPop;
 };
 
+class ChaserMob: public Mob {
+private:
+
+public:
+    ChaserMob ();
+    ChaserMob (double x, double y);
+    virtual void update() override;
+    virtual void drawSelf(olc::PixelGameEngine * gfx) const override;
+};
+
+
+class ScatterMob: public Mob {
+private:
+//    Random random1;
+//    std::mt19937 generator;
+public:
+    ScatterMob(double x, double y);
+
+    virtual void update() override;
+};
 #endif
 
 /*

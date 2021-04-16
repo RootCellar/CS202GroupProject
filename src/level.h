@@ -3,20 +3,21 @@
 
 #include <vector>
 #include <iterator>
-
+#include "olcPixelGameEngine.h"
 #include "debug.h"
+#include "main.h"
 #include "team.h"
 
 class Player;
 class Mob;
 class Projectile;
 class Example;
-
+//class DecalMap;
 //The world, bosses everyone else around but also serves them
 class Level {
 private:
 
-  Player &player;
+  Player * player;
 
   //Lists of mobs and projectiles in the level
 
@@ -32,9 +33,19 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
+  //Test projectiles below
+//  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
+//
+//  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
+//
+//  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
+//
+//  HomingProjectile followPlayer { olc::vd2d{200, 200}, player};
+  // testing decalmap
+
 public:
 
-  Level(Player &p);
+  Level(Player * p);
 
   void add(Mob *m);
 
@@ -57,20 +68,20 @@ public:
   //Call update for everybody, handle spawns and despawns
   void update();
 
+  void renderEntities(olc::PixelGameEngine * gfx) const;
   //Get mobs within range from some point
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
+    std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);
 
-  //Get mobs within range from some point and not on the given team
+    //Get mobs within range from some point and not on the given team
   //(So the returned list is only enemies)
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
+    std::vector<Mob *> getMobsInRange(const olc::vd2d &point, double radius, Team t);
 
   double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
+    double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
 
-  void renderEntities(Example &gfx) const;
-
+    olc::vd2d getPlayerPosition () const;
 };
-
-#include "mob.h"
-#include "projectile.h"
 
 #endif

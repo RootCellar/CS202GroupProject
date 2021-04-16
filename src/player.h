@@ -11,8 +11,9 @@ public:
 	using Mob::Mob;
 	Player();
 	Player(int health, int x, int y);
-
-	const std::vector<Spell>* getSpellList();
+    Player ( const std::string &text);
+    Player(int health, const olc::vd2d &sPos);
+	const std::vector<Spell> * getSpellList();
 
 	void setSpellSlot(int slotNum /*Spell type*/);
 
@@ -21,10 +22,11 @@ public:
 	void update() override;
 
 	void regen();
+	void increaseMaxHealth(int mod);
+	void attack(Mob& target) ;
 
-	void die() override;
-
-	void drawSelf(Example& gfx) const override;
+	void move (const std::string &direction);
+	virtual void die() override;
 private:
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;

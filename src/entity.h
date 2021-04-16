@@ -3,11 +3,8 @@
 
 #define PI 3.14159265
 #include <string>
-
+using std::string;
 #include "olcPixelGameEngine.h"
-
-double convertToAngle(const olc::vd2d components);
-double convertToMagnitude(const olc::vd2d components);
 
 class Level;
 class Example;
@@ -22,7 +19,8 @@ private:
   olc::vd2d _pos;
   olc::vd2d _vel = { 0.0, 0.0 };
 
-
+    olc::vd2d _direction;// = {.6, .8};
+    double _speed;
   // Decal/Sprite variables
   olc::Decal* _decal = nullptr;
   olc::vf2d _spriteDimensions;
@@ -50,12 +48,17 @@ private:
   int _graphicStateTimer = 25;
   int _frameCount = 0;
 
-
   static int idPoint;
   int id;
 
   Level *level;
 
+  // Sprite stuff following what I did for projectiles
+  std::shared_ptr <olc::Sprite> _spritePtr = nullptr;
+  std::shared_ptr <olc::Decal> _decalPtr = nullptr;
+  float _spriteOffset = 0;
+  // Now we need getters and setters I made down, we may be able to replace with * but I don't want
+  // to manage resources
 public:
   Entity();
 
@@ -64,13 +67,16 @@ public:
   virtual ~Entity() = default;
 
   virtual void setLevel(Level* l);
-
+  Level * getLevel() const;
   virtual void update() = 0;
 
-  // Graphics related functions
-  virtual void drawSelf(Example& gfx) const = 0;
+  // This may not need to be a virtual function or pure virtual function
+  // Offsets x and y are for position on screen as opposed to on the map.
+  virtual void drawSelf(olc::PixelGameEngine * gfx /*, float offsetx, float offsety*/) const = 0;
 
-  void setDecal(std::string sFilename);
+//  virtual void drawSelf(Example& gfx) const = 0;
+
+  //void setDecal(std::string sFilename);
 
   void setDeadSpriteSource(olc::vf2d source);
   void setAttackSpriteSource(olc::vf2d source);
@@ -94,15 +100,35 @@ public:
   double getXPos() const;
   double getYPos() const;
 
-  void setRedundant(bool b);
   void setRedundant();
+  void setRedundant(bool b);
   bool isRedundant() const;
 
+  olc::vd2d getPos() const;
+  void setPos(const olc::vd2d &newPos) ;
+  void addToPos(const olc::vd2d &disp) ;
+  olc::vd2d getDirection () const;
+  void setDirection(const olc::vd2d &newDirection);
+
+    void setSpeed(double s);
+    double getSpeed () const;
+
+
   int getId() const;
+
+  // Sprite stuff
+  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
+  olc::Decal * getDecal () const; // use .get() method in unique_ptr
+  olc::vf2d getDecalScale (float pixels) const;
+  float getSpriteRot () const;
+  void setSpriteOffset () ;
+  olc::vd2d getDecalCenter () const;
+  void setSpriteSourceSize (const olc::vi2d&);
+  olc::vi2d getSpriteSourceSize() const;
 };
 
 bool operator==(const Entity &one, const Entity &two);
 
-#include "level.h"
+//#include "level.h"
 
 #endif
