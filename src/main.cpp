@@ -34,8 +34,9 @@ bool Example::OnUserCreate()
 
 bool Example::OnUserUpdate(float fElapsedTime)
 {
+    level.renderEntities(*this);
 
-	fAccumulatedTime += fElapsedTime;
+    fAccumulatedTime += fElapsedTime;
 	if (fAccumulatedTime >= fTargetFrameTime)
 	{
 		fAccumulatedTime -= fTargetFrameTime;
@@ -60,7 +61,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	drawPixel(x, y, 255, 255, 255);
 
 
-	level.renderEntities(*this);
 
 	//if( x > ScreenWidth() ) x=0;
 

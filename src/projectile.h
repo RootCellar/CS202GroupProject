@@ -16,7 +16,9 @@ private:
 //    virtual void setlevel (Level * l ) override ; //idk how to use it
 public:
     Projectile(); // Random ??
-    Projectile(olc::vd2d sPos, olc::vd2d ePos);
+    Projectile(double, double);
+    Projectile(double, double, const olc::vd2d &fPos);
+    Projectile(double x, double y, double fx, double dy);
 
     ~Projectile() = default; // only worked after I did this
     virtual void drawSelf(Example& gfx) const override;//, double offsetx, double offsety);
@@ -34,16 +36,16 @@ public:
     void setHasHit();
 };
 
-std::unique_ptr<Projectile> projectileFactory(olc::vd2d sPos, olc::vd2d fPos);
+std::unique_ptr<Projectile> projectileFactory(double, double, double, double);
 
-std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOfBalls);
+std::vector<std::unique_ptr<Projectile>> getMyBalls(double, double, int numberOfBalls);
 
 // HomingProjectile keeps reference to an entity
 // need a btter way to mitigate failure incase entity is removed from level. Maybe check with nullptr ?
 class HomingProjectile : public Projectile {
 public:
     Entity *notPointerToEntity;// = nullptr;
-    HomingProjectile(olc::vd2d sPos, Entity *ent);
+    HomingProjectile(double, double, Entity *ent);
 
     virtual void update() override;
 
@@ -51,7 +53,7 @@ public:
 
 class OrbitalProjectile : public Projectile {
 public:
-    OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre);
+    OrbitalProjectile(double, double, double, double);
 
     double radiusOrbital;
     float fAngle = 0;

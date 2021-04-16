@@ -3,6 +3,7 @@
 //
 #include "mob.h"
 #include "main.h"
+#include "random.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -223,10 +224,6 @@ void Mob::drawSelf(Example& gfx) const {
     if(isAlive())
         gfx.DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
 }
-
-//double Mob::getSpeed() const { return _speed; }
-
-//void Mob::setSpeed(double i) { _speed = i; }
 
 ChaserMob::ChaserMob():Mob() {
     setDecal("Spider_Scaled_up.png");

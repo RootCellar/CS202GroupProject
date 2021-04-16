@@ -1,16 +1,29 @@
 //
 // Created by uddeepk on 4/6/21.
 //
-#include "projectile.h"
+//#include "projectile.h"
 #include "main.h"
+#include "projectile.h"
+
 
 Projectile::Projectile() :Entity()
 {
     // Probably don't need it but just keeping here
 }
 
-Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y), _endPosition(ePos)
-{
+Projectile::Projectile(double x, double y) : Entity(x,y){
+    setDirection( olc::vd2d{0,1});
+    setSpeed(0);
+    setDecal("fireBall.png");
+}
+
+Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
+    setDirection(_endPosition - getPos());
+    setSpeed(0.5);
+    setDecal("test2.png");
+}
+
+Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
     setDecal("test2.png");
@@ -59,12 +72,14 @@ double Projectile::getRadius() const {
 }
 
 
-std::unique_ptr<Projectile> projectileFactory ( olc::vd2d sPos , olc::vd2d fPos) // fP only gives directions
+
+
+std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, double fy) // fP only gives directions
 {
-    return std::make_unique<Projectile>(sPos, fPos);
+    return std::make_unique<Projectile>(x, y, fx, fy);
 }
 
-std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOfBalls) {
+std::vector<std::unique_ptr<Projectile>> getMyBalls(double x, double y, int numberOfBalls) {
     int &n = numberOfBalls;
     std::vector <std::unique_ptr<Projectile>> myBalls ;
     // Generate balls in a circle ?
@@ -73,13 +88,13 @@ std::vector<std::unique_ptr<Projectile>> getMyBalls(olc::vd2d sPos, int numberOf
     for ( int i = 0 ; i < n ; ++i ) {
         angleRad = 2.0 * PI * (static_cast<double> (i) /n) ;
         auto direction = olc::vd2d{cos (angleRad), sin (angleRad)};
-        myBalls.push_back(projectileFactory( sPos, sPos + direction ));
+        myBalls.push_back(projectileFactory(  x, y, direction.x, direction.y ));
     }
     return myBalls;
 }
 
-HomingProjectile::HomingProjectile(olc::vd2d sPos, Entity *ent) :
-        Projectile(sPos, ent->getPos()) , notPointerToEntity(ent) {
+HomingProjectile::HomingProjectile(double x, double y, Entity *ent) :
+        Projectile(x, y, ent->getPos()) , notPointerToEntity(ent) {
 }
 
 void HomingProjectile::update() {
@@ -99,9 +114,14 @@ void HomingProjectile::update() {
     }
 }
 
-OrbitalProjectile::OrbitalProjectile(const olc::vd2d &sPos, const olc::vd2d &centre):
-        Projectile(sPos, sPos + (sPos-centre).perp()), radiusOrbital((sPos-centre).mag())
+OrbitalProjectile::OrbitalProjectile(double x, double y, double cx, double cy):
+        Projectile(x, y)
 {
+    olc::vd2d sPos {x, y};
+    olc::vd2d centre {cx, cy};
+
+    setDirection ((sPos - centre).perp());
+    radiusOrbital = (sPos - centre).mag();
     setDecal("fireBall.png");
 }
 

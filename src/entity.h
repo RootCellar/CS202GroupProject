@@ -59,6 +59,7 @@ private:
   float _spriteOffset = 0;
   // Now we need getters and setters I made down, we may be able to replace with * but I don't want
   // to manage resources
+
 public:
   Entity();
 
@@ -125,6 +126,9 @@ public:
   olc::vd2d getDecalCenter () const;
   void setSpriteSourceSize (const olc::vi2d&);
   olc::vi2d getSpriteSourceSize() const;
+
+//  double getRadius () const;
+//  void setRadius (double);
 };
 
 bool operator==(const Entity &one, const Entity &two);

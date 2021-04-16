@@ -11,14 +11,18 @@ add_executable(CS202GroupProject
         src/level.cpp
         src/Mob.cpp
         src/player.cpp
-        #src/projectile.cpp
+        src/projectile.cpp
         src/debug.cpp
-        src/player.cpp
-        src/random.cpp
         src/team.cpp
+        src/text.cpp
+        src/random.cpp
         )
 
 if (UNIX AND NOT APPLE)
     #do something
     target_link_libraries(CS202GroupProject -lX11 -lGL -lpthread -lpng -lstdc++fs)
 endif (UNIX AND NOT APPLE)
+
+if(WIN32)
+    target_link_libraries(CS202GroupProject -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static)
+endif(WIN32)

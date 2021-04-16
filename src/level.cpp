@@ -1,13 +1,16 @@
 #include <cmath>
 
-#include "level.h"
-#include "team.h"
-#include "chuck.h"
+//#include "level.h"
+//#include "team.h"
+//#include "chuck.h"
+////#include "main.h"
 #include "main.h"
+#include "level.h"
 
 Level::Level(Player& p):player(p) {
     debug("Constructing the level...");
-
+    add(&testProjectile);
+    add(&test2);
     add(&p);
 }
 
@@ -71,13 +74,14 @@ void Level::update() {
 
   for(Projectile *p : projectiles) {
       std::vector <Mob * > mir;
+      if ( p != nullptr)
       mir = getMobsInRange(p->getPos(), p->getRadius());
       for ( auto x : mir) {
           x->die();
       }
       // If there were no mobs in range, then it hasn't hit. I know long way but still...
-      if ( !mir.empty())
-          p->setHasHit();
+      if ( !mir.empty());
+//          p->setHasHit();
     p->update();
   }
 
@@ -224,3 +228,4 @@ olc::vd2d Level::getPlayerPosition() const{
     return player.getPos();
 
 }
+
