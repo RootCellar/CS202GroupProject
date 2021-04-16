@@ -3,10 +3,12 @@
 #include "level.h"
 #include "team.h"
 #include "chuck.h"
+#include "main.h"
 
-Level::Level(Player * p): player(p) {
-  debug("Constructing the level...");
-  add(p);
+Level::Level(Player& p):player(p) {
+    debug("Constructing the level...");
+
+    add(&p);
 }
 
 void Level::add(Mob *m) {
@@ -205,12 +207,12 @@ double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2)
 double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2) {
     return (point1 - point2).mag();
 }
-void Level::renderEntities(olc::PixelGameEngine *gfx) const {
+void Level::renderEntities(Example& gfx) const {
     //Render these balls
 //    testProjectile.drawSelf(gfx);
 //    test2.drawSelf(gfx);
 //    test3.drawSelf(gfx);
-    player->drawSelf(gfx);
+    player.drawSelf(gfx);
 //    followPlayer.drawSelf(gfx);
     // test text
 //    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
@@ -224,6 +226,6 @@ void Level::renderEntities(olc::PixelGameEngine *gfx) const {
 }
 
 olc::vd2d Level::getPlayerPosition() const{
-    return player->getPos();
+    return player.getPos();
 
 }

@@ -2,7 +2,7 @@
 // Created by aleks on 04/06/21.
 //
 #include "mob.h"
-
+#include "main.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -103,8 +103,6 @@ void Mob::update() {
 
 Team& Mob::getTeam() { return _team; }
 
-double Mob::getSpeed() const { return _speed; }
-void Mob::setSpeed(double i) { _speed = i; }
 //=========
 // Increase Hp by hpPlus
 void Mob::addToHealth(double hpPlus) { _health += hpPlus; }
@@ -217,8 +215,6 @@ void Mob::setCritChance(double critChance) {
 void Mob::setAttackRange(double attackRange) {
     _attackRange = attackRange;
 }
-
-Team &Mob::getTeam() { return _team; }
 
 void Mob::drawSelf(Example& gfx) const {
     // Drawing code here...

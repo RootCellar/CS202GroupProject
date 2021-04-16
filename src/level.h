@@ -5,8 +5,9 @@
 #include <iterator>
 #include "olcPixelGameEngine.h"
 #include "debug.h"
-#include "main.h"
+//#include "main.h"
 #include "team.h"
+#include "projectile.h"
 
 class Player;
 class Mob;
@@ -17,7 +18,7 @@ class Example;
 class Level {
 private:
 
-  Player * player;
+  Player  &player;
 
   //Lists of mobs and projectiles in the level
 
@@ -33,17 +34,12 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
-  //Test projectiles below
-//  Projectile testProjectile { olc::vd2d {75, 75}, olc::vd2d{ 80, 80}};
-//
-//  OrbitalProjectile test2 { olc::vd2d {50, 50}, olc::vd2d{ 126, 110}};
-//
-//  HomingProjectile test3 { olc::vd2d{100, 100}, &test2};
-//
-//  HomingProjectile followPlayer { olc::vd2d{200, 200}, player};
   // testing decalmap
 
 public:
+    Level()=default;
+
+    Level (Player &p);
 
   Level(Player * p);
 
@@ -68,7 +64,7 @@ public:
   //Call update for everybody, handle spawns and despawns
   void update();
 
-  void renderEntities(olc::PixelGameEngine * gfx) const;
+  void renderEntities(Example& gfx) const;
   //Get mobs within range from some point
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
     std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);

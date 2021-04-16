@@ -2,6 +2,7 @@
 // Created by uddeepk on 4/6/21.
 //
 #include "projectile.h"
+#include "main.h"
 
 Projectile::Projectile() :Entity()
 {
@@ -15,12 +16,12 @@ Projectile::Projectile(olc::vd2d sPos, olc::vd2d ePos) : Entity(sPos.x, sPos.y),
     setDecal("test2.png");
 }
 
-void Projectile::drawSelf(olc::PixelGameEngine * gfx) const //, double offsetx, double offsety) {
+void Projectile::drawSelf(Example& gfx) const //, double offsetx, double offsety) {
 {
     if ( !_hasHit)
-        gfx->DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+        gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
     else
-        gfx->DrawStringDecal(getPos(), "BOOM", olc::RED);
+        gfx.DrawStringDecal(getPos(), "BOOM", olc::RED);
 
 }
 

@@ -20,7 +20,7 @@ public:
     Projectile(olc::vd2d sPos, olc::vd2d ePos);
 
     ~Projectile() = default; // only worked after I did this
-    virtual void drawSelf(olc::PixelGameEngine *gfx) const override;//, double offsetx, double offsety);
+    virtual void drawSelf(Example& gfx) const override;//, double offsetx, double offsety);
     //update the projectile, move it etc.
     virtual void update() override;
 
