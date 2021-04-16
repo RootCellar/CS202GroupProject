@@ -1,5 +1,9 @@
+#include <cmath>
+
 #include "level.h"
+#include "team.h"
 #include "chuck.h"
+#include "debug.h"
 
 Level::Level(Player &p): player(p) {
   debug("Constructing the level...");
@@ -7,6 +11,8 @@ Level::Level(Player &p): player(p) {
 
 void Level::add(Mob *m) {
   if(!has(m)) pendingMobSpawns.push_back(m);
+
+  debug("Adding a mob to pending spawns");
 }
 
 void Level::add(Projectile *p) {
@@ -69,7 +75,10 @@ void Level::update() {
   while(pendingMobSpawns.size() > 0) {
     Mob *m = pendingMobSpawns.at(0);
     pendingMobSpawns.erase( pendingMobSpawns.begin() );
-    if(!has(m)) mobs.push_back(m);
+    if(!has(m)) {
+      mobs.push_back(m);
+      debug("Spawning a mob from list");
+    }
   }
 
   while(pendingProjectileSpawns.size() > 0) {
@@ -103,7 +112,49 @@ void Level::update() {
 
 }
 
+//Get mobs within range from some point
+std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius) {
+  std::vector<Mob*> toRet;
+
+  for(Mob* m : mobs) {
+
+    Mob j = *m;
+    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+
+    if(dist <= radius) {
+      toRet.push_back(m);
+    }
+
+  }
+
+  return toRet;
+}
+
+//Get mobs within range from some point and not on the given team
+//(So the returned list is only enemies)
+std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius, Team t) {
+  std::vector<Mob*> toRet;
+
+  for(Mob* m : mobs) {
+
+    Mob j = *m;
+    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+
+    if(dist <= radius && j.getTeam() != t) {
+      toRet.push_back(m);
+    }
+
+  }
+
+  return toRet;
+}
+
+double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
+  return sqrt( pow(xP2 - xP1, 2) + pow(yP2 - yP1, 2) );
+}
+
 void Level::renderEntities(Example &gfx) const {
+
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }

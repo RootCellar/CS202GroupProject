@@ -2,6 +2,7 @@
 #define MOB_H
 
 #include "entity.h"
+#include "team.h"
 
 class Mob : public Entity {
 
@@ -17,6 +18,8 @@ public:
 	double getHealth() const;
 
 	void setHealth(double x);
+
+	double getMaxHp() const;
 
 	static int getCount();
 
@@ -39,6 +42,7 @@ public:
 	}
 
 	virtual void die();
+	virtual void revive();
 
 //	bool inRange(const Mob & target) // Has levelRef and members to determine location
 //	{
@@ -46,7 +50,12 @@ public:
 //	}
 
 	//each type of mob will have a different attack type & it is up to them to implement this
-	virtual void attack(Mob& target)= 0;
+	virtual void attack(Mob* target);
+
+	Team& getTeam();
+
+	double getSpeed() const;
+	void setSpeed(double);
 
 private:
 	// Personal State
@@ -105,11 +114,16 @@ private:
 
 
 
+	double _speed;
+
+	Team _team;
+
 	//Keeps track of the number of current constructed mobs in existence.
 	//if you want a counter to keep mob counts within a range in the level,
 	//it needs to be done differently.
 	static int _mobPop;
 };
+
 #endif
 
 /*

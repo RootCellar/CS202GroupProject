@@ -7,11 +7,11 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
-Mob::Mob() {
+Mob::Mob(): _speed(1), _team(true) {
 	_mobPop++;
 }
 
-Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth) {
+Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _speed(1), _team(true) {
 	_mobPop++;
 }
 
@@ -21,6 +21,10 @@ Mob::~Mob() {
 
 double Mob::getHealth() const {
 		return _health;
+}
+
+double Mob::getMaxHp() const {
+	return _maxHealth;
 }
 
 void Mob::setHealth(double x) {
@@ -33,6 +37,14 @@ int Mob::getCount() {
 
 void Mob::die() {
 	//_mobPop--; //Do not decrement this counter here, when the mob is deconstructed it will decrement again...
+
+}
+
+void Mob::revive() {
+	setRedundant(false);
+}
+
+void Mob::attack(Mob* target) {
 
 }
 
@@ -176,3 +188,9 @@ void Mob::setCritChance(double critChance){
 void Mob::setAttackRange(double attackRange){
 	_attackRange = attackRange;
 }
+}
+
+Team& Mob::getTeam() { return _team; }
+
+double Mob::getSpeed() const { return _speed; }
+void Mob::setSpeed(double i) { _speed = i; }

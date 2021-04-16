@@ -5,6 +5,7 @@
 #include <iterator>
 
 #include "debug.h"
+#include "team.h"
 
 class Player;
 class Mob;
@@ -55,6 +56,15 @@ public:
 
   //Call update for everybody, handle spawns and despawns
   void update();
+
+  //Get mobs within range from some point
+  std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
+
+  //Get mobs within range from some point and not on the given team
+  //(So the returned list is only enemies)
+  std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
+
+  double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
 
   void renderEntities(Example &gfx) const;
 

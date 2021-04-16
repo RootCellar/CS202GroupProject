@@ -1,13 +1,13 @@
 /*
- * main.cpp
- * 3/25/2021
- *
- * This project is written by:
- * Darian Marvel
- * Uddeep Karki
- * Aleks McCormick
- * Nathon Damon
- *
+* main.cpp
+* 3/25/2021
+*
+* This project is written by:
+* Darian Marvel
+* Uddeep Karki
+* Aleks McCormick
+* Nathon Damon
+*
 */
 
 #define OLC_PGE_APPLICATION
@@ -73,8 +73,8 @@ public:
 	{
 		sAppName = "Example";
 
-		//debug("Constructing the game...");
-	}
+	debug("Constructing the game...");
+}
 
 
 	bool OnUserCreate() override
@@ -86,8 +86,7 @@ public:
 		m_pDecal_OrbWizard = new olc::Decal(new olc::Sprite("Orb Wizard.png"));
 		m_pDecal_Staff = new olc::Decal(new olc::Sprite("Staffs.png"));
 
-		x = ScreenWidth() / 2;
-		y = ScreenHeight() / 2;
+	level.add(&player);
 
 		//Text::addText("Testing testing 1 2 3...", "Testing", { 0.5f, 0.5f }, {51, 255, 255}, 200);
 		Text::addText("HP " + valueToString(health), "HP", { 255, 25, 25 }, -1, { 0.5f, 0.5f });
@@ -282,36 +281,33 @@ public:
 			for (int y = 0; y < ScreenHeight(); y++)
 				Draw(x, y, olc::Pixel(0, 0, 0));*/
 
-		for (int x = 0; x < 1000; x+=50)
-			for (int y = 0; y < 1000; y+=50)
-				drawPixel(x, y, 255, 255, 255);
+	for (int x = 0; x < 1000; x+=50)
+	for (int y = 0; y < 1000; y+=50)
+	drawPixel(x, y, 255, 255, 255);
 
-		//x++;
-		drawPixel(x, y, 255, 0, 0 );
-		drawPixel( 75, 75, 0, 255, 0 );
 
-		//level.renderEntities(*this);
+	level.renderEntities(*this);
 
 		//if( x > ScreenWidth() ) x=0;
 
-		if(GetKey(olc::A).bHeld) {
-			x--;
-			Text::updateTextPositions({ -1.0f, 0.0f });
-		}
-		if(GetKey(olc::D).bHeld) {
-			x++;
-			Text::updateTextPositions({ 1.0f, 0.0f });
-		}
+	if(GetKey(olc::A).bHeld) {
+		player.addToXPos(-1 * player.getSpeed());
+	}
+	if(GetKey(olc::D).bHeld) {
+		player.addToXPos(player.getSpeed());
+	}
 
-		if(GetKey(olc::W).bHeld) {
-			y--;
-			Text::updateTextPositions({ 0.0f, -1.0f });
-		}
-		if(GetKey(olc::S).bHeld) {
-			y++;
-			Text::updateTextPositions({ 0.0f, 1.0f });
-		}
+	if(GetKey(olc::W).bHeld) {
+		player.addToYPos(-1 * player.getSpeed());
+	}
+	if(GetKey(olc::S).bHeld) {
+		player.addToYPos(player.getSpeed());
+	}
 
+	xOffs = player.getXPos();
+	yOffs = player.getYPos();
+
+	level.update();
 		//level.update();
 
 		// Runs until the fixed frame time has passed
@@ -322,28 +318,28 @@ public:
 				break;
 		}
 
-		return true;
-	}
+	return true;
+}
 
-	void drawPixel(int xPos, int yPos, int r, int g, int b) {
-		if(xPos < 0 || yPos < 0) return;
+void Example::drawPixel(int xPos, int yPos, int r, int g, int b) {
+	if(xPos < 0 || yPos < 0) return;
 
-		xPos -= x;
-		xPos += (ScreenWidth() / 2);
+	xPos -= xOffs;
+	xPos += (ScreenWidth() / 2);
 
-		yPos -= y;
-		yPos += (ScreenHeight() / 2);
+	yPos -= yOffs;
+	yPos += (ScreenHeight() / 2);
 
-		Draw(xPos, yPos, olc::Pixel( r, g, b) );
-	}
+	Draw(xPos, yPos, olc::Pixel( r, g, b) );
+}
 
-};
+
 
 int main()
 {
 	Example demo;
 	if (demo.Construct(256, 240, 4, 4))
-		demo.Start();
+	demo.Start();
 
 	return 0;
 }

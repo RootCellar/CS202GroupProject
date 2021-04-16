@@ -7,15 +7,21 @@ private:
   static int idPoint;
 
   int id;
+  bool alone;
 
 public:
-  Team() {
-    id = idPoint++;
-  }
+  Team();
 
-  int getId() { return id; }
+  //Don't set a real ID for this team if this team is marked as being "alone"
+  Team(bool a);
+
+  int getId() const;
+
+  bool isAlone() const;
 };
 
-int Team::idPoint = 0;
+bool operator==(const Team& one, const Team& two);
+
+bool operator!=(const Team& one, const Team& two);
 
 #endif

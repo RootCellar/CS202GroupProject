@@ -12,18 +12,22 @@ public:
 	Player();
 	Player(int health, int x, int y);
 
-	const std::vector<Spell> * getSpellList();
+	const std::vector<Spell>* getSpellList();
 
 	void setSpellSlot(int slotNum /*Spell type*/);
 
 	void increaseMaxHealth(double mod);
 
-	void attack(Mob& target) override;
+	void update() override;
+
+	void regen();
 
 	void die() override;
+
+	void drawSelf(Example& gfx) const override;
 private:
 	std::vector<Spell> _AvailableSpells[10];
-	static int _lives;
+	int _lives;
 };
 
 #endif
