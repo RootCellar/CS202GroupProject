@@ -16,6 +16,7 @@ add_executable(CS202GroupProject
         src/player.cpp
         src/random.cpp
         src/team.cpp
+        src/text.cpp
         )
 
 if (UNIX AND NOT APPLE)

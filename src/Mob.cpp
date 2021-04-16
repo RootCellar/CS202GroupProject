@@ -188,7 +188,7 @@ void Mob::setCritChance(double critChance){
 void Mob::setAttackRange(double attackRange){
 	_attackRange = attackRange;
 }
-}
+
 
 Team& Mob::getTeam() { return _team; }
 

@@ -13,6 +13,8 @@
 #include "spell.h"
 #include "player.h"
 #include "level.h"
+#include "text.h"
+#include <chrono>
 
 //Mobs
 //#include "Soldier.h" //Currently does not compile
@@ -22,8 +24,42 @@ class Example : public olc::PixelGameEngine
 {
 public:
 
+	std::chrono::steady_clock::time_point _timeStart;
+	std::chrono::duration<double> _timeSpan;
+
 	float fTargetFrameTime = 1.0f / 50.0f; // Virtual FPS of 50fps
-  float fAccumulatedTime = 0.0f;
+	float fAccumulatedTime = 0.0f;
+
+	int x = 0;
+	int y = 0;
+
+	int counter = 0;
+
+	olc::Decal* m_pDecal_HealthBar;
+	int numHealthBarState = 30.0;
+	int inputCounter = 0;
+	int updateAfterCount = 5;
+	double health = 500.0;
+	double maxHealth = 500.0;
+
+	double mana = 500.0;
+	double maxMana = 500.0;
+
+	olc::Decal* m_pDecal_OrbWizard;
+	float bounceMotion = 0.0f;
+
+	olc::Decal* m_pDecal_Staff;
+	int staffStage = 0;
+	bool staffUpgraded = false;
+	float staffOffsetAngle = 0.0f;
+	float staffAngle = 0.0f;
+	bool staffRotShiftLeft = false;
+	olc::vf2d staffPos = { 150.0f, 150.0f };
+
+	olc::Pixel staffUpTextColor = { 255, 0, 0, 0 };
+	int colorChangeHolder = 0;
+	int shakeTimer = 3;
+	int shakeCounter = 0;
 
 	int xOffs = 0;
 	int yOffs = 0;
