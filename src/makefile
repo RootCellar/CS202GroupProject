@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g -Wall
+CXXFLAGS = -std=c++17 -g -Wall
 LDFLAGS = -lX11 -lGL -lpthread -lpng -lstdc++fs
 
 # We use this to
