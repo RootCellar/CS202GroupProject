@@ -13,8 +13,6 @@
 #define OLC_PGE_APPLICATION
 #include "main.h"
 
-
-
 Example::Example(): player(), level(player)
 {
 	sAppName = "Example";
@@ -34,9 +32,21 @@ bool Example::OnUserCreate()
 
 bool Example::OnUserUpdate(float fElapsedTime)
 {
-    level.renderEntities(*this);
+	//Rendering Code
 
-    fAccumulatedTime += fElapsedTime;
+	//Clear the Screen
+	for (int x = 0; x < ScreenWidth(); x++)
+	for (int y = 0; y < ScreenHeight(); y++)
+	Draw(x, y, olc::Pixel(0, 0, 0));
+
+	//Draw reference dots
+	for (int x = 0; x < 1000; x+=50)
+	for (int y = 0; y < 1000; y+=50)
+	drawPixel(x, y, 255, 255, 255);
+
+	level.renderEntities(*this);
+
+	fAccumulatedTime += fElapsedTime;
 	if (fAccumulatedTime >= fTargetFrameTime)
 	{
 		fAccumulatedTime -= fTargetFrameTime;
@@ -45,42 +55,23 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	else
 	return true; // Don't do anything this frame
 
-	// called once per frame
-	/*
-	for (int x = 0; x < ScreenWidth(); x++)
-	for (int y = 0; y < ScreenHeight(); y++)
-	Draw(x, y, olc::Pixel(rand() % 255, rand() % 255, rand()% 255));
-	*/
+	if(GetKey(olc::A).bHeld) {
+		//			x--;
+		player.move("left");
+	}
+	if(GetKey(olc::D).bHeld) {
+		//			x++;
+		player.move("right");
+	}
 
-	for (int x = 0; x < ScreenWidth(); x++)
-	for (int y = 0; y < ScreenHeight(); y++)
-	Draw(x, y, olc::Pixel(0, 0, 0));
-
-	for (int x = 0; x < 1000; x+=50)
-	for (int y = 0; y < 1000; y+=50)
-	drawPixel(x, y, 255, 255, 255);
-
-
-
-	//if( x > ScreenWidth() ) x=0;
-
-		if(GetKey(olc::A).bHeld) {
-//			x--;
-            player.move("left");
-		}
-		if(GetKey(olc::D).bHeld) {
-//			x++;
-            player.move("right");
-		}
-
-		if(GetKey(olc::W).bHeld) {
-//			y--;
-            player.move("up");
-		}
-		if(GetKey(olc::S).bHeld) {
-//			y++;
-            player.move("down");
-		}
+	if(GetKey(olc::W).bHeld) {
+		//			y--;
+		player.move("up");
+	}
+	if(GetKey(olc::S).bHeld) {
+		//			y++;
+		player.move("down");
+	}
 
 	xOffs = player.getXPos();
 	yOffs = player.getYPos();
