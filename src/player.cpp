@@ -1,10 +1,13 @@
 //
 // Created by aleks on 04/08/21.
 //
+#include <vector>
+
 #include "player.h"
 #include "spell.h"
 #include "main.h"
-#include <vector>
+
+using std::string;
 
 Player::Player(): Mob(400, 50, 50), _lives(3) {
 	setSpeed(1);

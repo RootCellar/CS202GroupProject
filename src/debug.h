@@ -4,9 +4,6 @@
 #include <iostream>
 #include <string>
 
-using std::string;
-using std::to_string;
-
 //This line defines DEBUG, a preprocessor variable
 //Commenting this line out will disable debug printing
 #define DEBUG
