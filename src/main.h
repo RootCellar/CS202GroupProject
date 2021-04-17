@@ -14,7 +14,6 @@
 #include "player.h"
 #include "level.h"
 #include "text.h"
-#include <chrono>
 
 //Mobs
 //#include "Soldier.h" //Currently does not compile
@@ -46,9 +45,6 @@ public:
 
 //C++ Headers
 #include <iostream>
-
-//Using statements
-using std::cout;
-using std::endl;
+#include <chrono>
 
 #endif
