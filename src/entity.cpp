@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "main.h"
 
 int Entity::idPoint = 0;
 
@@ -18,7 +19,10 @@ void Entity::setLevel(Level* l) {
   level = l;
 }
 
-void Entity::setDecal(string sFilename) { _decal = new olc::Decal(new olc::Sprite(sFilename)); }
+void Entity::setDecal(string sFilename) { _decal = DecalMap::get().getDecal(sFilename); }
+
+void Entity::setSpriteSourceSize(olc::vi2d sourceSize) { _spriteSourceSize = sourceSize; }
+void Entity::setSpriteScaling(olc::vf2d scale) { _spriteScaling = scale; }
 
 void Entity::setDeadSpriteSource(olc::vf2d sourceOffset) { _spriteDeadOffset = sourceOffset; }
 void Entity::setAttackSpriteSource(olc::vf2d sourceOffset) { _spriteAttackOffset = sourceOffset; }
@@ -37,10 +41,26 @@ void Entity::setGraphicFlicker(bool flicker, int flickerStateStart, int flickerS
 void Entity::setSpriteRotOffset(double angle) { _spriteRotOffset = angle; }
 auto Entity::getSpriteRotOffset() { return _spriteRot; }
 
+void Entity::decalOut(Example& gfx, const olc::Pixel& tint) const
+{
+    if (_decal == nullptr)
+        std::cout << "decal error" << std::endl;
+    else
+        gfx.DrawPartialRotatedDecal(_pos, _decal, _spriteRot + _spriteRotOffset, _spriteSourceSize/2, _spriteSheetOffset, _spriteSourceSize, _spriteScaling, tint);
+}
 
+// Takes input for parameters related to graphics
+void Entity::setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal)
+{
+    setGraphicState(0, 1);
+    setSpriteSourceSize(sourceSize);
+    setSpriteScaling(scale);
+    setDecal(decal);
+}
 
 void Entity::spriteStateManager(bool isAlive)
 {
+    //std::cout << "decal manager" << std::endl;
     if (isAlive)
     {
         if (_vel != olc::vd2d{ 0.0, 0.0 }) // Sprite when moving
@@ -57,14 +77,15 @@ void Entity::spriteStateManager(bool isAlive)
                     if (_graphicState > _flickerEnd)
                         _graphicState = _flickerStart;
                 }
-                if (_graphicState >= _graphicStateCount)
+                if (_graphicState > _graphicStateCount)
                     _graphicState = 0;
             }
         }
         else // Sprite when stationary
             _graphicState = 0;
 
-        _spriteSheetOffset = _graphicState * _spriteSourceSize;
+        _spriteSheetOffset.x = _graphicState * _spriteSourceSize.x;
+        _spriteSheetOffset.y = 0;
 
         // Sprite when lauching an attack
         if (_attackAnimation)
@@ -78,7 +99,6 @@ void Entity::spriteStateManager(bool isAlive)
     }
 }
 
-
 // Position manipulation
 void Entity::setXPos(double newX) { _pos.x = newX; }
 void Entity::setYPos(double newY) { _pos.y = newY; };
@@ -89,7 +109,6 @@ double Entity::getXPos() const { return _pos.x; }
 double Entity::getYPos() const { return _pos.y; }
 
 // Miscellaneous
-void Entity::setRedundant() { _bRedundant = true; }
 void Entity::setRedundant(bool b) { _bRedundant = b; }
 bool Entity::isRedundant() const { return _bRedundant; }
 

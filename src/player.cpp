@@ -74,7 +74,7 @@ void Player::drawSelf(Example& gfx) const {
 void Player::die(){
 	if(_lives < 0){
 		//end the game & display a game over screen
-		setRedundant();
+		setRedundant(true);
 		return;
 	}
 	//display dying animation or sprite

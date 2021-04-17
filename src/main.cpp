@@ -28,7 +28,6 @@ bool Example::OnUserCreate()
 
 	level.add(&player);
 
-	//Text::addText("Testing testing 1 2 3...", "Testing", { 0.5f, 0.5f }, {51, 255, 255}, 200);
 	return true;
 
 }

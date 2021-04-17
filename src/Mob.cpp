@@ -2,6 +2,7 @@
 // Created by aleks on 04/06/21.
 //
 #include "mob.h"
+#include "main.h"
 
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
@@ -9,10 +10,12 @@ int Mob::_mobPop = 0;
 
 Mob::Mob(): _speed(1), _team(true) {
 	_mobPop++;
+	graphicsSetup();
 }
 
 Mob::Mob(double maxHealth, double x, double y): Entity(x, y), _health(maxHealth), _maxHealth(maxHealth), _speed(1), _team(true) {
 	_mobPop++;
+	graphicsSetup();
 }
 
 Mob::~Mob() {
@@ -92,8 +95,25 @@ void Mob::manaRegen()
 
 
 void Mob::update() {
-
+	spriteStateManager(getIsAlive());
 }
+
+void Mob::drawSelf(Example& gfx) const {
+	// Drawing code here...
+	decalOut(gfx);
+}
+
+// Calls the set up for this mob (Needs to be overwritten if data needs to be different)
+void Mob::graphicsSetup()
+{
+	// This is just some default/temporary stuff to test the sprite code
+	setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
+	setDeadSpriteSource({ 16, 16 });
+	setAttackSpriteSource({ 0, 16 });
+}
+
+bool Mob::getIsAlive() { return _isAlive; };
+
 // Increase Hp by hpPlus
 void Mob::addToHealth(double hpPlus) {	_health += hpPlus;}
 // Set Maximum health

@@ -25,8 +25,7 @@ private:
 
   // Decal/Sprite variables
   olc::Decal* _decal = nullptr;
-  olc::vf2d _spriteDimensions;
-  olc::vi2d _spriteSheetOffset;
+  olc::vi2d _spriteSheetOffset = { 0, 0 };
   olc::vi2d _spriteSourceSize = { 16, 16 };
   olc::vf2d _spriteScaling = { 1.0f, 1.0f };
 
@@ -38,9 +37,9 @@ private:
   bool _attackAnimation = false; // Display upon launching an attack
 
   double _spriteRot = 0.0; // Rotation of sprite
-  double _spriteRotOffset = 0.0;
+  double _spriteRotOffset = 0.0 + PI/2.0;
 
-  int _graphicState; // The specfic state of motion in the given faced direction
+  int _graphicState = 0; // The specfic state of motion in the given faced direction
   int _graphicStateCount = 2; // Number of states per direction faced
 
   bool _graphicFlicker = false;
@@ -69,8 +68,12 @@ public:
 
   // Graphics related functions
   virtual void drawSelf(Example& gfx) const = 0;
+  void decalOut(Example& gfx, const olc::Pixel& tint = { 255, 255, 255 }) const;
 
   void setDecal(std::string sFilename);
+
+  void setSpriteSourceSize(olc::vi2d sourceSize);
+  void setSpriteScaling(olc::vf2d scale);
 
   void setDeadSpriteSource(olc::vf2d source);
   void setAttackSpriteSource(olc::vf2d source);
@@ -83,7 +86,11 @@ public:
 
   void setSpriteRotOffset(double angle); // Sets the angle the sprite is rotated to
   auto getSpriteRotOffset();
+
+  void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
   void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
+
+  virtual void graphicsSetup() = 0;
 
   // Position manipulation
   void setXPos(double newX);
@@ -95,7 +102,6 @@ public:
   double getYPos() const;
 
   void setRedundant(bool b);
-  void setRedundant();
   bool isRedundant() const;
 
   int getId() const;

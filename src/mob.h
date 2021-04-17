@@ -37,9 +37,9 @@ public:
 	// update function needs to have the same parameters as the update function it inherits/overrides
 	void update() override;
 
-	virtual void drawSelf(Example& gfx) const override {
-		// Drawing code here...
-	}
+	virtual void drawSelf(Example& gfx) const override;
+
+	virtual void graphicsSetup() override;
 
 	virtual void die();
 	virtual void revive();
@@ -56,6 +56,8 @@ public:
 
 	double getSpeed() const;
 	void setSpeed(double);
+
+	bool getIsAlive();
 
 	// Health
 			//void setHealth(double hp);
@@ -99,21 +101,21 @@ private:
 	bool _isAlive = true;
 
 	// Health
-	double _health;
-	double _maxHealth;
-	double _hpPerFrame;
+	double _health = 100.0;
+	double _maxHealth = 100.0;
+	double _hpPerFrame = 0.1;
 
 	// Mana
-	double _mana;
-	double _maxMana;
-	double _mpPerFrame;
+	double _mana = 100.0;
+	double _maxMana = 100.0;
+	double _mpPerFrame = 0.1;
 
 	// Offense
-	double _attackDmg;
-	double _critModifier;
-	double _critChance;
-	double _attackRange;
-	double _distFromTarget;
+	double _attackDmg = 10.0;
+	double _critModifier = 10.0;
+	double _critChance = 10.0;
+	double _attackRange = 10.0;
+	double _distFromTarget = 0.0;
 
 	double _speed;
 

@@ -23,4 +23,7 @@ void DecalMap::loadDecals()
     load("Hp&Mp", "Health Bar States.png");
     load("Wizard", "Orb Wizard.png");
     load("Staffs", "Staffs.png");
+
+    // Mob
+    load("Spider", "Spider.png");
 }
