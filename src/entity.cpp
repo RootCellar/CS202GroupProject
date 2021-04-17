@@ -19,7 +19,7 @@ void Entity::setLevel(Level *l) {
     level = l;
 }
 
-Level *Entity::getLevel() const{
+Level* Entity::getLevel() const{
     return level;
 }
 

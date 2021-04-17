@@ -13,15 +13,16 @@ private:
     double _radius = 10;
 
     bool _hasHit = false;
-//    virtual void setlevel (Level * l ) override ; //idk how to use it
 public:
-    Projectile(); // Random ??
+    Projectile();
     Projectile(double, double);
     Projectile(double, double, const olc::vd2d &fPos);
     Projectile(double x, double y, double fx, double dy);
 
     ~Projectile() = default; // only worked after I did this
-    virtual void drawSelf(Example& gfx) const override;//, double offsetx, double offsety);
+
+    virtual void drawSelf(Example& gfx) const override;
+
     //update the projectile, move it etc.
     virtual void update() override;
 
@@ -38,14 +39,12 @@ public:
 
 std::unique_ptr<Projectile> projectileFactory(double, double, double, double);
 
-std::vector<std::unique_ptr<Projectile>> getMyBalls(double, double, int numberOfBalls);
-
 // HomingProjectile keeps reference to an entity
 // need a btter way to mitigate failure incase entity is removed from level. Maybe check with nullptr ?
 class HomingProjectile : public Projectile {
 public:
-    Entity *notPointerToEntity;// = nullptr;
-    HomingProjectile(double, double, Entity *ent);
+    Mob* _entityTarget;
+    HomingProjectile(double, double, Mob* mob);
 
     virtual void update() override;
 
