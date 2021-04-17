@@ -8,10 +8,7 @@
 #include "level.h"
 
 Level::Level(Player& p):player(p) {
-    debug("Constructing the level...");
-    add(&testProjectile);
-    add(&test2);
-    add(&p);
+  debug("Constructing the level...");
 }
 
 void Level::add(Mob *m) {
@@ -73,15 +70,6 @@ void Level::update() {
   }
 
   for(Projectile *p : projectiles) {
-      std::vector <Mob * > mir;
-      if ( p != nullptr)
-      mir = getMobsInRange(p->getPos(), p->getRadius());
-      for ( auto x : mir) {
-          x->die();
-      }
-      // If there were no mobs in range, then it hasn't hit. I know long way but still...
-      if ( !mir.empty());
-//          p->setHasHit();
     p->update();
   }
 
@@ -146,20 +134,18 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
 }
 // getMobsInRange adapted to use olc::vd2d
 std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) {
-    std::vector<Mob*> toRet;
+  std::vector<Mob*> toRet;
 
-    for(Mob* m : mobs) {
+  for(Mob* m : mobs) {
+    double dist = getDistanceBetween(point, m->getPos());
 
-//        Mob j = *m;
-        double dist = getDistanceBetween(point, m->getPos());
-
-        if(dist <= radius) {
-            toRet.push_back(m);
-        }
-
+    if(dist <= radius) {
+      toRet.push_back(m);
     }
 
-    return toRet;
+  }
+
+  return toRet;
 }
 
 //Get mobs within range from some point and not on the given team
@@ -180,22 +166,21 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
 
   return toRet;
 }
+
 //getMobsInRange adapted to use vd2d
 std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, Team t) {
-    std::vector<Mob*> toRet;
+  std::vector<Mob*> toRet;
 
-    for(Mob* m : mobs) {
+  for(Mob* m : mobs) {
+    double dist = getDistanceBetween(point , m->getPos());
 
-//        Mob j = *m; // this may not be good, because this creates another mob.
-        double dist = getDistanceBetween(point , m->getPos());
-
-        if(dist <= radius && m->getTeam() != t) {
-            toRet.push_back(m);
-        }
-
+    if(dist <= radius && m->getTeam() != t) {
+      toRet.push_back(m);
     }
 
-    return toRet;
+  }
+
+  return toRet;
 }
 
 double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2) {
@@ -204,17 +189,9 @@ double Level::getDistanceBetween(double xP1, double yP1, double xP2, double yP2)
 
 //getDistanceBetween adapted to use olc::vd2d .mag()
 double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2) {
-    return (point1 - point2).mag();
+  return (point1 - point2).mag();
 }
 void Level::renderEntities(Example& gfx) const {
-    //Render these balls
-//    testProjectile.drawSelf(gfx);
-//    test2.drawSelf(gfx);
-//    test3.drawSelf(gfx);
-    player.drawSelf(gfx);
-//    followPlayer.drawSelf(gfx);
-    // test text
-//    gfx->DrawStringDecal(olc::vi2d{100,100}, "This text using olc", olc::WHITE);
   for(Projectile *p : projectiles) {
     (*p).drawSelf(gfx);
   }
@@ -225,7 +202,5 @@ void Level::renderEntities(Example& gfx) const {
 }
 
 olc::vd2d Level::getPlayerPosition() const{
-    return player.getPos();
-
+  return player.getPos();
 }
-

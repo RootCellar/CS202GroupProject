@@ -6,7 +6,6 @@
 #include "olcPixelGameEngine.h"
 #include "debug.h"
 #include "team.h"
-#include <memory>
 
 class Player;
 class Mob;
@@ -33,14 +32,6 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
-    //Test projectiles below
-  Projectile testProjectile { 75, 75, 80, 80};
-
-  OrbitalProjectile test2 { 50, 50, 100, 126};
-
-  HomingProjectile test3 { 100, 100, &test2};
-
-  HomingProjectile followPlayer { 200, 200, &player};
 public:
 
   Level(Player &p);
@@ -69,18 +60,17 @@ public:
   void renderEntities(Example& gfx) const;
   //Get mobs within range from some point
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius);
-    std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);
+  std::vector<Mob*> getMobsInRange(const olc::vd2d &point, double radius);
 
-    //Get mobs within range from some point and not on the given team
+  //Get mobs within range from some point and not on the given team
   //(So the returned list is only enemies)
   std::vector<Mob*> getMobsInRange(double xPos, double yPos, double radius, Team t);
-    std::vector<Mob *> getMobsInRange(const olc::vd2d &point, double radius, Team t);
+  std::vector<Mob *> getMobsInRange(const olc::vd2d &point, double radius, Team t);
 
   double getDistanceBetween(double xP1, double yP1, double xP2, double yP2);
-    double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
+  double getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point2);
 
-    olc::vd2d getPlayerPosition () const;
-    std::unique_ptr<Projectile> xxx = std::make_unique<Projectile> (100, 100, 200, 200);
+  olc::vd2d getPlayerPosition () const;
 };
 
 #endif
