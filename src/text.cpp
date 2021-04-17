@@ -68,7 +68,7 @@ bool Text::overWriteText(std::string str, const std::string& purpose)
 
 // Edits a text already added
 bool Text::overWriteText(std::string str, const std::string& purpose, const olc::Pixel color)
-{   
+{
     if (overWriteText(str, purpose))
         _mText[purpose]._color = color;
     else
@@ -196,11 +196,11 @@ void textArranger(std::string str, const std::string& purpose, const olc::vf2d s
     float offsetRow = 0.0f;
     float offsetCol = 0.0f;
 
-    float charString = 0.0f; // Add to 
+    float charString = 0.0f; // Add to
 
     charString = linePos.x;
 
-    for (int i = 0; i < str.size(); i++)
+    for (size_t i = 0; i < str.size(); i++)
     {
         offsetRow = 0.0f;
         offsetCol = 0.0f;
