@@ -109,10 +109,10 @@ void Mob::addToHpPerFrame(double hpRegenPlus) {
 	_hpPerFrame += hpRegenPlus;
 }
 
-auto Mob::getMaxHealth(){
+double Mob::getMaxHealth() const {
 	return _maxHealth;
 }
-auto Mob::getHpPerFrame() {
+double Mob::getHpPerFrame()  const {
 	return _hpPerFrame;
 }
 
@@ -138,40 +138,18 @@ void Mob::addToMpPerFrame(double mpRegenPlus){
 }
 
 
-auto Mob::getMana(){
+double Mob::getMana() const {
 	return _mana;
 }
-auto Mob::getMaxMana(){
+double Mob::getMaxMana() const {
 	return _maxMana;
 }
-auto Mob::getMpPerFrame() {
+double Mob::getMpPerFrame()  const {
 	return _mpPerFrame;
 }
 
 
 // Offense
-// Get the amount of damage dealt by this mob
-auto Mob::getAttackDmg(){
-	return _attackDmg;
-}
-// Get the critical damage modifier for this mob
-auto Mob::getCritModifier(){
-	return _critModifier;
-}
-// Get the critical chance for this mob's attacks
-auto Mob::getCritChance(){
-	return _critChance;
-}
-// Get the range of attack for this mob
-auto Mob::getAttackRange(){
-	return _attackRange;
-}
-// Get the distance between this mob and its target  - > // Prabably more of a level function
-auto Mob::getDistFromTarget(){
-	return _distFromTarget;
-}
-
-
 // Set the amount of damage dealt by this mob
 void Mob::setAttackDmg(double attackDmg){
 	_attackDmg = attackDmg;
@@ -188,6 +166,30 @@ void Mob::setCritChance(double critChance){
 void Mob::setAttackRange(double attackRange){
 	_attackRange = attackRange;
 }
+
+// Get the amount of damage dealt by this mob
+double Mob::getAttackDmg() const {
+	return _attackDmg;
+}
+// Get the critical damage modifier for this mob
+double Mob::getCritModifier() const {
+	return _critModifier;
+}
+// Get the critical chance for this mob's attacks
+double Mob::getCritChance() const {
+	return _critChance;
+}
+// Get the range of attack for this mob
+double Mob::getAttackRange() const {
+	return _attackRange;
+}
+// Get the distance between this mob and its target  - > // Prabably more of a level function
+double Mob::getDistFromTarget() const {
+	return _distFromTarget;
+}
+
+
+
 
 
 Team& Mob::getTeam() { return _team; }

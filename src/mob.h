@@ -57,6 +57,43 @@ public:
 	double getSpeed() const;
 	void setSpeed(double);
 
+	// Health
+			//void setHealth(double hp);
+	void addToHealth(double hpPlus); // Increase Hp by hpPlus
+	void setMaxHealth(double hpMax); // Set Maximum health
+	void setHpPerFrame(double hpRegen); // Set the Hp regenerated each frame
+	void addToHpPerFrame(double hpRegenPlus); // Increase the amount of health regenerated each frame
+			//auto getHealth();
+	double getMaxHealth() const;
+	double getHpPerFrame() const;
+
+	// Mana
+	void setMana(double mp);
+	void addToMana(double mpPlus); // Increase Mp by mpPlus
+	void setMaxMana(double mpMax); // Set Maximum mana
+	void setMpPerFrame(double mpRegen); // Set the Mp regenerated each frame
+	void addToMpPerFrame(double mpRegenPlus); // Increase the amount of mana regenerated each frame
+
+	double getMana() const;
+	double getMaxMana() const;
+	double getMpPerFrame() const;
+
+	// Offense
+	void setAttackDmg(double attackDmg); // Set the amount of damage dealt by this mob
+			//void addToAttackDmg(); // Increase the amount of damage dealt by this mob
+	void setCritModifier(double critModifier); // Get the critical damage modifier for this mob
+			//void addToCritModifier(); // Increase the critical damage modifier for this mob
+	void setCritChance(double critChance); // Get the critical chance for this mob's attacks
+	void setAttackRange(double attackRange); // Get the range of attack for this mob
+	
+	double getAttackDmg() const; // Get the amount of damage dealt by this mob
+	double getCritModifier() const; // Get the critical damage modifier for this mob
+	double getCritChance() const; // Get the critical chance for this mob's attacks
+	double getAttackRange() const; // Get the range of attack for this mob
+	double getDistFromTarget() const; // Get the distance between this mob and its target  - > // Prabably more of a level function
+
+
+
 private:
 	// Personal State
 	bool _isAlive = true;
@@ -66,30 +103,10 @@ private:
 	double _maxHealth;
 	double _hpPerFrame;
 
-			//void setHealth(double hp);
-	void addToHealth(double hpPlus); // Increase Hp by hpPlus
-	void setMaxHealth(double hpMax); // Set Maximum health
-	void setHpPerFrame(double hpRegen); // Set the Hp regenerated each frame
-	void addToHpPerFrame(double hpRegenPlus); // Increase the amount of health regenerated each frame
-
-			//auto getHealth();
-	auto getMaxHealth();
-	auto getHpPerFrame();
-
 	// Mana
 	double _mana;
 	double _maxMana;
 	double _mpPerFrame;
-
-	void setMana(double mp);
-	void addToMana(double mpPlus); // Increase Mp by mpPlus
-	void setMaxMana(double mpMax); // Set Maximum mana
-	void setMpPerFrame(double mpRegen); // Set the Mp regenerated each frame
-	void addToMpPerFrame(double mpRegenPlus); // Increase the amount of mana regenerated each frame
-
-	auto getMana();
-	auto getMaxMana();
-	auto getMpPerFrame();
 
 	// Offense
 	double _attackDmg;
@@ -97,22 +114,6 @@ private:
 	double _critChance;
 	double _attackRange;
 	double _distFromTarget;
-
-	auto getAttackDmg(); // Get the amount of damage dealt by this mob
-	auto getCritModifier(); // Get the critical damage modifier for this mob
-	auto getCritChance(); // Get the critical chance for this mob's attacks
-	auto getAttackRange(); // Get the range of attack for this mob
-	auto getDistFromTarget(); // Get the distance between this mob and its target  - > // Prabably more of a level function
-
-
-	void setAttackDmg(double attackDmg); // Set the amount of damage dealt by this mob
-			//void addToAttackDmg(); // Increase the amount of damage dealt by this mob
-	void setCritModifier(double critModifier); // Get the critical damage modifier for this mob
-			//void addToCritModifier(); // Increase the critical damage modifier for this mob
-	void setCritChance(double critChance); // Get the critical chance for this mob's attacks
-	void setAttackRange(double attackRange); // Get the range of attack for this mob
-
-
 
 	double _speed;
 

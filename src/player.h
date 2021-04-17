@@ -25,10 +25,34 @@ public:
 	void die() override;
 
 	void drawSelf(Example& gfx) const override;
+
+	void upgradeStaff(); // Upgrades the staff sprite (should also probably upgrade the player's damage too)
+	void staffUpdate(); // Updates the staff
+
 private:
+
+	float _bounceMotion = 0.0f; // Determines the shrink and stretch of the sprite for bouncy motion
+	// Staffs drawing and updating parameters
+	int _staffStage = 0;
+	bool _staffUpgraded = false;
+	float _staffOffsetAngle = 0.0f;
+	float _staffAngle = 0.0f;
+	bool _staffRotShiftLeft = false;
+	olc::vf2d _staffPosFromPLayer = { 7.0f,0.0f };
+	olc::vf2d _staffPosOffset = { 2.0f, 2.0f };
+
+	olc::Pixel _staffUpTextColor = { 255, 0, 0, 0 };
+	int _colorChangeHolder = 0;
+	int _shakeTimer = 3;
+	int _shakeCounter = 0;
+
+
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;
 };
+
+// Sets up the text output for the player
+void playerTextSetup(const double health, const double mana);
 
 #endif
 /*

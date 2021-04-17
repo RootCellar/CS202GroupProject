@@ -262,19 +262,3 @@ std::string valueToString(double value)
     s << value;
     return s.str();
 }
-
-
-DecalMap::DecalMap() {}
-DecalMap::~DecalMap() {}
-
-void DecalMap::loadDecals()
-{
-    auto load = [&](std::string sName, std::string sFilename)
-    {
-        olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
-        _mapDecals[sName] = d;
-    };
-
-    // Text
-    load("Text", "Alphabet.png");
-}

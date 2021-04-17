@@ -86,31 +86,4 @@ void textArranger(std::string str, const std::string& purpose, const olc::vf2d s
 
 std::string valueToString(double value);
 
-
-class DecalMap
-{
-public:
-    static DecalMap& get()
-    {
-        static DecalMap me;
-        return me;
-    }
-
-    DecalMap(DecalMap const&) = delete;
-    void operator=(DecalMap const&) = delete;
-
-    olc::Decal* getDecal(std::string name)
-    {
-        return _mapDecals[name]; // State specifies item in vector
-    }
-
-    void loadDecals();
-
-private:
-    DecalMap();
-    ~DecalMap();
-
-    std::map<std::string, olc::Decal*> _mapDecals;
-};
-
 #endif // !TEXT_HPP
