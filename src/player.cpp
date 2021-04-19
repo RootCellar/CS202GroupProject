@@ -18,6 +18,7 @@ Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 	setSpeed(1);
 	playerTextSetup(getHealth(), getMana());
 }
+
 Player::Player(const string &text) : Mob( 100, 100, 100) {
 	// test player if you use text as parameter
 	// notice that constructor also sets decal
@@ -79,13 +80,14 @@ void Player::drawSelf(Example& gfx) const {
 
 void Player::die(){
 	if(_lives < 0){
-		//end the game & display a game over screen
+		//the player has died....
 		setRedundant();
 		return;
 	}
 	//display dying animation or sprite
 	//respawn in the starting location for the level
 	_lives--;
+	heal(getMaxHp());
 }
 // Uses the PGE's way to take input implemented at main.cpp
 // gets the string and moves player position corresponding direction

@@ -16,7 +16,6 @@ Mob::Mob() : Entity(), _team(true) {
 Mob::Mob(double maxHealth, double x, double y) : Entity(x, y), _health(maxHealth), _maxHealth(maxHealth),
 _team(true) {
   setSpeed(1);
-  setDecal("test.png");
   setDirection({0,0});
   _mobPop++;
 }
