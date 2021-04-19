@@ -27,11 +27,9 @@ public:
 
 	void move (const std::string &direction);
 
-	void drawSelf(Example& gfx) const;
+	void drawSelf(Example& gfx) const override;
 
 	virtual void die() override;
-
-	void drawSelf(Example& gfx) const override;
 
 	void upgradeStaff(); // Upgrades the staff sprite (should also probably upgrade the player's damage too)
 	void staffUpdate(); // Updates the staff

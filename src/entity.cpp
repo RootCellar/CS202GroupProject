@@ -27,6 +27,10 @@ Level* Entity::getLevel() const{
 
 void Entity::setDecal(std::string sName) { _decal = DecalMap::get().getDecal(sName); }
 
+olc::Decal* Entity::getDecal() const{
+  return _decal;
+}
+
 void Entity::setSpriteSourceSize(olc::vi2d sourceSize) { _spriteSourceSize = sourceSize; }
 
 void Entity::setSpriteScaling(olc::vf2d scale) { _spriteScaling = scale; }
@@ -107,7 +111,7 @@ void Entity::spriteStateManager(bool isAlive) {
 
         _graphicframeCount++;
     }
-    else 
+    else
     { // Dead sprite, supposedly
         _spriteSheetOffset = _spriteDeadOffset * _spriteSourceSize;
     }

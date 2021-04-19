@@ -75,6 +75,7 @@ public:
   void decalOut(Example& gfx, const olc::Pixel& tint = { 255, 255, 255 }) const;
 
   void setDecal(std::string sName);
+  olc::Decal* getDecal() const;
 
   void setSpriteSourceSize(olc::vi2d sourceSize);
   void setSpriteScaling(olc::vf2d scale);
