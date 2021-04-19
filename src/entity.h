@@ -20,7 +20,7 @@ private:
   std::string _name;
 
   olc::vd2d _pos;
-  olc::vd2d _vel = { 0.0, 0.0 };
+  
 
 
   // Decal/Sprite variables
@@ -47,7 +47,7 @@ private:
   int _flickerEnd = 0;
   // How many frames until we change the state
   int _graphicStateTimer = 25;
-  int _frameCount = 0;
+  int _graphicframeCount = 0;
 
 
   static int idPoint;
@@ -56,6 +56,7 @@ private:
   Level *level;
 
 public:
+    olc::vd2d _vel = { 0.0, 0.0 };
   Entity();
 
   Entity(double x, double y);
@@ -80,6 +81,9 @@ public:
 
   void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
   auto getGraphicState();
+
+  void setGraphicFrameTimer(int numFrames);
+  int getGraphicFrameTimer();
 
   void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
   void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states

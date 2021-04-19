@@ -95,6 +95,8 @@ void Mob::manaRegen()
 
 
 void Mob::update() {
+	addToXPos(0.5);
+	_vel = { 0.5, 0.0 };
 	spriteStateManager(getIsAlive());
 }
 
@@ -110,6 +112,8 @@ void Mob::graphicsSetup()
 	setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
 	setDeadSpriteSource({ 16, 16 });
 	setAttackSpriteSource({ 0, 16 });
+
+	setGraphicFrameTimer(20);
 }
 
 bool Mob::getIsAlive() { return _isAlive; };

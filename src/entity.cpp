@@ -30,6 +30,9 @@ void Entity::setAttackSpriteSource(olc::vf2d sourceOffset) { _spriteAttackOffset
 void Entity::setGraphicState(int startState, int stateCount) { _graphicState = startState; _graphicStateCount = stateCount; }
 auto Entity::getGraphicState() { return _graphicState; }
 
+void Entity::setGraphicFrameTimer(int numFrames) { _graphicStateTimer = numFrames; }
+int Entity::getGraphicFrameTimer() { return _graphicStateTimer; }
+
 void Entity::setGraphicStateTimer(int t) { _graphicStateTimer = t; }
 void Entity::setGraphicFlicker(bool flicker, int flickerStateStart, int flickerStateEnd)
 {
@@ -67,9 +70,9 @@ void Entity::spriteStateManager(bool isAlive)
         {
             if (_useRotations)
                 _spriteRot = convertToAngle(_vel);
-            if (_frameCount >= _graphicStateTimer) // Runs through all movement states and starts again
+            if (_graphicframeCount >= _graphicStateTimer) // Runs through all movement states and starts again
             {
-                _frameCount = 0;
+                _graphicframeCount = 0;
                 _graphicState++;
 
                 if (_graphicFlicker) // Flicker the decal between specified sprite animations
@@ -91,7 +94,7 @@ void Entity::spriteStateManager(bool isAlive)
         if (_attackAnimation)
             _spriteSheetOffset = _spriteAttackOffset;
 
-        _frameCount++;
+        _graphicframeCount++;
     }
     else
     { // Dead sprite, supposedly
