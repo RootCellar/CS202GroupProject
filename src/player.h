@@ -22,14 +22,16 @@ public:
 	void update() override;
 
 	void regen();
+	void manaRegen();
+
 	void increaseMaxHealth(int mod);
 	void attack(Mob& target);
 
 	void move (const std::string &direction);
 
-	virtual void die() override;
-
 	void drawSelf(Example& gfx) const override;
+
+	virtual void die() override;
 
 	void upgradeStaff(); // Upgrades the staff sprite (should also probably upgrade the player's damage too)
 	void staffUpdate(); // Updates the staff

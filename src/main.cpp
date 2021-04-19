@@ -50,6 +50,14 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	for (int y = 0; y < 1000; y+=50)
 	drawPixel(x, y, 255, 255, 255);
 
+	for(int x = 0; x < levelWidth; x++) {
+		drawPixel(x, 0, 255, 255, 255);
+	}
+
+	for(int y = 0; y < levelHeight; y++) {
+		drawPixel(0, y, 255, 255, 255);
+	}
+
 	level.renderEntities(*this);
 
 	fAccumulatedTime += fElapsedTime;

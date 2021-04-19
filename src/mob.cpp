@@ -8,13 +8,13 @@
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
 
-Mob::Mob() : Entity(), _team(true) {
+Mob::Mob() : Entity(), _team(true), _mana(0), _maxMana(100) {
   setSpeed(1);
   _mobPop++;
 }
 
 Mob::Mob(double maxHealth, double x, double y) : Entity(x, y), _health(maxHealth), _maxHealth(maxHealth),
-_team(true) {
+_team(true), _mana(0), _maxMana(100) {
   setSpeed(1);
   setDirection({0,0});
   _mobPop++;
