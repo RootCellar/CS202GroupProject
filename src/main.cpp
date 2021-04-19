@@ -79,6 +79,10 @@ bool Example::OnUserUpdate(float fElapsedTime)
 		player.move("down");
 	}
 
+	if (GetKey(olc::U).bPressed) {
+		player.upgradeStaff();
+	}
+
 	xOffs = player.getXPos();
 	yOffs = player.getYPos();
 

@@ -97,6 +97,23 @@ void Mob::manaRegen() {
 void Mob::update() {
   if(isAlive())
   addToPos(getDirection() * getSpeed());
+  spriteStateManager(isAlive());
+}
+
+void Mob::drawSelf(Example& gfx) const {
+    // Drawing code here...
+    decalOut(gfx);
+}
+
+// Calls the set up for this mob (Needs to be overwritten if data needs to be different)
+void Mob::graphicsSetup()
+{
+    // This is just some default/temporary stuff to test the sprite code
+    setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
+    setDeadSpriteSource({ 1.0f, 1.0f });
+    setAttackSpriteSource({ 0.0f, 1.0f });
+
+    setGraphicFrameTimer(20);
 }
 
 Team& Mob::getTeam() { return _team; }
@@ -120,11 +137,11 @@ void Mob::addToHpPerFrame(double hpRegenPlus) {
   _hpPerFrame += hpRegenPlus;
 }
 
-auto Mob::getMaxHealth() {
+double Mob::getMaxHealth() const {
   return _maxHealth;
 }
 
-auto Mob::getHpPerFrame() {
+double Mob::getHpPerFrame() const {
   return _hpPerFrame;
 }
 
@@ -154,42 +171,42 @@ void Mob::addToMpPerFrame(double mpRegenPlus) {
 }
 
 
-auto Mob::getMana() {
+double Mob::getMana() const {
   return _mana;
 }
 
-auto Mob::getMaxMana() {
+double Mob::getMaxMana() const {
   return _maxMana;
 }
 
-auto Mob::getMpPerFrame() {
+double Mob::getMpPerFrame() const {
   return _mpPerFrame;
 }
 
 
 // Offense
 // Get the amount of damage dealt by this mob
-auto Mob::getAttackDmg() {
+double Mob::getAttackDmg() const {
   return _attackDmg;
 }
 
 // Get the critical damage modifier for this mob
-auto Mob::getCritModifier() {
+double Mob::getCritModifier() const {
   return _critModifier;
 }
 
 // Get the critical chance for this mob's attacks
-auto Mob::getCritChance() {
+double Mob::getCritChance() const {
   return _critChance;
 }
 
 // Get the range of attack for this mob
-auto Mob::getAttackRange() {
+double Mob::getAttackRange() const {
   return _attackRange;
 }
 
 // Get the distance between this mob and its target  - > // Prabably more of a level function
-auto Mob::getDistFromTarget() {
+double Mob::getDistFromTarget() const {
   return _distFromTarget;
 }
 
@@ -214,13 +231,13 @@ void Mob::setAttackRange(double attackRange) {
   _attackRange = attackRange;
 }
 
-void Mob::drawSelf(Example& gfx) const {
-  // Drawing code here...
-  //		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
-
-  if(isAlive())
-  gfx.DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
-}
+//void Mob::drawSelf(Example& gfx) const {
+//  // Drawing code here...
+//  //		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
+//
+// /* if(isAlive())
+//  gfx.DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));*/
+//}
 
 ChaserMob::ChaserMob():Mob() {
   setDecal("Spider_Scaled_up.png");
@@ -247,12 +264,12 @@ void ChaserMob::drawSelf(Example& gfx) const{
   //        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
   //     getSpriteSourceSize() , getDecalScale(30));
 
-  if(isAlive())
+  /*if(isAlive())
   gfx.DrawPartialRotatedDecal(getPos(), getDecal(),getSpriteRot() , getSpriteSourceSize()/2, olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize(),
   getDecalScale(30));
   else
   gfx.DrawPartialRotatedDecal(getPos(), getDecal(),0 , getSpriteSourceSize()/2, olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize(),
-  getDecalScale(30));
+  getDecalScale(30));*/
   //    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize() ,
   //                          getDecalScale(30));
 
