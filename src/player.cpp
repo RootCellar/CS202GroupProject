@@ -11,11 +11,16 @@ using std::string;
 
 Player::Player(): Mob(400, 50, 50), _lives(3) {
 	setSpeed(1);
+
+	setDecal("Orb_Wizard_and_Staff.png");
 }
 
 Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 	setSpeed(1);
+
+	setDecal("Orb_Wizard_and_Staff.png");
 }
+
 Player::Player(const string &text) : Mob( 100, 100, 100) {
 	// test player if you use text as parameter
 	// notice that constructor also sets decal
