@@ -1,8 +1,13 @@
+/*decalmap.h
+4/16/2021
+This is the header file for the decalmap class.
+*/
 
-#ifndef CS202GROUPPROJECT_DECALMAP_H
-#define CS202GROUPPROJECT_DECALMAP_H
+#include "olcPixelGameEngine.h"
 
-#include <map>
+#ifndef DECALMAP_HPP
+#define DECALMAP_HPP
+
 class DecalMap
 {
 public:
@@ -15,7 +20,7 @@ public:
     DecalMap(DecalMap const&) = delete;
     void operator=(DecalMap const&) = delete;
 
-    olc::Decal * getDecal(string name)
+    olc::Decal* getDecal(std::string name)
     {
         return _mapDecals[name]; // State specifies item in vector
     }
@@ -26,21 +31,7 @@ private:
     DecalMap();
     ~DecalMap();
 
-    std::map<string, olc::Decal * > _mapDecals;
+    std::map<std::string, olc::Decal*> _mapDecals;
 };
 
-//DecalMap::DecalMap(){}
-//DecalMap::~DecalMap(){}
-
-void DecalMap::loadDecals()
-{
-    auto load = [&](string sName, string sFilename)
-    {
-        olc::Decal * d = new olc::Decal(new olc::Sprite(sFilename));
-        _mapDecals[sName] = d;
-    };
-
-    // Text
-    load("Text", "Alphabet.png");
-}
-#endif //CS202GROUPPROJECT_DECALMAP_H
+#endif // !DECALMAP_HPP

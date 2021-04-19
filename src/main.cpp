@@ -24,6 +24,11 @@ Example::Example(): player(), level(player)
 bool Example::OnUserCreate()
 {
 	// Called once at the start, so create things here
+	DecalMap::get().loadDecals();
+	Text::loadTextDecal();
+
+	Text::addText("Game Start!", "Begin", { 255, 255, 255 }, 70);
+	Text::addToTextPos("Begin", { 50, 50 });
 
 	level.add(&player);
 
@@ -33,6 +38,7 @@ bool Example::OnUserCreate()
 bool Example::OnUserUpdate(float fElapsedTime)
 {
 	//Rendering Code
+	Text::drawText(*this);
 
 	//Clear the Screen
 	for (int x = 0; x < ScreenWidth(); x++)
@@ -77,6 +83,7 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	yOffs = player.getYPos();
 
 	level.update();
+	Text::updateTextLifetimes();
 
 	return true;
 }

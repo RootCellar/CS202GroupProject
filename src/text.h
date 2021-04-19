@@ -78,39 +78,12 @@ static void flipStuckToScreen(const std::string& purpose);
 static void addToTextPos(const std::string& purpose, olc::vf2d Offset);
 
 // Draws all the text stored in the _mText map
-static void drawText(olc::PixelGameEngine* gfx);
+static void drawText(Example& gfx);
 };
 
 // Does the assembling of the characters
 void textArranger(std::string str, const std::string& purpose, const olc::vf2d scale, std::map<std::string, textData>& mText, olc::vf2d linePos = { 0.0f, 0.0f });
 
 std::string valueToString(double value);
-
-
-class DecalMap
-{
-public:
-    static DecalMap& get()
-    {
-        static DecalMap me;
-        return me;
-    }
-
-    DecalMap(DecalMap const&) = delete;
-    void operator=(DecalMap const&) = delete;
-
-    olc::Decal* getDecal(std::string name)
-    {
-        return _mapDecals[name]; // State specifies item in vector
-    }
-
-    void loadDecals();
-
-private:
-    DecalMap();
-    ~DecalMap();
-
-    std::map<std::string, olc::Decal*> _mapDecals;
-};
 
 #endif // !TEXT_HPP

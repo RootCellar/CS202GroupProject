@@ -3,6 +3,7 @@
 This is the cpp file for the text classes and functions.
 */
 
+#include "main.h"
 #include "text.h"
 
 olc::Decal* Text::_decal = nullptr;
@@ -179,11 +180,11 @@ void Text::addToTextPos(const std::string& purpose, olc::vf2d Offset)
 }
 
 // Draws all the text stored in the _mText map
-void Text::drawText(olc::PixelGameEngine* gfx)
+void Text::drawText(Example& gfx)
 {
     for (const auto& [key, data] : _mText)
         for (auto& letter : data._vText)
-            gfx->DrawPartialDecal(data._pos + letter._posOffSet, _decal, letter._sourceOffset, letter._sourceSize, data._scale, data._color);
+            gfx.DrawPartialDecal(data._pos + letter._posOffSet, _decal, letter._sourceOffset, letter._sourceSize, data._scale, data._color);
 }
 
 // Does the assembling of the characters
@@ -261,20 +262,4 @@ std::string valueToString(double value)
     std::stringstream s;
     s << value;
     return s.str();
-}
-
-
-DecalMap::DecalMap() {}
-DecalMap::~DecalMap() {}
-
-void DecalMap::loadDecals()
-{
-    auto load = [&](std::string sName, std::string sFilename)
-    {
-        olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
-        _mapDecals[sName] = d;
-    };
-
-    // Text
-    load("Text", "Alphabet.png");
 }

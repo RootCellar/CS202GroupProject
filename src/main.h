@@ -14,6 +14,7 @@
 #include "player.h"
 #include "level.h"
 #include "text.h"
+#include "DecalMap.h"
 
 //Mobs
 //#include "Soldier.h" //Currently does not compile
