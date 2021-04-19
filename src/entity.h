@@ -98,7 +98,7 @@ public:
   void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
   void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
 
-  virtual void graphicsSetup() = 0;
+  virtual void graphicsSetup();
 
   // Position manipulation
   void setXPos(double newX);

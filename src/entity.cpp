@@ -117,6 +117,10 @@ void Entity::spriteStateManager(bool isAlive) {
     }
 }
 
+void Entity::graphicsSetup() {
+
+}
+
 
 // Position manipulation
 void Entity::setXPos(double newX) { _pos.x = newX; }
