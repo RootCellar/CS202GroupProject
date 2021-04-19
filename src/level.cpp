@@ -7,7 +7,7 @@
 #include "main.h"
 #include "level.h"
 
-Level::Level(Player& p):player(p) {
+Level::Level(Player& p): player(p) {
   debug("Constructing the level...");
 }
 

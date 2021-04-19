@@ -59,13 +59,14 @@ void Player::regen() {
 
 void Player::die(){
 	if(_lives < 0){
-		//end the game & display a game over screen
+		//the player has died....
 		setRedundant();
 		return;
 	}
 	//display dying animation or sprite
 	//respawn in the starting location for the level
 	_lives--;
+	heal(getMaxHp());
 }
 // Uses the PGE's way to take input implemented at main.cpp
 // gets the string and moves player position corresponding direction
