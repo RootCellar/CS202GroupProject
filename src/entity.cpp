@@ -186,9 +186,9 @@ int Entity::getId() const { return id; }
 //    _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 //}
 
-olc::Decal *Entity::getDecal() const {
-    return _decalPtr.get();
-}
+//olc::Decal *Entity::getDecal() const {
+//    return _decalPtr.get();
+//}
 
 olc::vf2d Entity::getDecalScale(float pixels) const {
   float scale = pixels / _spritePtr->height;

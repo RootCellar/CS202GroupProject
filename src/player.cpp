@@ -75,20 +75,24 @@ void Player::drawSelf(Example& gfx) const {
 	// HOT Bar
 	gfx.DrawPartialDecal({ 0.0f, 214.0f }, DecalMap::get().getDecal("HOT"), { 0.0f, 0.0f }, { 165.0f, 26.0f });
 
+	// Player center screen
+	float screenCenterX = gfx.ScreenWidth() / 2.0f - getSpriteSourceSize().x / 2;
+	float screenCenterY = gfx.ScreenHeight() / 2.0f - getSpriteSourceSize().y / 2;
+
 	// Orb Wizard
 	float changeX = 0.1f * cosf(_bounceMotion);
 	float changeY = 0.05f * sinf(_bounceMotion - float(PI) / 2.0f);
-	gfx.DrawPartialRotatedDecal({ (float)getXPos() - 4.0f * changeY, (float)getYPos() + 6.0f * changeX }, DecalMap::get().getDecal("Wizard"), 0.0f, { 8.0f, 8.0f }, { 0.0f, 0.0f }, { 16.0f, 14.0f }, { 0.90f + changeX, 0.95f + changeY });
+	gfx.DrawPartialRotatedDecal({ screenCenterX - 4.0f * changeY, screenCenterY + 6.0f * changeX }, DecalMap::get().getDecal("Wizard"), 0.0f, { 8.0f, 8.0f }, { 0.0f, 0.0f }, { 16.0f, 14.0f }, { 0.90f + changeX, 0.95f + changeY });
 
 	// Staff
-	gfx.DrawPartialRotatedDecal(olc::vf2d{ (float)getXPos(), (float)getYPos() } +_staffPosFromPLayer + _staffPosOffset, DecalMap::get().getDecal("Staffs"), _staffAngle - PI / 7.0f, { 17.0f, 18.0f }, { 34.0f * _staffStage, 0 }, { 34.0f, 36.0f });
+	gfx.DrawPartialRotatedDecal(olc::vf2d{ screenCenterX, screenCenterY } +_staffPosFromPLayer + _staffPosOffset, DecalMap::get().getDecal("Staffs"), _staffAngle - PI / 7.0f, { 17.0f, 18.0f }, { 34.0f * _staffStage, 0 }, { 34.0f, 36.0f });
 
 	// Health bar
-	gfx.DrawPartialDecal({ 10.0f, 220.0f }, DecalMap::get().getDecal("Hp&Mp"), { 0.0f, 120.0f - 4.0f * std::ceil(float(getHealth() / getMaxHp() * 30.0)) }, { 32.0f, 5.0f });
+	gfx.DrawPartialDecal({ 5.0f, 205.0f }, DecalMap::get().getDecal("Hp&Mp"), { 0.0f, 120.0f - 4.0f * std::ceil(float(getHealth() / getMaxHp() * 30.0)) }, { 32.0f, 5.0f });
 	Text::overWriteText("HP " + valueToString( (int)getHealth() ), "HP", olc::PixelF(1.0 - getHealth() / getMaxHealth(), getHealth() / getMaxHealth(), 0));
 
 	// Mana bar
-	gfx.DrawPartialDecal({ 10.0f, 210.0f }, DecalMap::get().getDecal("Hp&Mp"), { 33.0f, 120.0f - 4.0f * std::ceil(float(getMana() / getMaxMana() * 30.0)) }, { 32.0f, 5.0f });
+	gfx.DrawPartialDecal({ 5.0f, 195.0f }, DecalMap::get().getDecal("Hp&Mp"), { 33.0f, 120.0f - 4.0f * std::ceil(float(getMana() / getMaxMana() * 30.0)) }, { 32.0f, 5.0f });
 	Text::overWriteText("MP " + valueToString( (int)getMana() ), "MP", olc::PixelF(1.0 - (getMana() / getMaxMana()) * 0.7 - 0.3, 1.0 - getMana() / getMaxMana() * 0.7 - 0.3, 1.0));
 
 }
@@ -243,8 +247,8 @@ void Player::staffUpdate()
 void playerTextSetup(const double health, const double mana)
 {
 	Text::addText("HP " + valueToString(health), "HP", { 255, 25, 25 }, -1, { 0.5f, 0.5f });
-	Text::setTextPos("HP", { 50, 220 });
+	Text::setTextPos("HP", { 40, 205 });
 
 	Text::addText("MP " + valueToString(mana), "MP", { 255, 25, 25 }, -1, { 0.5f, 0.5f });
-	Text::setTextPos("MP", { 50, 210 });
+	Text::setTextPos("MP", { 40, 195 });
 }
