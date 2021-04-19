@@ -30,6 +30,9 @@ public:
 	int xOffs = 0;
 	int yOffs = 0;
 
+	int levelWidth = 1000;
+	int levelHeight = 1000;
+
 	Player player;
 
 	Level level;
