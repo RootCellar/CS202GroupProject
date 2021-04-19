@@ -21,6 +21,8 @@ public:
 
 	double getMaxHp() const;
 
+	void setMaxHp(double d);
+
 	static int getCount();
 
 	void damage(double damage);
@@ -53,7 +55,6 @@ public:
 
 		//void setHealth(double hp);
 	void addToHealth(double hpPlus); // Increase Hp by hpPlus
-	void setMaxHealth(double hpMax); // Set Maximum health
 	void setHpPerFrame(double hpRegen); // Set the Hp regenerated each frame
 	void addToHpPerFrame(double hpRegenPlus); // Increase the amount of health regenerated each frame
 

@@ -37,7 +37,7 @@ void Player::setSpellSlot(int slotNum) {
 
 //used to increase the max health of the player when they level up or completes a level
 void Player::increaseMaxHealth(double mod) {
-	setHealth((mod *= getHealth()));
+	setMaxHp((mod *= getHealth()));
 }
 
 void Player::update() {

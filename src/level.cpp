@@ -20,6 +20,7 @@ void Level::add(Mob *m) {
 void Level::add(Projectile *p) {
   if(!has(p)) pendingProjectileSpawns.push_back(p);
   p->setLevel(this);
+  debug("Adding a projectile to pending spawns");
 }
 
 void Level::remove(Mob *m) {
@@ -66,7 +67,7 @@ std::vector<Projectile*>::iterator Level::getIteratorToProjectile(Projectile *p)
 void Level::update() {
 
   for(Mob *m : mobs) {
-    (*m).update();
+    m->update();
   }
 
   for(Projectile *p : projectiles) {
@@ -87,10 +88,14 @@ void Level::update() {
   while(pendingProjectileSpawns.size() > 0) {
     Projectile *p = pendingProjectileSpawns.at(0);
     pendingProjectileSpawns.erase( pendingProjectileSpawns.begin() );
-    if(!has(p)) projectiles.push_back(p);
+    if(!has(p)) {
+      projectiles.push_back(p);
+      debug("Spawning a projectile from list");
+    }
   }
 
-  //De-spawn mobs from lists
+  //De-spawn mobs from list
+
   while(pendingMobRemovals.size() > 0) {
     Mob *m = pendingMobRemovals.at(0);
     pendingMobRemovals.erase( pendingMobRemovals.begin() );
@@ -98,10 +103,13 @@ void Level::update() {
       continue;
     }
 
+    debug("Despawning a mob");
+
     mobs.erase( getIteratorToMob(m) );
+    delete m;
   }
 
-  //Despawn projectile from lists
+  //Despawn projectile from list
 
   while(pendingProjectileRemovals.size() > 0) {
     Projectile *p = pendingProjectileRemovals.at(0);
@@ -110,7 +118,10 @@ void Level::update() {
       continue;
     }
 
+    debug("Despawning a projectile");
+
     projectiles.erase( getIteratorToProjectile(p) );
+    delete p;
   }
 
 }
@@ -121,8 +132,7 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
 
   for(Mob* m : mobs) {
 
-    Mob j = *m;
-    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+    double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
 
     if(dist <= radius) {
       toRet.push_back(m);
@@ -153,12 +163,11 @@ std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) 
 std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius, Team t) {
   std::vector<Mob*> toRet;
 
-  for(Mob* m : mobs) {
+  for(Mob *m : mobs) {
 
-    Mob j = *m;
-    double dist = getDistanceBetween(xPos, yPos, j.getXPos(), j.getYPos());
+    double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
 
-    if(dist <= radius && j.getTeam() != t) {
+    if(dist <= radius && m->getTeam() != t) {
       toRet.push_back(m);
     }
 
@@ -171,7 +180,7 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
 std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, Team t) {
   std::vector<Mob*> toRet;
 
-  for(Mob* m : mobs) {
+  for(Mob *m : mobs) {
     double dist = getDistanceBetween(point , m->getPos());
 
     if(dist <= radius && m->getTeam() != t) {

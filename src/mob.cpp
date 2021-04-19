@@ -32,6 +32,10 @@ double Mob::getMaxHp() const {
   return _maxHealth;
 }
 
+void Mob::setMaxHp(double d) {
+  _maxHealth = d;
+}
+
 void Mob::setHealth(double x) {
   _health = x;
 }
@@ -120,11 +124,6 @@ Team& Mob::getTeam() { return _team; }
 //=========
 // Increase Hp by hpPlus
 void Mob::addToHealth(double hpPlus) { _health += hpPlus; }
-
-// Set Maximum health
-void Mob::setMaxHealth(double hpMax) {
-  _maxHealth = hpMax;
-}
 
 // Set the Hp regenerated each frame
 void Mob::setHpPerFrame(double hpRegen) {

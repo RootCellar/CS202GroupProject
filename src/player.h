@@ -23,9 +23,12 @@ public:
 
 	void regen();
 	void increaseMaxHealth(int mod);
-	void attack(Mob& target) ;
+	void attack(Mob& target);
 
 	void move (const std::string &direction);
+
+	void drawSelf(Example& gfx) const;
+
 	virtual void die() override;
 
 	void drawSelf(Example& gfx) const override;
