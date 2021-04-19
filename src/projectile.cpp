@@ -38,6 +38,17 @@ void Projectile::drawSelf(Example& gfx) const
 
 }
 
+// Calls the set up for this mob (Needs to be overwritten if data needs to be different)
+void Projectile::graphicsSetup()
+{
+    //// This is just some default/temporary stuff to test the sprite code
+    //setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
+    //setDeadSpriteSource({ 1.0f, 1.0f });
+    //setAttackSpriteSource({ 0.0f, 1.0f });
+
+    //setGraphicFrameTimer(20);
+}
+
 void Projectile::update() {
     if (!_hasHit) {
         auto displacement = getDirection() * getSpeed();

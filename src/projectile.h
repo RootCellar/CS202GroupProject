@@ -23,6 +23,8 @@ public:
 
     virtual void drawSelf(Example& gfx) const override;
 
+    virtual void graphicsSetup() override;
+
     //update the projectile, move it etc.
     virtual void update() override;
 

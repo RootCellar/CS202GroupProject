@@ -60,6 +60,10 @@ void Player::regen() {
 }
 
 void Player::drawSelf(Example& gfx) const {
+
+	// HOT Bar
+	gfx.DrawPartialDecal({ 0.0f, 214.0f }, DecalMap::get().getDecal("HOT"), { 0.0f, 0.0f }, { 165.0f, 26.0f });
+
 	// Orb Wizard
 	float changeX = 0.1f * cosf(_bounceMotion);
 	float changeY = 0.05f * sinf(_bounceMotion - float(PI) / 2.0f);

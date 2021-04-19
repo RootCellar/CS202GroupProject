@@ -126,7 +126,7 @@ public:
 
   // Sprite stuff
   //void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
-  //olc::Decal * getDecal () const; // use .get() method in unique_ptr
+  olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;
   void setSpriteOffset () ;

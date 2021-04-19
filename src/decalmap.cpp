@@ -24,6 +24,15 @@ void DecalMap::loadDecals()
     load("Wizard", "Orb Wizard.png");
     load("Staffs", "Staffs.png");
 
+    // Hot bar
+    load("HOT","HOT Bar.png");
+
     // Mob
     load("Spider", "Spider.png");
+    load("Slime", "Slime.png");
+
+    // Projectiles
+    load("Black Hole", "Black Hole Reformatted.png");
+    load("Web", "Web Projectile.png");
+
 }
