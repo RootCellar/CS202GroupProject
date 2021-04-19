@@ -11,17 +11,20 @@ using std::string;
 
 Player::Player(): Mob(400, 50, 50), _lives(3) {
 	setSpeed(1);
+	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
 }
 
 Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 	setSpeed(1);
+	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
 }
 
 Player::Player(const string &text) : Mob( 100, 100, 100) {
 	// test player if you use text as parameter
 	// notice that constructor also sets decal
+	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
 	//setDecal("Orb_Wizard_and_Staff.png");
 }
@@ -42,6 +45,10 @@ void Player::increaseMaxHealth(double mod) {
 
 void Player::update() {
 	regen();
+	manaRegen();
+	if(getMana() > getMaxMana()) {
+		setMana(getMaxMana());
+	}
 
 	// Graphics related changes
 	// Orb Wizard
@@ -59,6 +66,10 @@ void Player::regen() {
 	heal(getMaxHp() * 0.001);
 }
 
+void Player::manaRegen() {
+	addToMana(getMaxMana() * 0.001);
+}
+
 void Player::drawSelf(Example& gfx) const {
 	// Orb Wizard
 	float changeX = 0.1f * cosf(_bounceMotion);
@@ -70,11 +81,11 @@ void Player::drawSelf(Example& gfx) const {
 
 	// Health bar
 	gfx.DrawPartialDecal({ 10.0f, 220.0f }, DecalMap::get().getDecal("Hp&Mp"), { 0.0f, 120.0f - 4.0f * std::ceil(float(getHealth() / getMaxHp() * 30.0)) }, { 32.0f, 5.0f });
-	Text::overWriteText("HP " + valueToString(getHealth()), "HP", olc::PixelF(1.0 - getHealth() / getMaxHealth(), getHealth() / getMaxHealth(), 0));
+	Text::overWriteText("HP " + valueToString( (int)getHealth() ), "HP", olc::PixelF(1.0 - getHealth() / getMaxHealth(), getHealth() / getMaxHealth(), 0));
 
 	// Mana bar
 	gfx.DrawPartialDecal({ 10.0f, 210.0f }, DecalMap::get().getDecal("Hp&Mp"), { 33.0f, 120.0f - 4.0f * std::ceil(float(getMana() / getMaxMana() * 30.0)) }, { 32.0f, 5.0f });
-	Text::overWriteText("MP " + valueToString(getMana()), "MP", olc::PixelF(1.0 - (getMana() / getMaxMana()) * 0.7 - 0.3, 1.0 - getMana() / getMaxMana() * 0.7 - 0.3, 1.0));
+	Text::overWriteText("MP " + valueToString( (int)getMana() ), "MP", olc::PixelF(1.0 - (getMana() / getMaxMana()) * 0.7 - 0.3, 1.0 - getMana() / getMaxMana() * 0.7 - 0.3, 1.0));
 
 }
 

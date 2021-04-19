@@ -22,6 +22,8 @@ public:
 	void update() override;
 
 	void regen();
+	void manaRegen();
+
 	void increaseMaxHealth(int mod);
 	void attack(Mob& target);
 
