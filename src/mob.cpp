@@ -16,7 +16,6 @@ Mob::Mob() : Entity(), _team(true) {
 Mob::Mob(double maxHealth, double x, double y) : Entity(x, y), _health(maxHealth), _maxHealth(maxHealth),
 _team(true) {
   setSpeed(1);
-  setDecal("test.png");
   setDirection({0,0});
   _mobPop++;
 }
@@ -218,8 +217,9 @@ void Mob::drawSelf(Example& gfx) const {
   // Drawing code here...
   //		gfx->DrawDecal(getPos(), getDecal(), getDecalScale(20));
 
-  if(isAlive())
-  gfx.DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
+  if(isAlive()) {
+    gfx.DrawRotatedDecal(getPos(), getDecal(), 0, getDecalCenter(), getDecalScale(20));
+  }
 }
 
 ChaserMob::ChaserMob():Mob() {

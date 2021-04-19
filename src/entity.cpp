@@ -146,9 +146,6 @@ void Entity::setDecal(std::string fileName) {
 
   debug("Entity::setDecal()");
 
-  if (fileName == "test2.png")
-  _spriteRotOffset = PI/2;
-
   _spritePtr = std::make_shared<olc::Sprite> (fileName);
   _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 }
