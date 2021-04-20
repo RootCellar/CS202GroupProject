@@ -165,7 +165,7 @@ void Example::drawPixel(int xPos, int yPos, int r, int g, int b) {
 
 olc::vd2d Example::getOffsetVector() {
 	olc::vd2d offs(ScreenWidth() / 2, ScreenHeight() / 2);
-	return offs;
+	return offs - player.getPos();
 }
 
 
