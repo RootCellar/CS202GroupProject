@@ -38,7 +38,7 @@ bool Example::OnUserCreate()
 bool Example::OnUserUpdate(float fElapsedTime)
 {
 	//Rendering Code
-	Text::drawText(*this);
+
 
 	//Clear the Screen
 	for (int x = 0; x < ScreenWidth(); x++)
@@ -52,13 +52,18 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	for(int x = 0; x < levelWidth; x++) {
 		drawPixel(x, 0, 255, 255, 255);
+		drawPixel(x, levelHeight, 255, 255, 255);
 	}
+
 
 	for(int y = 0; y < levelHeight; y++) {
 		drawPixel(0, y, 255, 255, 255);
+		drawPixel(levelWidth, y, 255, 255, 255);
 	}
 
 	level.renderEntities(*this);
+
+	Text::drawText(*this);
 
 	fAccumulatedTime += fElapsedTime;
 	if (fAccumulatedTime >= fTargetFrameTime)
@@ -71,21 +76,46 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	if(GetKey(olc::A).bHeld) {
 		//			x--;
+
 		player.move("left");
+		if (player.getXPos() < 16)
+			player.setXPos(16);
 	}
 	if(GetKey(olc::D).bHeld) {
 		//			x++;
 		player.move("right");
+		if (player.getXPos() > levelWidth)
+			player.setXPos(levelWidth);
 	}
 
 	if(GetKey(olc::W).bHeld) {
 		//			y--;
 		player.move("up");
+		if (player.getYPos() < 16)
+			player.setYPos(16);
 	}
 	if(GetKey(olc::S).bHeld) {
 		//			y++;
 		player.move("down");
+		if (player.getYPos() > levelHeight)
+			player.setYPos(levelHeight);
 	}
+
+	if (GetKey(olc::K0).bPressed) { // key pressed 0
+		player.setMana(player.getMana() - 80);
+		player.setSpeed(player.getSpeed() * 1.75);
+		player._speedSpellDuration = 80;
+	}
+
+	//// Shoot fireball
+	//if (GetKey(olc::K2).bPressed) { // key pressed 2
+	//	player.setMana(player.getMana() - 50);
+	//	Projectile a(player.getXPos(), player.getYPos(), GetMouseX(), GetMouseY());
+	//	p = a;
+	//	level.add(&p);
+	//}
+
+
 
 	if (GetKey(olc::U).bPressed) {
 		player.upgradeStaff();

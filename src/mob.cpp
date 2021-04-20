@@ -257,19 +257,19 @@ ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
   //    setDecal("test2.png");
 }
 
-void ChaserMob::drawSelf(Example& gfx) const{
-  //    if (isAlive())
-  //        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
-  //     getSpriteSourceSize() , getDecalScale(30));
+void ChaserMob::drawSelf(Example& gfx) const {
+    //    if (isAlive())
+    //        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
+    //     getSpriteSourceSize() , getDecalScale(30));
 
-  /*if(isAlive())
-  gfx.DrawPartialRotatedDecal(getPos(), getDecal(),getSpriteRot() , getSpriteSourceSize()/2, olc::vf2d{0,0} * getSpriteSourceSize(), getSpriteSourceSize(),
-  getDecalScale(30));
-  else
-  gfx.DrawPartialRotatedDecal(getPos(), getDecal(),0 , getSpriteSourceSize()/2, olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize(),
-  getDecalScale(30));*/
-  //    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize() ,
-  //                          getDecalScale(30));
+    if (isAlive())
+        gfx.DrawPartialRotatedDecal(getPos(), getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),
+            getDecalScale(30));
+    else
+        gfx.DrawPartialRotatedDecal(getPos(), getDecal(), 0, getSpriteSourceSize() / 2, olc::vf2d{ 1,1 } *getSpriteSourceSize(), getSpriteSourceSize(),
+            getDecalScale(30));
+    //    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize() ,
+    //                          getDecalScale(30));
 
 }
 

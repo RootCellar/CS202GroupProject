@@ -36,6 +36,8 @@ public:
 	void upgradeStaff(); // Upgrades the staff sprite (should also probably upgrade the player's damage too)
 	void staffUpdate(); // Updates the staff
 
+	int _speedSpellDuration = 200;
+
 private:
 
 	float _bounceMotion = 0.0f; // Determines the shrink and stretch of the sprite for bouncy motion
@@ -52,6 +54,9 @@ private:
 	int _colorChangeHolder = 0;
 	int _shakeTimer = 3;
 	int _shakeCounter = 0;
+
+	
+
 
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;

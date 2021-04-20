@@ -74,28 +74,45 @@ public:
   virtual void drawSelf(Example& gfx) const = 0;
   void decalOut(Example& gfx, const olc::Pixel& tint = { 255, 255, 255 }) const;
 
-  void setDecal(std::string sName);
-  olc::Decal* getDecal() const;
+  void set_decal(std::string sName);
+  olc::Decal* get_decal() const;
 
-  void setSpriteSourceSize(olc::vi2d sourceSize);
+  void set_spriteSourceSize(olc::vi2d sourceSize);
+
   void setSpriteScaling(olc::vf2d scale);
 
   void setDeadSpriteSource(olc::vf2d source);
+
   void setAttackSpriteSource(olc::vf2d source);
 
   void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
-  auto getGraphicState();
 
   void setGraphicFrameTimer(int numFrames);
-  int getGraphicFrameTimer();
 
   void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
+
   void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states
 
   void setSpriteRotOffset(double angle); // Sets the angle the sprite is rotated to
-  auto getSpriteRotOffset();
 
   void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
+  
+
+  auto getGraphicState() const;
+
+  int getGraphicFrameTimer() const;
+
+  olc::vi2d getSpriteSheetOffset() const;
+
+  olc::vf2d getSpriteScaling() const;
+
+  olc::vf2d getDeadSpriteSource() const;
+
+  olc::vf2d getAttackSpriteSource() const;
+
+  auto getSpriteRotOffset() const;
+  
+
   void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
 
   virtual void graphicsSetup();
@@ -126,13 +143,13 @@ public:
   int getId() const;
 
   // Sprite stuff
-  //void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
-  //olc::Decal * getDecal () const; // use .get() method in unique_ptr
+  void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
+  olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;
   void setSpriteOffset () ;
   olc::vd2d getDecalCenter () const;
-  //void setSpriteSourceSize (const olc::vi2d&);
+  void setSpriteSourceSize (const olc::vi2d&);
   olc::vi2d getSpriteSourceSize() const;
 
 //  double getRadius () const;

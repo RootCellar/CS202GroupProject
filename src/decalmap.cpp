@@ -34,5 +34,10 @@ void DecalMap::loadDecals()
     // Projectiles
     load("Black Hole", "Black Hole Reformatted.png");
     load("Web", "Web Projectile.png");
+    load("fireBall.png", "fireBall.png");
+
+    // Test sprites
+    load("test2.png", "test2.png");
+
 
 }

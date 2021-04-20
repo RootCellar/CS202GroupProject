@@ -9,7 +9,7 @@
 
 using std::string;
 
-Player::Player(): Mob(400, 50, 50), _lives(3) {
+Player::Player(): Mob(400, 200, 200), _lives(3) {
 	setSpeed(1);
 	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
@@ -44,18 +44,33 @@ void Player::increaseMaxHealth(double mod) {
 }
 
 void Player::update() {
-	regen();
-	manaRegen();
-	if(getMana() > getMaxMana()) {
-		setMana(getMaxMana());
+	if (!isRedundant())
+	{
+		regen();
+		manaRegen();
+		if (getMana() > getMaxMana()) {
+			setMana(getMaxMana());
+		}
+
+		//damage(4.0);
+
+		if (getSpeed() > 1.0)
+		{
+			if (_speedSpellDuration > 0)
+				_speedSpellDuration--;
+			else
+				setSpeed(1.0);
+		}
+
+
+
+		// Graphics related changes
+		// Orb Wizard
+		_bounceMotion += 0.12f;
+
+		// Staff
+		staffUpdate();
 	}
-
-	// Graphics related changes
-	// Orb Wizard
-	_bounceMotion += 0.12f;
-
-	// Staff
-	staffUpdate();
 }
 
 //This is called on every player update,
@@ -98,14 +113,51 @@ void Player::drawSelf(Example& gfx) const {
 }
 
 void Player::die(){
-	if(_lives < 0){
+	_lives--;
+
+	if (_lives == 0)
+	{
+		if (!Text::doesTextExist("last life"))
+		{
+			Text::addText("You are on your last life!", "last life", { 200, 0, 0 }, 80, {0.5f, 0.5f});
+			Text::addToTextPos("last life", { 60.0f, 80.0f });
+		}
+	}
+	else if (_lives == 2)
+	{
+		if (!Text::doesTextExist("Died"))
+		{
+			Text::addText("You died", "Died", { 200, 0, 0 }, 80, { 0.5f, 0.5f });
+			Text::addToTextPos("Died", { 100.0f, 80.0f });
+		}
+	}
+	else if (_lives == 1)
+	{
+		if (!Text::doesTextExist("Died again"))
+		{
+			Text::addText("You died. Again...", "Died again", { 200, 0, 0 }, 80, { 0.5f, 0.5f });
+			Text::addToTextPos("Died again", { 85.0f, 80.0f });
+		}
+	};
+
+	if (_lives < 0) {
 		//the player has died....
 		setRedundant();
+
+		Text::addText("You have died for the last time!", "last death", { 200, 0, 0 }, 200, { 0.7f, 0.7f });
+		Text::addText("Game over!", "Game over", { 200, 0, 0 }, 300, { 1.5f, 2.0f });
+		Text::addToTextPos("Game over", { 40.0f, 40.0f });
+
 		return;
 	}
+
 	//display dying animation or sprite
 	//respawn in the starting location for the level
-	_lives--;
+
+	Text::overWriteText("Spare Lives " + valueToString(_lives), "Spare Lives", { 255, uint8_t(255 / 3 * _lives), uint8_t(255 / 3 * _lives) });
+
+
+
 	heal(getMaxHp());
 }
 // Uses the PGE's way to take input implemented at main.cpp
@@ -251,4 +303,7 @@ void playerTextSetup(const double health, const double mana)
 
 	Text::addText("MP " + valueToString(mana), "MP", { 255, 25, 25 }, -1, { 0.5f, 0.5f });
 	Text::setTextPos("MP", { 40, 195 });
+
+	Text::addText("Spare Lives " + valueToString(3), "Spare Lives", { 255, 255, 255 }, -1, { 0.5f, 0.5f });
+	Text::setTextPos("Spare Lives", { 85, 205 });
 }
