@@ -25,9 +25,15 @@ Level* Entity::getLevel() const{
 }
 
 
-void Entity::set_decal(std::string sName) { _decal = DecalMap::get().getDecal(sName); }
+void Entity::set_decal(std::string sName) {
+    _decal = DecalMap::get().getDecal(sName);
+}
 
-olc::Decal* Entity::get_decal() const{
+void Entity::setDecal(std::string sName) {
+    _spritePtr = DecalMap::get().getSprite(sName);
+    _decal = DecalMap::get().getDecal(sName);
+}
+olc::Decal* Entity::getDecal() const{
   return _decal;
 }
 
@@ -188,16 +194,16 @@ int Entity::getId() const { return id; }
 //////////////////
 // For sprite and decals
 
-void Entity::setDecal(std::string fileName) {
-    if (fileName == "test2.png")
-        _spriteRotOffset = PI/2;
-    _spritePtr = std::make_shared<olc::Sprite> (fileName);
-    _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
-}
+//void Entity::setDecal(std::string fileName) {
+//    if (fileName == "test2.png")
+//        _spriteRotOffset = PI/2;
+//    _spritePtr = std::make_shared<olc::Sprite> (fileName);
+//    _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
+//}
 
-olc::Decal *Entity::getDecal() const {
-    return _decalPtr.get();
-}
+//olc::Decal *Entity::getDecal() const {
+//    return _decalPtr.get();
+//}
 
 olc::vf2d Entity::getDecalScale(float pixels) const {
   float scale = pixels / _spritePtr->height;

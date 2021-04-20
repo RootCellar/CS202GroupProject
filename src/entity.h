@@ -53,7 +53,8 @@ private:
   Level *level;
 
   // Sprite stuff following what I did for projectiles
-  std::shared_ptr <olc::Sprite> _spritePtr = nullptr;
+//  std::shared_ptr <olc::Sprite> _spritePtr = nullptr;
+olc::Sprite* _spritePtr = nullptr;//for using uddeep's sprite, and decal stuff
   std::shared_ptr <olc::Decal> _decalPtr = nullptr;
   float _spriteOffset = 0;
   // Now we need getters and setters I made down, we may be able to replace with * but I don't want
