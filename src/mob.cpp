@@ -269,7 +269,7 @@ void ChaserMob::drawSelf(Example& gfx) const {
     //     getSpriteSourceSize() , getDecalScale(30));
 
 
-    olc::vd2d sOffs{gfx.ScreenWidth() / 2, gfx.ScreenHeight() / 2};
+    olc::vd2d sOffs(gfx.ScreenWidth() / 2, gfx.ScreenHeight() / 2);
 
     if (isAlive())
         gfx.DrawPartialRotatedDecal(getPos() - getLevel()->getPlayerPosition() + sOffs, getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),
