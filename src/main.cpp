@@ -32,6 +32,9 @@ bool Example::OnUserCreate()
 
 	level.add(&player);
 
+	ChaserMob* m = new ChaserMob(100, 100);
+	level.add(m);
+
 	return true;
 }
 

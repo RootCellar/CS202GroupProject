@@ -4,6 +4,8 @@
 #include "mob.h"
 #include "main.h"
 #include "random.h"
+
+#include "debug.h"
 //start this at zero, otherwise it becomes whatever value was already at that location
 //Don't forget to initialize your data!
 int Mob::_mobPop = 0;
@@ -239,6 +241,8 @@ void Mob::setAttackRange(double attackRange) {
 
 ChaserMob::ChaserMob():Mob() {
   setDecal("Spider_Scaled_up.png");
+
+  setSpeed(0.7);
 }
 
 void ChaserMob::update() {
@@ -254,6 +258,8 @@ ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
   setDecal("Spider_Scaled_up.png");
   setSpriteSourceSize( olc::vi2d {64, 64});
   setSpriteRotOffset(PI/2);
+
+  setSpeed(0.7);
   //    setDecal("test2.png");
 }
 
@@ -262,12 +268,18 @@ void ChaserMob::drawSelf(Example& gfx) const {
     //        gfx->DrawDecal(getPos(), getDecal());//, olc::vi2d{1, 1},
     //     getSpriteSourceSize() , getDecalScale(30));
 
+
+    olc::vd2d sOffs{gfx.ScreenWidth() / 2, gfx.ScreenHeight() / 2};
+
     if (isAlive())
-        gfx.DrawPartialRotatedDecal(getPos(), getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),
+        gfx.DrawPartialRotatedDecal(getPos() - getLevel()->getPlayerPosition() + sOffs, getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),
             getDecalScale(30));
     else
         gfx.DrawPartialRotatedDecal(getPos(), getDecal(), 0, getSpriteSourceSize() / 2, olc::vf2d{ 1,1 } *getSpriteSourceSize(), getSpriteSourceSize(),
             getDecalScale(30));
+
+    //gfx.drawPixel(getXPos(), getYPos(), 255, 0, 0);
+
     //    gfx->DrawPartialDecal(getPos(), getDecal(), olc::vf2d{1,1} * getSpriteSourceSize(), getSpriteSourceSize() ,
     //                          getDecalScale(30));
 
