@@ -13,12 +13,18 @@ Player::Player(): Mob(400, 200, 200), _lives(3) {
 	setSpeed(1);
 	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
+	set_decal("Barrier");
+	setGraphicState(0, 18);
+	setGraphicFrameTimer(5);
 }
 
 Player::Player(int health, int x, int y): Mob(health,x,y), _lives(3) {
 	setSpeed(1);
 	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
+	set_decal("Barrier");
+	setGraphicState(0, 18);
+	setGraphicFrameTimer(5);
 }
 
 Player::Player(const string &text) : Mob( 100, 100, 100) {
@@ -27,6 +33,9 @@ Player::Player(const string &text) : Mob( 100, 100, 100) {
 	setMaxMana(500);
 	playerTextSetup(getHealth(), getMana());
 	//setDecal("Orb_Wizard_and_Staff.png");
+	set_decal("Barrier");
+	setGraphicState(0, 18);
+	setGraphicFrameTimer(5);
 }
 const std::vector<Spell> *Player::getSpellList() {
 	return _AvailableSpells;
@@ -54,6 +63,7 @@ void Player::update() {
 
 		//damage(4.0);
 
+		// Speed spell
 		if (getSpeed() > 1.0)
 		{
 			if (_speedSpellDuration > 0)
@@ -62,6 +72,12 @@ void Player::update() {
 				setSpeed(1.0);
 		}
 
+		if (_barrier)
+		{
+			setMana(getMana() - 0.6);
+			if (getMana() <= 0.0)
+				_barrier = false;
+		}
 
 
 		// Graphics related changes
@@ -70,6 +86,9 @@ void Player::update() {
 
 		// Staff
 		staffUpdate();
+
+		// Barrier for now
+		spriteStateManager(isAlive());
 	}
 }
 
@@ -94,10 +113,17 @@ void Player::drawSelf(Example& gfx) const {
 	float screenCenterX = gfx.ScreenWidth() / 2.0f - getSpriteSourceSize().x / 2;
 	float screenCenterY = gfx.ScreenHeight() / 2.0f - getSpriteSourceSize().y / 2;
 
+	// Barrier
+	if(_barrier)
+		gfx.DrawPartialDecal({ screenCenterX - 8.0f, screenCenterY - 8.0f }, DecalMap::get().getDecal("Barrier"), { (float)getSpriteSheetOffset().x, 16.0f }, { 16.0f, 16.0f });
+
 	// Orb Wizard
 	float changeX = 0.1f * cosf(_bounceMotion);
 	float changeY = 0.05f * sinf(_bounceMotion - float(PI) / 2.0f);
 	gfx.DrawPartialRotatedDecal({ screenCenterX - 4.0f * changeY, screenCenterY + 6.0f * changeX }, DecalMap::get().getDecal("Wizard"), 0.0f, { 8.0f, 8.0f }, { 0.0f, 0.0f }, { 16.0f, 14.0f }, { 0.90f + changeX, 0.95f + changeY });
+
+	if (_barrier)
+		gfx.DrawPartialDecal({ screenCenterX - 8.0f, screenCenterY - 8.0f }, DecalMap::get().getDecal("Barrier"), { (float)getSpriteSheetOffset().x, 0.0f }, { 16.0f, 16.0f });
 
 	// Staff
 	gfx.DrawPartialRotatedDecal(olc::vf2d{ screenCenterX, screenCenterY } +_staffPosFromPLayer + _staffPosOffset, DecalMap::get().getDecal("Staffs"), _staffAngle - PI / 7.0f, { 17.0f, 18.0f }, { 34.0f * _staffStage, 0 }, { 34.0f, 36.0f });
@@ -292,6 +318,21 @@ void Player::staffUpdate()
 	{
 		_staffPosOffset.x *= cosf(_staffOffsetAngle) / 2.0f + 0.5f;
 		_staffPosOffset.y *= sinf(_staffOffsetAngle) / 2.0f;
+	}
+}
+
+// Activates the player's barrier spell
+void Player::toggleBarrier()
+{
+	if (_barrier)
+		_barrier = false;
+	else
+	{
+		if (getMana() - 50 >= 0.0)
+		{
+			_barrier = true;
+			setMana(getMana() - 50);
+		}
 	}
 }
 

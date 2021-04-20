@@ -36,6 +36,9 @@ public:
 	void upgradeStaff(); // Upgrades the staff sprite (should also probably upgrade the player's damage too)
 	void staffUpdate(); // Updates the staff
 
+	void toggleBarrier();
+
+
 	int _speedSpellDuration = 200;
 
 private:
@@ -55,7 +58,7 @@ private:
 	int _shakeTimer = 3;
 	int _shakeCounter = 0;
 
-	
+	bool _barrier = false;
 
 
 	std::vector<Spell> _AvailableSpells[10];

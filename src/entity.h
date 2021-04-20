@@ -87,9 +87,7 @@ public:
 
   void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
 
-  void setGraphicFrameTimer(int numFrames);
-
-  void setGraphicStateTimer(int t); // Sets _graphicStateTimer -> (How many frames until we change the state)
+  void setGraphicFrameTimer(int numFrames); // Sets _graphicStateTimer -> (How many frames until we change the state)
 
   void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states
 

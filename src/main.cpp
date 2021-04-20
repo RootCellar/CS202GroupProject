@@ -107,6 +107,10 @@ bool Example::OnUserUpdate(float fElapsedTime)
 		player._speedSpellDuration = 80;
 	}
 
+	if (GetKey(olc::K3).bPressed) { // key pressed 0
+		player.toggleBarrier();
+	}
+
 	//// Shoot fireball
 	//if (GetKey(olc::K2).bPressed) { // key pressed 2
 	//	player.setMana(player.getMana() - 50);

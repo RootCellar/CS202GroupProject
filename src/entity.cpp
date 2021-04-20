@@ -46,8 +46,6 @@ void Entity::setGraphicState(int startState, int stateCount) {
 
 void Entity::setGraphicFrameTimer(int numFrames) { _graphicStateTimer = numFrames; }
 
-void Entity::setGraphicStateTimer(int t) { _graphicStateTimer = t; }
-
 void Entity::setGraphicFlicker(bool flicker, int flickerStateStart, int flickerStateEnd) {
   _graphicFlicker = flicker;
   _flickerStart = flickerStateStart;

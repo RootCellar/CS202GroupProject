@@ -24,6 +24,9 @@ void DecalMap::loadDecals()
     load("Wizard", "Orb Wizard.png");
     load("Staffs", "Staffs.png");
 
+    // Barrier
+    load("Barrier", "Barrier.png");
+
     // Hot bar
     load("HOT","HOT Bar.png");
 
@@ -34,10 +37,12 @@ void DecalMap::loadDecals()
     // Projectiles
     load("Black Hole", "Black Hole Reformatted.png");
     load("Web", "Web Projectile.png");
+    load("Bullet", "Bullet.png");
     load("fireBall.png", "fireBall.png");
 
     // Test sprites
     load("test2.png", "test2.png");
 
-
+    // Miscellaneous
+    load("Dollar", "Dollar.png");
 }
