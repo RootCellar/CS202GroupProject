@@ -240,7 +240,7 @@ void Mob::setAttackRange(double attackRange) {
 //}
 
 ChaserMob::ChaserMob():Mob() {
-  setDecal("Spider_Scaled_up.png");
+  setDecal("Spider");
 
   setSpeed(0.7);
 }
@@ -255,8 +255,8 @@ void ChaserMob::update() {
 }
 
 ChaserMob::ChaserMob(double x, double y) : Mob(100, x, y) {
-  setDecal("Spider_Scaled_up.png");
-  setSpriteSourceSize( olc::vi2d {64, 64});
+  setDecal("Spider");
+  setSpriteSourceSize( olc::vi2d {16, 16});
   setSpriteRotOffset(PI/2);
 
   setSpeed(0.7);
@@ -269,7 +269,7 @@ void ChaserMob::drawSelf(Example& gfx) const {
     //     getSpriteSourceSize() , getDecalScale(30));
 
 
-    olc::vd2d sOffs{gfx.ScreenWidth() / 2, gfx.ScreenHeight() / 2};
+    olc::vd2d sOffs(gfx.ScreenWidth() / 2, gfx.ScreenHeight() / 2);
 
     if (isAlive())
         gfx.DrawPartialRotatedDecal(getPos() - getLevel()->getPlayerPosition() + sOffs, getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),

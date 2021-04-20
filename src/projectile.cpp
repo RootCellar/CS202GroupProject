@@ -14,7 +14,7 @@ Projectile::Projectile() :Entity()
 Projectile::Projectile(double x, double y) : Entity(x,y){
     setDirection( olc::vd2d{0,1});
     setSpeed(0);
-    setDecal("fireBall.png");
+    setDecal("Fireball");
 }
 
 Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
