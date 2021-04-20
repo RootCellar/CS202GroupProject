@@ -298,6 +298,11 @@ ScatterMob::ScatterMob(double x, double y) : Mob(100, x, y) {
 
 void ScatterMob::update() {
   ++counter;
+
+  if( getLevel()->getDistanceBetween(getPos(), getLevel()->getPlayerPosition()) > 500 ) {
+    setDirection( getLevel()->getPlayerPosition() - getPos() );
+  }
+
   if ( counter > 50) {
     // new dirction ?
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -307,5 +312,6 @@ void ScatterMob::update() {
     setDirection(olc::vd2d(cos(theta), sin(theta)));
     counter = 0;
   }
+
   Mob::update();
 }

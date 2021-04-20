@@ -31,9 +31,17 @@ bool Example::OnUserCreate()
 	Text::addToTextPos("Begin", { 50, 50 });
 
 	level.add(&player);
+	{
+		ChaserMob* m = new ChaserMob(100, 100);
+		level.add(m);
+	}
 
-	ChaserMob* m = new ChaserMob(100, 100);
-	level.add(m);
+	/*
+	{
+		ScatterMob* m = new ScatterMob(100, 100);
+		level.add(m);
+	}
+	*/
 
 	return true;
 }
