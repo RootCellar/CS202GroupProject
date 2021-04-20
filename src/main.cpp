@@ -36,12 +36,12 @@ bool Example::OnUserCreate()
 		level.add(m);
 	}
 
+	/*
 	{
 		ScatterMob* m = new ScatterMob(100, 100);
 		level.add(m);
 	}
-
-
+	*/
 
 	return true;
 }
