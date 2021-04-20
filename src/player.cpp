@@ -74,6 +74,8 @@ void Player::update() {
 
 		if (_barrier)
 		{
+			regen();
+			regen();
 			setMana(getMana() - 0.6);
 			if (getMana() <= 0.0)
 				_barrier = false;

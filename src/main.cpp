@@ -66,13 +66,18 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	//Button Presses
 
-	if (GetKey(olc::K0).bPressed) { // key pressed 0
+	if(GetKey(olc::K0).bPressed && player.getMana() > 80) { // key pressed 0
 		player.setMana(player.getMana() - 80);
 		player.setSpeed(player.getSpeed() * 1.75);
 		player._speedSpellDuration = 80;
 	}
 
-	if (GetKey(olc::K3).bPressed) { // key pressed 0
+	if(GetKey(olc::K3).bPressed && player.getMana() > 200) {
+		player.heal(200);
+		player.setMana(player.getMana() - 200);
+	}
+
+	if (GetKey(olc::K4).bPressed) { // key pressed 0
 		player.toggleBarrier();
 	}
 
