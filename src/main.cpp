@@ -163,6 +163,10 @@ void Example::drawPixel(int xPos, int yPos, int r, int g, int b) {
 	Draw(xPos, yPos, olc::Pixel( r, g, b) );
 }
 
+olc::vd2d Example::getOffsetVector() {
+	olc::vd2d offs(ScreenWidth() / 2, ScreenHeight() / 2);
+	return offs;
+}
 
 
 int main()

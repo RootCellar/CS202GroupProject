@@ -47,6 +47,8 @@ public:
 
 	void drawPixel(int xPos, int yPos, int r, int g, int b);
 
+	olc::vd2d getOffsetVector();
+
 };
 
 //C++ Headers
