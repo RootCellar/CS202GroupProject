@@ -50,6 +50,8 @@ public:
 
     virtual void update() override;
 
+    virtual void graphicsSetup() override;
+
 };
 
 class OrbitalProjectile : public Projectile {
@@ -60,6 +62,8 @@ public:
     float fAngle = 0;
 
     virtual void update() override;
+
+    virtual void graphicsSetup() override;
 };
 
 #endif

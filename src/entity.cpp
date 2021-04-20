@@ -25,108 +25,131 @@ Level* Entity::getLevel() const{
 }
 
 
-void Entity::set_decal(std::string sName) { _decal = DecalMap::get().getDecal(sName); }
+//void Entity::set_decal(std::string sName) { _decal = DecalMap::get().getDecal(sName); }
+//olc::Decal* Entity::get_decal() const{
+//  return _decal;
+//}
+//void Entity::set_spriteSourceSize(olc::vi2d sourceSize) { _spriteSourceSize = sourceSize; }
+//
+//void Entity::setSpriteScaling(olc::vf2d scale) { _spriteScaling = scale; }
+//
+//void Entity::setDeadSpriteSource(olc::vf2d sourceOffsetFactor) { _spriteDeadOffset = sourceOffsetFactor; }
+//
+//void Entity::setAttackSpriteSource(olc::vf2d sourceOffsetFactor) { _spriteAttackOffset = sourceOffsetFactor; }
+//
+//void Entity::setGraphicState(int startState, int stateCount) {
+//  _graphicState = startState;
+//  _graphicStateCount = stateCount;
+//}
+//
+//void Entity::setGraphicFrameTimer(int numFrames) { _graphicStateTimer = numFrames; }
+//
+//void Entity::setGraphicFlicker(bool flicker, int flickerStateStart, int flickerStateEnd) {
+//  _graphicFlicker = flicker;
+//  _flickerStart = flickerStateStart;
+//  _flickerEnd = flickerStateEnd;
+//}
+//
+//void Entity::setSpriteRotOffset(double angle) { _spriteRotOffset = angle; }
+//
+//void Entity::decalOut(Example& gfx, const olc::Pixel& tint) const
+//{
+//    if (_decal == nullptr)
+//        std::cout << "decal error" << std::endl;
+//    else
+//        gfx.DrawPartialRotatedDecal(_pos, _decal, _spriteRot + _spriteRotOffset, _spriteSourceSize / 2, _spriteSheetOffset, _spriteSourceSize, _spriteScaling, tint);
+//}
+//
+//// Takes input for parameters related to graphics
+//void Entity::setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal)
+//{
+//    setGraphicState(0, 1);
+//    setSpriteSourceSize(sourceSize);
+//    setSpriteScaling(scale);
+//    setDecal(decal);
+//}
+//auto Entity::getSpriteRotOffset() const { return _spriteRot; }
+//
+//auto Entity::getGraphicState() const { return _graphicState; }
+//
+//int Entity::getGraphicFrameTimer() const { return _graphicStateTimer; }
+//
+//olc::vi2d Entity::getSpriteSheetOffset() const { return _spriteSheetOffset; }
+//
+//olc::vf2d Entity::getSpriteScaling() const { return _spriteScaling; }
+//
+//olc::vf2d Entity::getDeadSpriteSource() const { return _spriteDeadOffset; }
+//
+//olc::vf2d Entity::getAttackSpriteSource() const { return _spriteAttackOffset; }
+//void Entity::spriteStateManager(bool isAlive) {
+//    if (isAlive) {
+//        if (getDirection() != olc::vd2d{ 0.0, 0.0 }) // Sprite when moving
+//        {
+//            if (_useRotations)
+//                _spriteRot = getSpriteRot();
+//            if (_graphicframeCount >= _graphicStateTimer) // Runs through all movement states and starts again
+//            {
+//                _graphicframeCount = 0;
+//                _graphicState++;
+//
+//                if (_graphicFlicker) // Flicker the decal between specified sprite animations
+//                {
+//                    if (_graphicState > _flickerEnd)
+//                        _graphicState = _flickerStart;
+//                }
+//                if (_graphicState >= _graphicStateCount)
+//                    _graphicState = 0;
+//            }
+//        }
+//        else // Sprite when stationary
+//            _graphicState = 0;
+//
+//        _spriteSheetOffset.x = _graphicState * _spriteSourceSize.x;
+//        _spriteSheetOffset.y = 0;
+//
+//        // Sprite when lauching an attack
+//        if (_attackAnimation)
+//            _spriteSheetOffset = _spriteAttackOffset * _spriteSourceSize;
+//
+//        _graphicframeCount++;
+//    }
+//    else
+//    { // Dead sprite, supposedly
+//        _spriteSheetOffset = _spriteDeadOffset * _spriteSourceSize;
+//    }
+//}
 
-olc::Decal* Entity::get_decal() const{
-  return _decal;
-}
-
-void Entity::set_spriteSourceSize(olc::vi2d sourceSize) { _spriteSourceSize = sourceSize; }
-
-void Entity::setSpriteScaling(olc::vf2d scale) { _spriteScaling = scale; }
-
-void Entity::setDeadSpriteSource(olc::vf2d sourceOffsetFactor) { _spriteDeadOffset = sourceOffsetFactor; }
-
-void Entity::setAttackSpriteSource(olc::vf2d sourceOffsetFactor) { _spriteAttackOffset = sourceOffsetFactor; }
-
-void Entity::setGraphicState(int startState, int stateCount) {
-  _graphicState = startState;
-  _graphicStateCount = stateCount;
-}
-
-void Entity::setGraphicFrameTimer(int numFrames) { _graphicStateTimer = numFrames; }
-
-void Entity::setGraphicFlicker(bool flicker, int flickerStateStart, int flickerStateEnd) {
-  _graphicFlicker = flicker;
-  _flickerStart = flickerStateStart;
-  _flickerEnd = flickerStateEnd;
-}
-
-void Entity::setSpriteRotOffset(double angle) { _spriteRotOffset = angle; }
-
-void Entity::decalOut(Example& gfx, const olc::Pixel& tint) const
+// Adds a decal and the data for it, if available, to the decal map and decalmap info
+void Entity::addDecalAndIfData(std::string sName)
 {
-    if (_decal == nullptr)
-        std::cout << "decal error" << std::endl;
-    else
-        gfx.DrawPartialRotatedDecal(_pos, _decal, _spriteRot + _spriteRotOffset, _spriteSourceSize / 2, _spriteSheetOffset, _spriteSourceSize, _spriteScaling, tint);
+    if (!_decals.count(sName)) // Prevent copies
+        _decals[sName] = DecalMap::get().getDecal(sName);
+    if (!_decalsData.count(sName)) // Prevent copies
+        if (DecalMap::get().hasData(sName))
+            _decalsData[sName] = DecalMap::get().getDecalData(sName);
 }
 
-// Takes input for parameters related to graphics
-void Entity::setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal)
+// Called to draw a specific decal of a sprite
+void Entity::drawDecal(Example& gfx, std::string sDecalName, olc::vf2d pos, olc::vf2d addScaleOffset = { 0.0f, 0.0f }, const olc::Pixel& tint = { 255, 255, 255 }) const
 {
-    setGraphicState(0, 1);
-    setSpriteSourceSize(sourceSize);
-    setSpriteScaling(scale);
-    setDecal(decal);
+    auto data = _decalsData.find(sDecalName)->second;
+    gfx.DrawPartialRotatedDecal(pos, _decals.find(sDecalName)->second, data.getSpriteRot(), data.getSpriteCenter(), 
+        data.getSpriteSheetOffset(), data.getSpriteSourceSize(), data.getSpriteScaling() + addScaleOffset);
+
 }
 
-
-
-auto Entity::getSpriteRotOffset() const { return _spriteRot; }
-
-auto Entity::getGraphicState() const { return _graphicState; }
-
-int Entity::getGraphicFrameTimer() const { return _graphicStateTimer; }
-
-olc::vi2d Entity::getSpriteSheetOffset() const { return _spriteSheetOffset; }
-
-olc::vf2d Entity::getSpriteScaling() const { return _spriteScaling; }
-
-olc::vf2d Entity::getDeadSpriteSource() const { return _spriteDeadOffset; }
-
-olc::vf2d Entity::getAttackSpriteSource() const { return _spriteAttackOffset; }
-
-void Entity::spriteStateManager(bool isAlive) {
-    if (isAlive) {
-        if (getDirection() != olc::vd2d{ 0.0, 0.0 }) // Sprite when moving
-        {
-            if (_useRotations)
-                _spriteRot = getSpriteRot();
-            if (_graphicframeCount >= _graphicStateTimer) // Runs through all movement states and starts again
-            {
-                _graphicframeCount = 0;
-                _graphicState++;
-
-                if (_graphicFlicker) // Flicker the decal between specified sprite animations
-                {
-                    if (_graphicState > _flickerEnd)
-                        _graphicState = _flickerStart;
-                }
-                if (_graphicState >= _graphicStateCount)
-                    _graphicState = 0;
-            }
-        }
-        else // Sprite when stationary
-            _graphicState = 0;
-
-        _spriteSheetOffset.x = _graphicState * _spriteSourceSize.x;
-        _spriteSheetOffset.y = 0;
-
-        // Sprite when lauching an attack
-        if (_attackAnimation)
-            _spriteSheetOffset = _spriteAttackOffset * _spriteSourceSize;
-
-        _graphicframeCount++;
-    }
-    else
-    { // Dead sprite, supposedly
-        _spriteSheetOffset = _spriteDeadOffset * _spriteSourceSize;
+// Calls each sprite's manager to update them
+void Entity::spritesOverManager(bool isAlive)
+{
+    for (auto& [key, data] : _decalsData)
+    {
+        data.spriteStateManager(isAlive, getDirection(), data.getSpriteRot());
     }
 }
 
+// Used to add in the decals/sprites for the entity --> NEEDS TO BE OVERWITTEN FOR EVERY MOB WITH DIFFERENT DECALS!
 void Entity::graphicsSetup() {
-
+    //addDecalAndIfData(sDecalNameHere) <- How things should be called in this function
 }
 
 
@@ -190,7 +213,8 @@ int Entity::getId() const { return id; }
 
 void Entity::setDecal(std::string fileName) {
     if (fileName == "test2.png")
-        _spriteRotOffset = PI/2;
+        std::cout << "spriteRotOffset not set in set decal" << std::endl;
+        //_spriteRotOffset = PI/2;
     _spritePtr = std::make_shared<olc::Sprite> (fileName);
     _decalPtr = std::make_shared<olc::Decal> (_spritePtr.get());
 }
@@ -204,8 +228,9 @@ olc::vf2d Entity::getDecalScale(float pixels) const {
   return {scale, scale};
 }
 
-float Entity::getSpriteRot() const {
-  return _spriteRotOffset + atan(_direction.y / _direction.x) + (_direction.x < 0 ? PI : 0);
+float Entity::getSpriteRot(std::string sDecalName) const {
+    if (_decalsData.count(sDecalName))
+        return (_decalsData.find(sDecalName))->second.getSpriteRotOffset() + atan(_direction.y / _direction.x) + (_direction.x < 0 ? PI : 0);
 }
 
 //Returns the center of the decal using the size. ie, half the width, and half the height of the sprite size
@@ -213,13 +238,13 @@ olc::vd2d Entity::getDecalCenter() const {
   return olc::vd2d(_spritePtr->width / 2.0, _spritePtr->height / 2.0);
 }
 
-void Entity::setSpriteSourceSize(const olc::vi2d &s) {
-    _spriteSourceSize = s;
-}
-
-olc::vi2d Entity::getSpriteSourceSize() const{
-  return _spriteSourceSize;
-}
+//void Entity::setSpriteSourceSize(const olc::vi2d &s) {
+//    _spriteSourceSize = s;
+//}
+//
+//olc::vi2d Entity::getSpriteSourceSize() const{
+//  return _spriteSourceSize;
+//}
 
 //////////////
 bool operator==(const Entity &one, const Entity &two) {

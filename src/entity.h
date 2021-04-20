@@ -3,16 +3,16 @@
 
 #define PI 3.14159265
 #include <string>
-
+#include "decalmap.h"
 #include "olcPixelGameEngine.h"
 
 class Level;
 class Example;
 
 class Entity {
+    friend spriteInfo;
 
 private:
-
   bool _bRedundant = false;
   std::string _name;
 
@@ -21,31 +21,33 @@ private:
 
     olc::vd2d _direction;// = {.6, .8};
     double _speed;
-  // Decal/Sprite variables
-  olc::Decal* _decal = nullptr;
-  olc::vi2d _spriteSheetOffset = { 0, 0 };
-  olc::vi2d _spriteSourceSize = { 16, 16 };
-  olc::vf2d _spriteScaling = { 1.0f, 1.0f };
 
-  olc::vf2d _spriteDeadOffset = { 1.0f, 1.0f };
-  olc::vf2d _spriteAttackOffset = { 1.0f, 0.0f };
+    // Holds all the decals for this entity
+    std::map<std::string, olc::Decal*> _decals;
+    // Holds all available decal data for this entity
+    std::map<std::string, spriteInfo> _decalsData;
 
-  bool _useRotations = true; // Sprites will rotate based on velocity direction
-  bool _singleSprite = false; // If it's single image that we rotate set to true
-  bool _attackAnimation = false; // Display upon launching an attack
-
-  double _spriteRot = 0.0; // Rotation of sprite
-  double _spriteRotOffset = 0.0 + PI / 2.0;
-
-  int _graphicState; // The specfic state of motion in the given faced direction
-  int _graphicStateCount = 2; // Number of states per direction faced
-
-  bool _graphicFlicker = false;
-  int _flickerStart = 0;
-  int _flickerEnd = 0;
-  // How many frames until we change the state
-  int _graphicStateTimer = 25;
-  int _graphicframeCount = 0;
+    //spriteInfo spriteData;
+    // Decal/Sprite variables
+    //olc::Decal* _decal = nullptr;
+    //olc::vi2d _spriteSheetOffset = { 0, 0 };
+    //olc::vi2d _spriteSourceSize = { 16, 16 };
+    //olc::vf2d _spriteScaling = { 1.0f, 1.0f };
+    //olc::vf2d _spriteDeadOffset = { 1.0f, 1.0f };
+    //olc::vf2d _spriteAttackOffset = { 1.0f, 0.0f };
+    //int _graphicState; // The specfic state of motion in the given faced direction
+    //int _graphicStateCount = 2; // Number of states per direction faced
+    //bool _graphicFlicker = false;
+    //int _flickerStart = 0;
+    //int _flickerEnd = 0;
+    //// How many frames until we change the state
+    //int _graphicStateTimer = 25;
+    //int _graphicframeCount = 0;
+    //double _spriteRot = 0.0; // Rotation of sprite
+    //double _spriteRotOffset = 0.0 + PI / 2.0;
+  //bool _useRotations = true; // Sprites will rotate based on velocity direction
+  //bool _singleSprite = false; // If it's single image that we rotate set to true
+  //bool _attackAnimation = false; // Display upon launching an attack
 
   static int idPoint;
   int id;
@@ -72,48 +74,42 @@ public:
 
  // Graphics related functions
   virtual void drawSelf(Example& gfx) const = 0;
-  void decalOut(Example& gfx, const olc::Pixel& tint = { 255, 255, 255 }) const;
+  //void decalOut(Example& gfx, const olc::Pixel& tint = { 255, 255, 255 }) const;
 
-  void set_decal(std::string sName);
-  olc::Decal* get_decal() const;
+  //void set_decal(std::string sName);
+  //olc::Decal* get_decal() const;
 
-  void set_spriteSourceSize(olc::vi2d sourceSize);
+  //void set_spriteSourceSize(olc::vi2d sourceSize);
+  //void setSpriteScaling(olc::vf2d scale);
+  //void setDeadSpriteSource(olc::vf2d source);
+  //void setAttackSpriteSource(olc::vf2d source);
+  //void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
+  //void setGraphicFrameTimer(int numFrames); // Sets _graphicStateTimer -> (How many frames until we change the state)
+  //void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states
+  //void setSpriteRotOffset(double angle); // Sets the angle the sprite is rotated to
+  //void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
+  //
+  //auto getGraphicState() const;
+  //int getGraphicFrameTimer() const;
+  //olc::vi2d getSpriteSheetOffset() const;
+  //olc::vf2d getSpriteScaling() const;
+  //olc::vf2d getDeadSpriteSource() const;
+  //olc::vf2d getAttackSpriteSource() const;
+  //auto getSpriteRotOffset() const;
+  //void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
 
-  void setSpriteScaling(olc::vf2d scale);
-
-  void setDeadSpriteSource(olc::vf2d source);
-
-  void setAttackSpriteSource(olc::vf2d source);
-
-  void setGraphicState(int startState, int stateCount); // Sets the starting state and the number of states
-
-  void setGraphicFrameTimer(int numFrames); // Sets _graphicStateTimer -> (How many frames until we change the state)
-
-  void setGraphicFlicker(bool flicker, int flickerStateStart = 0, int flickerStateEnd = 1); // Set flicker bool and start/end states
-
-  void setSpriteRotOffset(double angle); // Sets the angle the sprite is rotated to
-
-  void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
-  
-
-  auto getGraphicState() const;
-
-  int getGraphicFrameTimer() const;
-
-  olc::vi2d getSpriteSheetOffset() const;
-
-  olc::vf2d getSpriteScaling() const;
-
-  olc::vf2d getDeadSpriteSource() const;
-
-  olc::vf2d getAttackSpriteSource() const;
-
-  auto getSpriteRotOffset() const;
-  
-
-  void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
-
+  // Used to add in the decals/sprites for the entity --> NEEDS TO BE OVERWITTEN FOR EVERY MOB WITH DIFFERENT DECALS!
   virtual void graphicsSetup();
+
+  // Gets the decal and any data that is associated with it
+  void addDecalAndIfData(std::string sName);
+
+  // Called to draw a specific decal of a sprite
+  void drawDecal(Example& gfx, std::string sDecalName, olc::vf2d pos, olc::vf2d addScaleOffset = { 0.0f, 0.0f }, const olc::Pixel& tint = { 255, 255, 255 }) const;
+
+  // Calls each sprite's manager to update them
+  void spritesOverManager(bool isAlive);
+
 
   // Position manipulation
   void setXPos(double newX);
@@ -144,7 +140,7 @@ public:
   void setDecal(std::string); // maybe combine set sprite and decal so that it's faster
   olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
-  float getSpriteRot () const;
+  float getSpriteRot (std::string sDecalName) const;
   void setSpriteOffset () ;
   olc::vd2d getDecalCenter () const;
   void setSpriteSourceSize (const olc::vi2d&);

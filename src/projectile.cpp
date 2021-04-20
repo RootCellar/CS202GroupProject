@@ -14,39 +14,35 @@ Projectile::Projectile() :Entity()
 Projectile::Projectile(double x, double y) : Entity(x,y){
     setDirection( olc::vd2d{0,1});
     setSpeed(0);
-    setDecal("fireBall.png");
+    //setDecal("fireBall.png");
 }
 
 Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
-    setDecal("test2.png");
+    //setDecal("test2.png");
 }
 
 Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
-    setDecal("test2.png");
+    //setDecal("test2.png");
 }
 
 void Projectile::drawSelf(Example& gfx) const
 {
-    if ( !_hasHit)
-        gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+    if (!_hasHit)
+        //gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot("fireBall"), getDecalCenter() , getDecalScale(10));
+        drawDecal(gfx, "fireBall", getPos());
     else
         gfx.DrawStringDecal(getPos(), "BOOM", olc::RED);
 
 }
 
-// Calls the set up for this mob (Needs to be overwritten if data needs to be different)
+// Used to add in the decals/sprites for the entity --> NEEDS TO BE OVERWITTEN FOR EVERY MOB WITH DIFFERENT DECALS!
 void Projectile::graphicsSetup()
 {
-    //// This is just some default/temporary stuff to test the sprite code
-    //setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
-    //setDeadSpriteSource({ 1.0f, 1.0f });
-    //setAttackSpriteSource({ 0.0f, 1.0f });
-
-    //setGraphicFrameTimer(20);
+    addDecalAndIfData("fireBall");
 }
 
 void Projectile::update() {
@@ -104,6 +100,12 @@ void HomingProjectile::update() {
     }
 }
 
+// Used to add in the decals/sprites for the entity --> NEEDS TO BE OVERWITTEN FOR EVERY MOB WITH DIFFERENT DECALS!
+void HomingProjectile::graphicsSetup()
+{
+    addDecalAndIfData("fireBall");
+}
+
 OrbitalProjectile::OrbitalProjectile(double x, double y, double cx, double cy):
         Projectile(x, y)
 {
@@ -112,7 +114,7 @@ OrbitalProjectile::OrbitalProjectile(double x, double y, double cx, double cy):
 
     setDirection ((sPos - centre).perp());
     radiusOrbital = (sPos - centre).mag();
-    setDecal("fireBall.png");
+    //setDecal("fireBall");
 }
 
 void OrbitalProjectile::update() {
@@ -122,4 +124,10 @@ void OrbitalProjectile::update() {
     setDirection(direction);
 
     Projectile::update();
+}
+
+// Used to add in the decals/sprites for the entity --> NEEDS TO BE OVERWITTEN FOR EVERY MOB WITH DIFFERENT DECALS!
+void OrbitalProjectile::graphicsSetup()
+{
+    addDecalAndIfData("fireBall");
 }
