@@ -31,11 +31,10 @@ Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endP
 
 void Projectile::drawSelf(Example& gfx) const
 {
-    olc::vd2d offS = olc::vd2d(gfx.ScreenHeight()/2,gfx.ScreenHeight()/2) - getLevel()->getPlayerPosition();
     if ( !_hasHit)
-        gfx.DrawRotatedDecal(getPos() + offS , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+        gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
     else
-        gfx.DrawStringDecal(getPos() + offS, "BOOM", olc::RED);
+        gfx.DrawStringDecal(getPos() + gfx.getOffsetVector(), "BOOM", olc::RED);
 
 }
 
