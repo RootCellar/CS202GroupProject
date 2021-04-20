@@ -39,7 +39,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 {
 	//Rendering Code
 
-
 	//Clear the Screen
 	for (int x = 0; x < ScreenWidth(); x++)
 	for (int y = 0; y < ScreenHeight(); y++)
@@ -64,6 +63,24 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	level.renderEntities(*this);
 
 	Text::drawText(*this);
+
+	//Button Presses
+
+	if (GetKey(olc::K0).bPressed) { // key pressed 0
+		player.setMana(player.getMana() - 80);
+		player.setSpeed(player.getSpeed() * 1.75);
+		player._speedSpellDuration = 80;
+	}
+
+	if (GetKey(olc::K3).bPressed) { // key pressed 0
+		player.toggleBarrier();
+	}
+
+	if (GetKey(olc::U).bPressed) {
+		player.upgradeStaff();
+	}
+
+	//Keep game simulating at the correct rate
 
 	fAccumulatedTime += fElapsedTime;
 	if (fAccumulatedTime >= fTargetFrameTime)
@@ -101,16 +118,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 			player.setYPos(levelHeight);
 	}
 
-	if (GetKey(olc::K0).bPressed) { // key pressed 0
-		player.setMana(player.getMana() - 80);
-		player.setSpeed(player.getSpeed() * 1.75);
-		player._speedSpellDuration = 80;
-	}
-
-	if (GetKey(olc::K3).bPressed) { // key pressed 0
-		player.toggleBarrier();
-	}
-
 	//// Shoot fireball
 	//if (GetKey(olc::K2).bPressed) { // key pressed 2
 	//	player.setMana(player.getMana() - 50);
@@ -118,12 +125,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	//	p = a;
 	//	level.add(&p);
 	//}
-
-
-
-	if (GetKey(olc::U).bPressed) {
-		player.upgradeStaff();
-	}
 
 	xOffs = player.getXPos();
 	yOffs = player.getYPos();
