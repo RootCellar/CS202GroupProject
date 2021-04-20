@@ -24,7 +24,10 @@ public:
     {
         return _mapDecals[name]; // State specifies item in vector
     }
-
+    olc::Sprite* getSprite(std::string name)
+    {
+        return _mapSprites[name];
+    }
     void loadDecals();
 
 private:
@@ -32,6 +35,7 @@ private:
     ~DecalMap();
 
     std::map<std::string, olc::Decal*> _mapDecals;
+    std::map<std::string, olc::Sprite*> _mapSprites;
 };
 
 #endif // !DECALMAP_HPP

@@ -12,7 +12,9 @@ void DecalMap::loadDecals()
 {
     auto load = [&](std::string sName, std::string sFilename)
     {
-        olc::Decal* d = new olc::Decal(new olc::Sprite(sFilename));
+        olc::Sprite* s = new olc::Sprite(sFilename);
+        olc::Decal* d = new olc::Decal(s);
+        _mapSprites[sName] = s;
         _mapDecals[sName] = d;
     };
 
@@ -36,12 +38,12 @@ void DecalMap::loadDecals()
 
     // Projectiles
     load("Black Hole", "Black Hole Reformatted.png");
-    load("Web", "Web Projectile.png");
+    load("Web", "Web Projectile 7x11.png");
     load("Bullet", "Bullet.png");
-    load("fireBall.png", "fireBall.png");
+    load("Fireball", "fireBall.png");
 
     // Test sprites
-    load("test2.png", "test2.png");
+    load("Trailing Fireball", "test2.png");
 
     // Miscellaneous
     load("Dollar", "Dollar.png");
