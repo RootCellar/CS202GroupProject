@@ -7,6 +7,8 @@
 #include "spell.h"
 #include "main.h"
 
+#include "debug.h"
+
 using std::string;
 
 Player::Player(): Mob(400, 200, 200), _lives(3) {
@@ -53,6 +55,7 @@ void Player::increaseMaxHealth(double mod) {
 }
 
 void Player::update() {
+
 	if (!isRedundant())
 	{
 		regen();
