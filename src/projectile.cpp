@@ -13,28 +13,29 @@ Projectile::Projectile() :Entity()
 
 Projectile::Projectile(double x, double y) : Entity(x,y){
     setDirection( olc::vd2d{0,1});
-    setSpeed(0);
+    setSpeed(0.5);
     setDecal("Fireball");
 }
 
 Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
-    setDecal("test2.png");
+    setDecal("Trailing Fireball");
 }
 
 Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
-    setDecal("test2.png");
+    setDecal("Trailing Fireball");
 }
 
 void Projectile::drawSelf(Example& gfx) const
 {
+    olc::vd2d offS = olc::vd2d(gfx.ScreenHeight()/2,gfx.ScreenHeight()/2) - getLevel()->getPlayerPosition();
     if ( !_hasHit)
-        gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+        gfx.DrawRotatedDecal(getPos() + offS , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
     else
-        gfx.DrawStringDecal(getPos(), "BOOM", olc::RED);
+        gfx.DrawStringDecal(getPos() + offS, "BOOM", olc::RED);
 
 }
 
@@ -112,7 +113,7 @@ OrbitalProjectile::OrbitalProjectile(double x, double y, double cx, double cy):
 
     setDirection ((sPos - centre).perp());
     radiusOrbital = (sPos - centre).mag();
-    setDecal("fireBall.png");
+    setDecal("Fireball");
 }
 
 void OrbitalProjectile::update() {
