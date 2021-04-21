@@ -32,8 +32,12 @@ bool Example::OnUserCreate()
 
 	level.add(&player);
 	{
-		ChaserMob* m = new ChaserMob(100, 100);
-		level.add(m);
+		for(int i = 0; i < 4; i++) {
+
+			ChaserMob* m = new ChaserMob(i * 100, 100);
+			level.add(m);
+
+		}
 	}
 
 	/*
