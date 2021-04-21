@@ -5,6 +5,9 @@
 #include "main.h"
 #include "projectile.h"
 
+#include <vector>
+using std::vector;
+
 
 Projectile::Projectile() :Entity()
 {
@@ -17,13 +20,13 @@ Projectile::Projectile(double x, double y) : Entity(x,y){
   setDecal("Fireball");
 }
 
-Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
+Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(x, y), _endPosition(fPos) {
   setDirection(_endPosition - getPos());
   setSpeed(2);
   setDecal("Fireball");
 }
 
-Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
+Projectile::Projectile(double x, double y, double fx, double fy):Entity(x, y), _endPosition(fx, fy) {
   setDirection(_endPosition - getPos());
   setSpeed(2);
   setDecal("Fireball");
@@ -49,6 +52,14 @@ void Projectile::graphicsSetup()
 void Projectile::update() {
   auto displacement = getDirection() * getSpeed();
   addToPos(displacement);
+
+  Level* level = getLevel();
+  vector<Mob*> inRange = level->getMobsInRange(getPos(), 20, _shooter->getTeam());
+  if(inRange.size() > 0) {
+    Mob* toHit = inRange[0];
+    toHit->damage(50);
+    level->remove(this);
+  }
 }
 
 void Projectile::setEndPosition(const olc::vd2d &newEndPosition) {
