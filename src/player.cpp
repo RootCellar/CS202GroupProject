@@ -39,6 +39,7 @@ Player::Player(const string &text) : Mob( 100, 100, 100) {
 	setGraphicState(0, 18);
 	setGraphicFrameTimer(5);
 }
+
 const std::vector<Spell> *Player::getSpellList() {
 	return _AvailableSpells;
 }
@@ -64,16 +65,8 @@ void Player::update() {
 			setMana(getMaxMana());
 		}
 
-		//damage(4.0);
-
 		// Speed spell
-		if (getSpeed() > 1.0)
-		{
-			if (_speedSpellDuration > 0)
-				_speedSpellDuration--;
-			else
-				setSpeed(1.0);
-		}
+		if(_speedSpellDuration > 0) _speedSpellDuration--;
 
 		if (_barrier)
 		{
@@ -204,6 +197,8 @@ void Player::move(const string &direction) {
 	changeToPos = east;
 	else if (direction == "left")
 	changeToPos = east * (-1);
+
+	if(_speedSpellDuration > 0) changeToPos *= 1.75;
 
 	//Multiply changeToPos by speed to apply proper position change
 	addToPos(changeToPos * getSpeed());
