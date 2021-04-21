@@ -39,6 +39,7 @@ Player::Player(const string &text) : Mob( 100, 100, 100) {
 	setGraphicState(0, 18);
 	setGraphicFrameTimer(5);
 }
+
 const std::vector<Spell> *Player::getSpellList() {
 	return _AvailableSpells;
 }
@@ -64,16 +65,8 @@ void Player::update() {
 			setMana(getMaxMana());
 		}
 
-		//damage(4.0);
-
 		// Speed spell
-		if (getSpeed() > 1.0)
-		{
-			if (_speedSpellDuration > 0)
-				_speedSpellDuration--;
-			else
-				setSpeed(1.0);
-		}
+		if(_speedSpellDuration > 0) _speedSpellDuration--;
 
 		if (_barrier)
 		{
@@ -145,6 +138,7 @@ void Player::drawSelf(Example& gfx) const {
 
 void Player::die(){
 	_lives--;
+	heal(getMaxHp());
 
 	if (_lives == 0)
 	{
@@ -187,9 +181,6 @@ void Player::die(){
 
 	Text::overWriteText("Spare Lives " + valueToString(_lives), "Spare Lives", { 255, uint8_t(255 / 3 * _lives), uint8_t(255 / 3 * _lives) });
 
-
-
-	heal(getMaxHp());
 }
 // Uses the PGE's way to take input implemented at main.cpp
 // gets the string and moves player position corresponding direction
@@ -204,6 +195,8 @@ void Player::move(const string &direction) {
 	changeToPos = east;
 	else if (direction == "left")
 	changeToPos = east * (-1);
+
+	if(_speedSpellDuration > 0) changeToPos *= 1.75;
 
 	//Multiply changeToPos by speed to apply proper position change
 	addToPos(changeToPos * getSpeed());

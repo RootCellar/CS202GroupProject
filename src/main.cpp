@@ -79,7 +79,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	if(GetKey(olc::K0).bPressed && player.getMana() > 80) { // key pressed 0
 		player.setMana(player.getMana() - 80);
-		player.setSpeed(player.getSpeed() * 1.75);
 		player._speedSpellDuration = 80;
 	}
 

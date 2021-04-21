@@ -12,6 +12,7 @@ Projectile::Projectile() :Entity()
 }
 
 Projectile::Projectile(double x, double y) : Entity(x,y){
+<<<<<<< HEAD
     setDirection( olc::vd2d{0,1});
     setSpeed(0.5);
     setDecal("Fireball");
@@ -27,99 +28,123 @@ Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endP
     setDirection(_endPosition - getPos());
     setSpeed(0.5);
     setDecal("Trailing Fireball");
+=======
+  setDirection( olc::vd2d{0,1});
+  setSpeed(0);
+  setDecal("Fireball");
+}
+
+Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
+  setDirection(_endPosition - getPos());
+  setSpeed(0.5);
+  setDecal("Fireball");
+}
+
+Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
+  setDirection(_endPosition - getPos());
+  setSpeed(0.5);
+  setDecal("Fireball");
+>>>>>>> main
 }
 
 void Projectile::drawSelf(Example& gfx) const
 {
+<<<<<<< HEAD
     if ( !_hasHit)
         gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
     else
         gfx.DrawStringDecal(getPos() + gfx.getOffsetVector(), "BOOM", olc::RED);
+=======
+  if ( !_hasHit)
+  gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+  else
+  gfx.DrawStringDecal(getPos(), "BOOM", olc::RED);
+>>>>>>> main
 
 }
 
 // Calls the set up for this mob (Needs to be overwritten if data needs to be different)
 void Projectile::graphicsSetup()
 {
-    //// This is just some default/temporary stuff to test the sprite code
-    //setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
-    //setDeadSpriteSource({ 1.0f, 1.0f });
-    //setAttackSpriteSource({ 0.0f, 1.0f });
+  //// This is just some default/temporary stuff to test the sprite code
+  //setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
+  //setDeadSpriteSource({ 1.0f, 1.0f });
+  //setAttackSpriteSource({ 0.0f, 1.0f });
 
-    //setGraphicFrameTimer(20);
+  //setGraphicFrameTimer(20);
 }
 
 void Projectile::update() {
-    if (!_hasHit) {
-        auto displacement = getDirection() * getSpeed();
-        addToPos(displacement);
-    } else {
-        // do nothing
-    }
+  auto displacement = getDirection() * getSpeed();
+  addToPos(displacement);
 }
 
 void Projectile::setEndPosition(const olc::vd2d &newEndPosition) {
-    _endPosition = newEndPosition;
+  _endPosition = newEndPosition;
 }
 
 olc::vd2d Projectile::getEndPosition() const {
-    return _endPosition;
+  return _endPosition;
 }
 
 void Projectile::setHasHit() {
-    _hasHit = true;
+  _hasHit = true;
 }
 
 bool Projectile::getHasHit() const {
-    return _hasHit;
+  return _hasHit;
 }
 
 double Projectile::getRadius() const {
-    return _radius;
+  return _radius;
 }
 
 std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, double fy) // fP only gives directions
 {
-    return std::make_unique<Projectile>(x, y, fx, fy);
+  return std::make_unique<Projectile>(x, y, fx, fy);
 }
 
 HomingProjectile::HomingProjectile(double x, double y, Mob* mob) :
-        Projectile(x, y, mob->getPos()) , _entityTarget(mob) {
+Projectile(x, y, mob->getPos()) , _entityTarget(mob) {
 }
 
 void HomingProjectile::update() {
-    // Get Final position from the object
-    // adjust direction to object
-    // adjust position
-    if ( !getHasHit() && getLevel()->has(_entityTarget) ) {
-        auto oldDirection = getDirection();
-        setEndPosition(_entityTarget->getPos());
-        auto directionToObject = (getEndPosition() - getPos()).norm();
-        auto newDirection = oldDirection * .96 + directionToObject * .04; // adjust multiplier for responsetimes.
-        // Bigger multiplier for oldDirection, slower response time.
-        setDirection(newDirection);
-        Projectile::update();
-    } else {
-        // do nothing
-    }
+  // Get Final position from the object
+  // adjust direction to object
+  // adjust position
+  if ( getLevel()->has(_entityTarget) ) {
+    auto oldDirection = getDirection();
+    setEndPosition(_entityTarget->getPos());
+    auto directionToObject = (getEndPosition() - getPos()).norm();
+    auto newDirection = oldDirection * .96 + directionToObject * .04; // adjust multiplier for responsetimes.
+    // Bigger multiplier for oldDirection, slower response time.
+    setDirection(newDirection);
+    Projectile::update();
+  }
 }
 
 OrbitalProjectile::OrbitalProjectile(double x, double y, double cx, double cy):
-        Projectile(x, y)
+Projectile(x, y)
 {
-    olc::vd2d sPos {x, y};
-    olc::vd2d centre {cx, cy};
+  olc::vd2d sPos {x, y};
+  olc::vd2d centre {cx, cy};
 
+<<<<<<< HEAD
     setDirection ((sPos - centre).perp());
     radiusOrbital = (sPos - centre).mag();
     setDecal("Fireball");
+=======
+  setDirection ((sPos - centre).perp());
+  radiusOrbital = (sPos - centre).mag();
+  setDecal("Fireball");
+>>>>>>> main
 }
 
 void OrbitalProjectile::update() {
 
-    auto direction = getDirection();
-    direction += direction.perp() * getSpeed() / radiusOrbital;
-    setDirection(direction);
+  auto direction = getDirection();
+  direction += direction.perp() * getSpeed() / radiusOrbital;
+  setDirection(direction);
 
-    Projectile::update();
+  Projectile::update();
 }
