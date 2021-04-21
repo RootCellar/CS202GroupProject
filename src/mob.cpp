@@ -247,9 +247,16 @@ ChaserMob::ChaserMob():Mob() {
 
 void ChaserMob::update() {
   if(isAlive()) {
+    //Movement
     auto oldDirection = getDirection();
-    Level *x = getLevel();
-    setDirection(x->getPlayerPosition() - getPos());
+    Level *level = getLevel();
+    setDirection(level->getPlayerPosition() - getPos());
+
+    //Attack
+    if( getLevel()->getDistanceBetween(getPos(), getLevel()->getPlayerPosition()) < 20 ) {
+      level->getPlayer().damage(2);
+    }
+
     Mob::update();
   }
 }

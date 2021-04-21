@@ -213,3 +213,5 @@ void Level::renderEntities(Example& gfx) const {
 olc::vd2d Level::getPlayerPosition() const{
   return player.getPos();
 }
+
+Player& Level::getPlayer() { return player; }

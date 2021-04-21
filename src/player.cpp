@@ -138,6 +138,7 @@ void Player::drawSelf(Example& gfx) const {
 
 void Player::die(){
 	_lives--;
+	heal(getMaxHp());
 
 	if (_lives == 0)
 	{
@@ -180,9 +181,6 @@ void Player::die(){
 
 	Text::overWriteText("Spare Lives " + valueToString(_lives), "Spare Lives", { 255, uint8_t(255 / 3 * _lives), uint8_t(255 / 3 * _lives) });
 
-
-
-	heal(getMaxHp());
 }
 // Uses the PGE's way to take input implemented at main.cpp
 // gets the string and moves player position corresponding direction
