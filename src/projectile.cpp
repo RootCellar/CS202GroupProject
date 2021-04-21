@@ -12,23 +12,6 @@ Projectile::Projectile() :Entity()
 }
 
 Projectile::Projectile(double x, double y) : Entity(x,y){
-<<<<<<< HEAD
-    setDirection( olc::vd2d{0,1});
-    setSpeed(0.5);
-    setDecal("Fireball");
-}
-
-Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
-    setDirection(_endPosition - getPos());
-    setSpeed(0.5);
-    setDecal("Trailing Fireball");
-}
-
-Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
-    setDirection(_endPosition - getPos());
-    setSpeed(0.5);
-    setDecal("Trailing Fireball");
-=======
   setDirection( olc::vd2d{0,1});
   setSpeed(0);
   setDecal("Fireball");
@@ -44,22 +27,14 @@ Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endP
   setDirection(_endPosition - getPos());
   setSpeed(0.5);
   setDecal("Fireball");
->>>>>>> main
 }
 
 void Projectile::drawSelf(Example& gfx) const
 {
-<<<<<<< HEAD
     if ( !_hasHit)
         gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
     else
         gfx.DrawStringDecal(getPos() + gfx.getOffsetVector(), "BOOM", olc::RED);
-=======
-  if ( !_hasHit)
-  gfx.DrawRotatedDecal(getPos() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
-  else
-  gfx.DrawStringDecal(getPos(), "BOOM", olc::RED);
->>>>>>> main
 
 }
 
@@ -129,15 +104,9 @@ Projectile(x, y)
   olc::vd2d sPos {x, y};
   olc::vd2d centre {cx, cy};
 
-<<<<<<< HEAD
-    setDirection ((sPos - centre).perp());
-    radiusOrbital = (sPos - centre).mag();
-    setDecal("Fireball");
-=======
   setDirection ((sPos - centre).perp());
   radiusOrbital = (sPos - centre).mag();
   setDecal("Fireball");
->>>>>>> main
 }
 
 void OrbitalProjectile::update() {
