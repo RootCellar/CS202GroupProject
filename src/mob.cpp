@@ -282,7 +282,7 @@ void ChaserMob::drawSelf(Example& gfx) const {
         gfx.DrawPartialRotatedDecal(getPos() + gfx.getOffsetVector(), getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, olc::vf2d{ 0,0 } *getSpriteSourceSize(), getSpriteSourceSize(),
             getDecalScale(30));
     else
-        gfx.DrawPartialRotatedDecal(getPos(), getDecal(), 0, getSpriteSourceSize() / 2, olc::vf2d{ 1,1 } *getSpriteSourceSize(), getSpriteSourceSize(),
+        gfx.DrawPartialRotatedDecal(getPos() + gfx.getOffsetVector(), getDecal(), 0, getSpriteSourceSize() / 2, olc::vf2d{ 1,1 } *getSpriteSourceSize(), getSpriteSourceSize(),
             getDecalScale(30));
 
     //gfx.drawPixel(getXPos(), getYPos(), 255, 0, 0);

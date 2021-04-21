@@ -77,8 +77,8 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	//Button Presses
 
-	if(GetKey(olc::K2).bPressed && player.getMana() > 50) {
-		//player.setMana(player.getMana() - 50);
+	if(GetKey(olc::K2).bPressed && player.getMana() > 30) {
+		player.setMana(player.getMana() - 30);
 		olc::vd2d fireballDir( GetMouseX(), GetMouseY() );
 		Projectile* fireball = new Projectile(player.getXPos(), player.getYPos(), fireballDir - getOffsetVector());
 		fireball->setShooter(&player);
