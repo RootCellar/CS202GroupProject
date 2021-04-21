@@ -32,6 +32,9 @@ private:
   std::vector<Projectile*> pendingProjectileSpawns;
   std::vector<Projectile*> pendingProjectileRemovals;
 
+  int _levelHeight;
+  int _levelWidth;
+
 public:
 
   Level(Player &p);
@@ -73,6 +76,12 @@ public:
   olc::vd2d getPlayerPosition () const;
 
   Player& getPlayer();
+
+  void setWidth(int);
+  void setHeight(int);
+
+  int getWidth();
+  int getHeight();
 };
 
 #endif

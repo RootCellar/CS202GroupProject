@@ -13,28 +13,25 @@ Projectile::Projectile() :Entity()
 
 Projectile::Projectile(double x, double y) : Entity(x,y){
   setDirection( olc::vd2d{0,1});
-  setSpeed(0);
+  setSpeed(2);
   setDecal("Fireball");
 }
 
 Projectile::Projectile(double x, double y, const olc::vd2d &fPos):Entity(), _endPosition(fPos) {
   setDirection(_endPosition - getPos());
-  setSpeed(0.5);
+  setSpeed(2);
   setDecal("Fireball");
 }
 
 Projectile::Projectile(double x, double y, double fx, double fy):Entity(), _endPosition(fx, fy) {
   setDirection(_endPosition - getPos());
-  setSpeed(0.5);
+  setSpeed(2);
   setDecal("Fireball");
 }
 
 void Projectile::drawSelf(Example& gfx) const
 {
-    if ( !_hasHit)
-        gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
-    else
-        gfx.DrawStringDecal(getPos() + gfx.getOffsetVector(), "BOOM", olc::RED);
+  gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
 
 }
 
@@ -62,16 +59,18 @@ olc::vd2d Projectile::getEndPosition() const {
   return _endPosition;
 }
 
-void Projectile::setHasHit() {
-  _hasHit = true;
-}
-
-bool Projectile::getHasHit() const {
-  return _hasHit;
-}
-
 double Projectile::getRadius() const {
   return _radius;
+}
+
+Mob* Projectile::getShooter() {
+  if(_shooter == nullptr) return nullptr;
+
+  return _shooter;
+}
+
+Mob* Projectile::setShooter(Mob* m) {
+  _shooter = m;
 }
 
 std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, double fy) // fP only gives directions

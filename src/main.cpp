@@ -60,15 +60,15 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	for (int y = 0; y < 1000; y+=50)
 	drawPixel(x, y, 255, 255, 255);
 
-	for(int x = 0; x < levelWidth; x++) {
+	for(int x = 0; x < level.getWidth(); x++) {
 		drawPixel(x, 0, 255, 255, 255);
-		drawPixel(x, levelHeight, 255, 255, 255);
+		drawPixel(x, level.getHeight(), 255, 255, 255);
 	}
 
 
-	for(int y = 0; y < levelHeight; y++) {
+	for(int y = 0; y < level.getHeight(); y++) {
 		drawPixel(0, y, 255, 255, 255);
-		drawPixel(levelWidth, y, 255, 255, 255);
+		drawPixel(level.getWidth(), y, 255, 255, 255);
 	}
 
 	level.renderEntities(*this);
@@ -116,8 +116,8 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	if(GetKey(olc::D).bHeld) {
 		//			x++;
 		player.move("right");
-		if (player.getXPos() > levelWidth)
-			player.setXPos(levelWidth);
+		if (player.getXPos() > level.getWidth())
+			player.setXPos(level.getWidth());
 	}
 
 	if(GetKey(olc::W).bHeld) {
@@ -129,8 +129,8 @@ bool Example::OnUserUpdate(float fElapsedTime)
 	if(GetKey(olc::S).bHeld) {
 		//			y++;
 		player.move("down");
-		if (player.getYPos() > levelHeight)
-			player.setYPos(levelHeight);
+		if (player.getYPos() > level.getHeight())
+			player.setYPos(level.getHeight());
 	}
 
 	//// Shoot fireball

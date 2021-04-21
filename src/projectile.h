@@ -12,7 +12,8 @@ private:
 
     double _radius = 10;
 
-    bool _hasHit = false;
+    Mob* _shooter;
+
 public:
     Projectile();
     Projectile(double, double);
@@ -34,9 +35,8 @@ public:
 
     double getRadius() const;
 
-    bool getHasHit() const;
-
-    void setHasHit();
+    Mob* getShooter();
+    Mob* setShooter(Mob*);
 };
 
 std::unique_ptr<Projectile> projectileFactory(double, double, double, double);

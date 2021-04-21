@@ -7,7 +7,7 @@
 #include "main.h"
 #include "level.h"
 
-Level::Level(Player& p): player(p) {
+Level::Level(Player& p): player(p), _levelWidth(1000), _levelHeight(1000) {
   debug("Constructing the level...");
 }
 
@@ -72,6 +72,14 @@ void Level::update() {
 
   for(Projectile *p : projectiles) {
     p->update();
+
+    if(p->getXPos() < 0 || p->getYPos() < 0) {
+      remove(p);
+    }
+
+    if(p->getXPos() > _levelWidth || p->getYPos() > _levelHeight) {
+      remove(p);
+    }
   }
 
   //Spawn mobs and projectiles from our lists
@@ -215,3 +223,19 @@ olc::vd2d Level::getPlayerPosition() const{
 }
 
 Player& Level::getPlayer() { return player; }
+
+void Level::setWidth(int i) {
+  _levelWidth = i;
+}
+
+void Level::setHeight(int i) {
+  _levelHeight = i;
+}
+
+int Level::getWidth() {
+  return _levelWidth;
+}
+
+int Level::getHeight() {
+  return _levelHeight;
+}
