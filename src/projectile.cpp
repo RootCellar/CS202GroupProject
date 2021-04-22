@@ -192,6 +192,7 @@ void BlackHoleProjectile::update() {
 //        yBHHold = 0.0f;
         bHCount = 0;
         stage = 0;
+        getLevel()->remove(this);
     }
     Projectile::update();
 }
@@ -201,4 +202,3 @@ void BlackHoleProjectile::drawSelf(Example &gfx) const{
 //    DrawPartialDecal({ 100.0f + xBHHold + xBH * bHCount, 100.0f + yBHHold + yBH * bHCount } , m_pDecal_BH, { 16.0f * (stage % 5), 16.0f * (stage / 5) }, { 16.0f, 16.0f });
 
 }
-
