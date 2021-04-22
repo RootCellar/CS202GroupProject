@@ -244,7 +244,7 @@ void NewHomingProjectile::update() {
 //        setDirection(closestMob->getPos() - getPos());
         setEndPosition(closestMob->getPos());
         auto directionToObject = (getEndPosition() - getPos()).norm();
-        auto newDirection = oldDirection * .90 + directionToObject * .10; // for slow chang in direction
+        auto newDirection = oldDirection * .94 + directionToObject * .06; // for slow chang in direction
         setDirection(newDirection);
 
 //        Mob* toHit = inRange[0];
