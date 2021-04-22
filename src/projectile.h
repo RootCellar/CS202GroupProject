@@ -40,7 +40,7 @@ public:
 };
 
 std::unique_ptr<Projectile> projectileFactory(double, double, double, double);
-
+Projectile* gimmeProjectile(int projectileType, double, double, const olc::vd2d &fPos);
 // HomingProjectile keeps reference to an entity
 // need a btter way to mitigate failure incase entity is removed from level. Maybe check with nullptr ?
 class HomingProjectile : public Projectile {
@@ -55,6 +55,8 @@ public:
 class OrbitalProjectile : public Projectile {
 public:
     OrbitalProjectile(double, double, double, double);
+    OrbitalProjectile(double, double, const olc::vd2d &center);
+
 
     double radiusOrbital;
     float fAngle = 0;
@@ -62,4 +64,15 @@ public:
     virtual void update() override;
 };
 
+class BlackHoleProjectile : public Projectile {
+public:
+    BlackHoleProjectile(double, double, double, double);
+    BlackHoleProjectile(double x, double y, const olc::vd2d &fPos);
+    virtual void update() override;
+    virtual void drawSelf(Example& gfx) const override;
+
+private:
+    double bHCount = 0;
+    int stage = 0;
+};
 #endif
