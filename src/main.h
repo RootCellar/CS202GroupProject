@@ -33,8 +33,6 @@ public:
 	int levelWidth = 1000;
 	int levelHeight = 1000;
 
-	Projectile p;
-
 	Player player;
 
 	Level level;

@@ -128,6 +128,18 @@ public:
     virtual void drawSelf(Example& gfx) const override;
 };
 
+class RangedChaserMob : public ChaserMob{
+private:
+	int _frameTimeOffset = 0;
+	int _attackDelay = 100; // 500 frames
+	int _attackWaitCount = 0;
+
+public:
+	RangedChaserMob();
+	RangedChaserMob(double x, double y);
+	virtual void update() override;
+	virtual void drawSelf(Example& gfx) const override;
+};
 
 class ScatterMob: public Mob {
 private:

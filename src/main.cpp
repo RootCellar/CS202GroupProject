@@ -34,7 +34,14 @@ bool Example::OnUserCreate()
 	{
 		for(int i = 0; i < 4; i++) {
 
-			ChaserMob* m = new ChaserMob(i * 100, 100);
+			ChaserMob* m = new ChaserMob(double(i * 100), 100.0);
+			level.add(m);
+
+		}
+
+		for (int i = 0; i < 4; i++) {
+
+			RangedChaserMob* m = new RangedChaserMob(double(i * 100), 100.0);
 			level.add(m);
 
 		}
@@ -144,14 +151,6 @@ bool Example::OnUserUpdate(float fElapsedTime)
 		if (player.getYPos() > level.getHeight())
 			player.setYPos(level.getHeight());
 	}
-
-	//// Shoot fireball
-	//if (GetKey(olc::K2).bPressed) { // key pressed 2
-	//	player.setMana(player.getMana() - 50);
-	//	Projectile a(player.getXPos(), player.getYPos(), GetMouseX(), GetMouseY());
-	//	p = a;
-	//	level.add(&p);
-	//}
 
 	xOffs = player.getXPos();
 	yOffs = player.getYPos();

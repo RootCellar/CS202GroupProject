@@ -28,10 +28,10 @@ private:
   olc::vf2d _spriteScaling = { 1.0f, 1.0f };
 
   olc::vf2d _spriteDeadOffset = { 1.0f, 1.0f };
-  olc::vf2d _spriteAttackOffset = { 1.0f, 0.0f };
+  olc::vf2d _spriteAttackOffset = { 0.0f, 1.0f };
 
   bool _useRotations = true; // Sprites will rotate based on velocity direction
-  bool _singleSprite = false; // If it's single image that we rotate set to true
+  bool _singleSprite = true; // If it's single image that we rotate set to true
   bool _attackAnimation = false; // Display upon launching an attack
 
   double _spriteRot = 0.0; // Rotation of sprite
@@ -78,7 +78,11 @@ public:
   void set_decal(std::string sName);
   olc::Decal* get_decal() const;
 
+  void setIfSingleSprite(bool ifSingleSprite);
+
   void set_spriteSourceSize(olc::vi2d sourceSize);
+
+  void setSpriteSheetOffset(olc::vi2d sheetOffset);
 
   void setSpriteScaling(olc::vf2d scale);
 
@@ -96,8 +100,12 @@ public:
 
   void setGraphicParameters(const int movementStates, const olc::vi2d sourceSize, const olc::vf2d scale, const std::string decal); // Takes input for parameters related to graphics
   
+  void setIfAttackAnimation(bool ifAttack);
 
-  auto getGraphicState() const;
+
+  bool getIfSingleSprite() const;
+
+  int getGraphicState() const;
 
   int getGraphicFrameTimer() const;
 
@@ -109,7 +117,7 @@ public:
 
   olc::vf2d getAttackSpriteSource() const;
 
-  auto getSpriteRotOffset() const;
+  double getSpriteRotOffset() const;
   
 
   void spriteStateManager(bool isAlive); // Manages the Decal/Sprite variables as needed
@@ -146,7 +154,7 @@ public:
   olc::Decal * getDecal () const; // use .get() method in unique_ptr
   olc::vf2d getDecalScale (float pixels) const;
   float getSpriteRot () const;
-  void setSpriteOffset () ;
+  //void setSpriteOffset () ;
   olc::vd2d getDecalCenter () const;
   void setSpriteSourceSize (const olc::vi2d&);
   olc::vi2d getSpriteSourceSize() const;

@@ -139,13 +139,14 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius)
   std::vector<Mob*> toRet;
 
   for(Mob* m : mobs) {
+      if (m->isAlive())
+      {
+          double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
 
-    double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
-
-    if(dist <= radius) {
-      toRet.push_back(m);
-    }
-
+          if (dist <= radius) {
+              toRet.push_back(m);
+          }
+      }
   }
 
   return toRet;
@@ -155,12 +156,14 @@ std::vector<Mob *> Level::getMobsInRange(const olc::vd2d &point, double radius) 
   std::vector<Mob*> toRet;
 
   for(Mob* m : mobs) {
-    double dist = getDistanceBetween(point, m->getPos());
+      if (m->isAlive())
+      {
+          double dist = getDistanceBetween(point, m->getPos());
 
-    if(dist <= radius) {
-      toRet.push_back(m);
-    }
-
+          if (dist <= radius) {
+              toRet.push_back(m);
+          }
+      }
   }
 
   return toRet;
@@ -172,13 +175,14 @@ std::vector<Mob*> Level::getMobsInRange(double xPos, double yPos, double radius,
   std::vector<Mob*> toRet;
 
   for(Mob *m : mobs) {
+      if (m->isAlive())
+      {
+          double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
 
-    double dist = getDistanceBetween(xPos, yPos, m->getXPos(), m->getYPos());
-
-    if(dist <= radius && m->getTeam() != t) {
-      toRet.push_back(m);
-    }
-
+          if (dist <= radius && m->getTeam() != t) {
+              toRet.push_back(m);
+          }
+      }
   }
 
   return toRet;
@@ -189,12 +193,14 @@ std::vector<Mob*> Level::getMobsInRange(const olc::vd2d &point, double radius, T
   std::vector<Mob*> toRet;
 
   for(Mob *m : mobs) {
-    double dist = getDistanceBetween(point , m->getPos());
+      if (m->isAlive())
+      {
+          double dist = getDistanceBetween(point, m->getPos());
 
-    if(dist <= radius && m->getTeam() != t) {
-      toRet.push_back(m);
-    }
-
+          if (dist <= radius && m->getTeam() != t) {
+              toRet.push_back(m);
+          }
+      }
   }
 
   return toRet;
@@ -209,14 +215,14 @@ double Level::getDistanceBetween(const olc::vd2d &point1, const olc::vd2d &point
   return (point1 - point2).mag();
 }
 void Level::renderEntities(Example& gfx) const {
-  for(Projectile *p : projectiles) {
-    (*p).drawSelf(gfx);
-  }
-
   // Draw dead mobs while skipping over the living ones
   for(Mob *m : mobs) { // Puts them under all mobs drawn next
       if(!(*m).isAlive())
         (*m).drawSelf(gfx);
+  }
+
+  for(Projectile *p : projectiles) {
+    (*p).drawSelf(gfx);
   }
 
   // Draw living mobs while skipping over the dead ones

@@ -292,6 +292,103 @@ void ChaserMob::drawSelf(Example& gfx) const {
 
 }
 
+RangedChaserMob::RangedChaserMob() {
+    setGraphicParameters(5, olc::vi2d{ 16, 16 }, olc::vf2d{ 0.8f, 0.8f }, "Slime");
+    setSpriteRotOffset(2.0 * PI);
+    setSpeed(0.5);
+}
+
+RangedChaserMob::RangedChaserMob(double x, double y) : ChaserMob(x, y) {
+    setMaxHp(150);
+    setHealth(150);
+    setGraphicParameters(5, olc::vi2d{ 16, 16 }, olc::vf2d{ 0.8f, 0.8f }, "Slime");
+    setSpriteRotOffset(2.0 * PI);
+
+    auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+    auto uniDis = std::uniform_int_distribution(0, 5);
+    std::mt19937 gen(seed);
+    setGraphicState(uniDis(gen), 5); // Set to random state for variance in state among Slimes
+    _frameTimeOffset = uniDis(gen); // Set some slimes to be faster and some slower
+    setSpeed(0.5);
+}
+
+void RangedChaserMob::update() {
+    if (isAlive()) {
+        //Movement
+        auto oldDirection = getDirection();
+        Level* level = getLevel();
+        if (_attackWaitCount < 80)
+            setDirection(level->getPlayerPosition() - getPos());
+
+        //Attack
+        if (getLevel()->getDistanceBetween(getPos(), getLevel()->getPlayerPosition()) < 80) {
+            setSpeed(0.0);
+            setIfAttackAnimation(true);
+            if (_attackWaitCount == _attackDelay) // shoot bullet
+            {
+                _attackWaitCount = 0;
+
+                Projectile* bullet = new Projectile(getXPos(), getYPos());
+                bullet->setDirection(getDirection());
+                bullet->setShooter(this);
+                bullet->setGraphicParameters(2, olc::vi2d{ 16, 5 }, { 1.0f, 1.0f }, "Bullet");
+                bullet->setSpriteRotOffset(2.0 * PI);
+                bullet->setIfSingleSprite(false);
+
+                getLevel()->add(bullet);
+            }
+
+            _attackWaitCount++;
+        }
+        else
+        {
+            setIfAttackAnimation(false);
+
+            switch (getGraphicState())
+            {
+            case 0:
+                setGraphicFrameTimer(25 - _frameTimeOffset);
+                setSpeed(0.0);
+                break;
+            case 1:
+                setGraphicFrameTimer(22 - _frameTimeOffset);
+                setSpeed(0.1);
+                break;
+            case 2:
+                setGraphicFrameTimer(18 - _frameTimeOffset);
+                setSpeed(0.3);
+                break;
+            case 3:
+                setGraphicFrameTimer(12 - _frameTimeOffset);
+                setSpeed(0.5);
+                break;
+            case 4:
+                setGraphicFrameTimer(18 - _frameTimeOffset);
+                setSpeed(0.3);
+                break;
+            case 5:
+                setGraphicFrameTimer(20 - _frameTimeOffset);
+                setSpeed(0.1);
+                break;
+            default:
+                break;
+            }
+        }
+
+        Mob::update();
+    }
+    else
+    {
+        setDirection({1.0, 0.0});
+        setSpriteSheetOffset(getDeadSpriteSource() * getSpriteSourceSize());
+    }
+}
+
+void RangedChaserMob::drawSelf(Example& gfx) const {
+    gfx.DrawPartialRotatedDecal(getPos() + gfx.getOffsetVector(), getDecal(), getSpriteRot(), getSpriteSourceSize() / 2, getSpriteSheetOffset(), getSpriteSourceSize(),
+        getSpriteScaling());
+}
+
 ScatterMob::ScatterMob(double x, double y) : Mob(100, x, y) {
 
   //    std::uniform_real_distribution();

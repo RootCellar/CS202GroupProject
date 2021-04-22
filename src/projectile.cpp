@@ -32,21 +32,25 @@ Projectile::Projectile(double x, double y, double fx, double fy):Entity(x, y), _
   setDecal("Fireball");
 }
 
+//void Projectile::drawSelf(Example& gfx) const
+//{
+//  gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
+//
+//}
+
+// Added this additional drawSelf for sprites with animations
 void Projectile::drawSelf(Example& gfx) const
 {
-  gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector() , getDecal(), getSpriteRot(), getDecalCenter() , getDecalScale(10));
-
+    if(getIfSingleSprite())
+        gfx.DrawRotatedDecal(getPos() + gfx.getOffsetVector(), getDecal(), getSpriteRot(), getDecalCenter(), getDecalScale(10));
+    else
+        gfx.DrawPartialRotatedDecal(getPos() + gfx.getOffsetVector(), getDecal(), getSpriteRot(), getSpriteSourceSize() / 2 , getSpriteSheetOffset() , getSpriteSourceSize(), getSpriteScaling());
 }
 
 // Calls the set up for this mob (Needs to be overwritten if data needs to be different)
 void Projectile::graphicsSetup()
 {
-  //// This is just some default/temporary stuff to test the sprite code
-  //setGraphicParameters(1, { 16, 16 }, { 0.5f, 0.5f }, "Spider");
-  //setDeadSpriteSource({ 1.0f, 1.0f });
-  //setAttackSpriteSource({ 0.0f, 1.0f });
 
-  //setGraphicFrameTimer(20);
 }
 
 void Projectile::update() {

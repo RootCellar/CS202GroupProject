@@ -37,7 +37,11 @@ olc::Decal* Entity::getDecal() const{
   return _decal;
 }
 
+void Entity::setIfSingleSprite(bool ifSingleSprite) { _singleSprite = ifSingleSprite; }
+
 void Entity::set_spriteSourceSize(olc::vi2d sourceSize) { _spriteSourceSize = sourceSize; }
+
+void Entity::setSpriteSheetOffset(olc::vi2d sheetOffset) { _spriteSheetOffset = sheetOffset; }
 
 void Entity::setSpriteScaling(olc::vf2d scale) { _spriteScaling = scale; }
 
@@ -75,13 +79,20 @@ void Entity::setGraphicParameters(const int movementStates, const olc::vi2d sour
     setSpriteSourceSize(sourceSize);
     setSpriteScaling(scale);
     setDecal(decal);
+    setGraphicState(0, movementStates);
+}
+
+void Entity::setIfAttackAnimation(bool ifAttack)
+{
+    _attackAnimation = ifAttack;
 }
 
 
+bool Entity::getIfSingleSprite() const { return _singleSprite; }
 
-auto Entity::getSpriteRotOffset() const { return _spriteRot; }
+double Entity::getSpriteRotOffset() const { return _spriteRot; }
 
-auto Entity::getGraphicState() const { return _graphicState; }
+int Entity::getGraphicState() const { return _graphicState; }
 
 int Entity::getGraphicFrameTimer() const { return _graphicStateTimer; }
 
@@ -124,9 +135,11 @@ void Entity::spriteStateManager(bool isAlive) {
             _spriteSheetOffset = _spriteAttackOffset * _spriteSourceSize;
 
         _graphicframeCount++;
+
     }
     else
     { // Dead sprite, supposedly
+        _spriteRot = 0.0;
         _spriteSheetOffset = _spriteDeadOffset * _spriteSourceSize;
     }
 }
