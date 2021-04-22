@@ -58,7 +58,7 @@ void Projectile::update() {
   addToPos(displacement);
 
   Level* level = getLevel();
-  vector<Mob*> inRange = level->getMobsInRange(getPos(), 20, _shooter->getTeam());
+  vector<Mob*> inRange = level->getMobsInRange(getPos(), getRadius(), _shooter->getTeam());
   if(inRange.size() > 0) {
     Mob* toHit = inRange[0];
     toHit->damage(50);
@@ -86,6 +86,11 @@ Mob* Projectile::getShooter() {
 
 void Projectile::setShooter(Mob* m) {
   _shooter = m;
+}
+
+void Projectile::setRadius(double r) {
+    _radius = r;
+
 }
 
 std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, double fy) // fP only gives directions
@@ -210,6 +215,7 @@ NewHomingProjectile::NewHomingProjectile(double x, double y, const olc::vd2d &fP
 //    setDecal("New Chasing Fireball");
     setDecal("Trailing Fireball");
     setSpeed(1);
+    setRadius(5);
 //    setRadius
 //    auto mobsInRange = level.getMobsInRange();
 
