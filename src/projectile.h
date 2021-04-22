@@ -36,7 +36,7 @@ public:
     double getRadius() const;
 
     Mob* getShooter();
-    Mob* setShooter(Mob*);
+    void setShooter(Mob*);
 };
 
 std::unique_ptr<Projectile> projectileFactory(double, double, double, double);

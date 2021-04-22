@@ -80,7 +80,7 @@ Mob* Projectile::getShooter() {
   return _shooter;
 }
 
-Mob* Projectile::setShooter(Mob* m) {
+void Projectile::setShooter(Mob* m) {
   _shooter = m;
 }
 

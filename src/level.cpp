@@ -213,8 +213,16 @@ void Level::renderEntities(Example& gfx) const {
     (*p).drawSelf(gfx);
   }
 
-  for(Mob *m : mobs) {
-    (*m).drawSelf(gfx);
+  // Draw dead mobs while skipping over the living ones
+  for(Mob *m : mobs) { // Puts them under all mobs drawn next
+      if(!(*m).isAlive())
+        (*m).drawSelf(gfx);
+  }
+
+  // Draw living mobs while skipping over the dead ones
+  for (Mob* m : mobs) {
+      if ((*m).isAlive())
+        (*m).drawSelf(gfx);
   }
 }
 
