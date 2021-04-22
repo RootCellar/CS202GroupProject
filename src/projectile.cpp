@@ -207,14 +207,17 @@ void BlackHoleProjectile::drawSelf(Example &gfx) const{
 }
 
 NewHomingProjectile::NewHomingProjectile(double x, double y, const olc::vd2d &fPos) : Projectile(x, y, fPos) {
-    setDecal("New Chasing Fireball");
+//    setDecal("New Chasing Fireball");
+    setDecal("Trailing Fireball");
+    setSpeed(1);
+//    setRadius
 //    auto mobsInRange = level.getMobsInRange();
 
 }
 
 void NewHomingProjectile::update() {
-//    auto displacement = getDirection() * getSpeed();
-//    addToPos(displacement);
+
+    auto oldDirection = getDirection();
 
     Level* level = getLevel();
     vector<Mob*> inRange = level->getMobsInRange(getPos(), _searchRadius, getShooter()->getTeam());
@@ -229,7 +232,12 @@ void NewHomingProjectile::update() {
     }
 
     if(inRange.size() > 0) {
-        setDirection(closestMob->getPos() - getPos());
+//        setDirection(closestMob->getPos() - getPos());
+        setEndPosition(closestMob->getPos());
+        auto directionToObject = (getEndPosition() - getPos()).norm();
+        auto newDirection = oldDirection * .96 + directionToObject * .04; // for slow chang in direction
+        setDirection(newDirection);
+
 //        Mob* toHit = inRange[0];
 //        toHit->damage(50);
 //        level->remove(this);
