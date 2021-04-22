@@ -346,3 +346,15 @@ void playerTextSetup(const double health, const double mana)
 	Text::addText("Spare Lives " + valueToString(3), "Spare Lives", { 255, 255, 255 }, -1, { 0.5f, 0.5f });
 	Text::setTextPos("Spare Lives", { 85, 205 });
 }
+
+// Playing with projectile Factory
+int Player::getSpellNumber() const {
+    return _spellNumber;
+}
+
+void Player::changeSpellNumber () {
+    ++_spellNumber;
+    if ( _spellNumber > 2)
+        _spellNumber = 0;
+
+}
