@@ -338,6 +338,7 @@ void RangedChaserMob::update() {
                 bullet->setGraphicParameters(2, olc::vi2d{ 16, 5 }, { 1.0f, 1.0f }, "Bullet");
                 bullet->setSpriteRotOffset(2.0 * PI);
                 bullet->setIfSingleSprite(false);
+                bullet->setRadius(10);
 
                 getLevel()->add(bullet);
             }

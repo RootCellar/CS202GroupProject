@@ -234,15 +234,17 @@ void NewHomingProjectile::update() {
     Mob *closestMob = nullptr;
     for ( auto m : inRange) {
         auto d = m->getPos() - getPos() ;
-        if (d.mag2() < displacementToNearest.mag2())
+        if (d.mag2() < displacementToNearest.mag2()) {
             closestMob = m;
+            displacementToNearest = d;
+          }
     }
 
     if(inRange.size() > 0) {
 //        setDirection(closestMob->getPos() - getPos());
         setEndPosition(closestMob->getPos());
         auto directionToObject = (getEndPosition() - getPos()).norm();
-        auto newDirection = oldDirection * .96 + directionToObject * .04; // for slow chang in direction
+        auto newDirection = oldDirection * .90 + directionToObject * .10; // for slow chang in direction
         setDirection(newDirection);
 
 //        Mob* toHit = inRange[0];
