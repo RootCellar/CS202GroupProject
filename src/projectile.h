@@ -75,4 +75,11 @@ private:
     double bHCount = 0;
     int stage = 0;
 };
+
+// Adding Homing Projectile to work without reference to target.
+class NewHomingProjectile : public Projectile {
+public:
+    NewHomingProjectile(double x, double y, const olc::vd2d &fPos);
+
+};
 #endif
