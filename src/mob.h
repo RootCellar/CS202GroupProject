@@ -50,6 +50,7 @@ public:
 	virtual void attack(Mob* target);
 
 	Team& getTeam();
+	void setTeam(Team);
 
     int counter = 0;
 
@@ -68,7 +69,7 @@ public:
 	void setMpPerFrame(double mpRegen); // Set the Mp regenerated each frame
 	void addToMpPerFrame(double mpRegenPlus); // Increase the amount of mana regenerated each frame
 
-	double getMana() const; 
+	double getMana() const;
 	double getMaxMana() const;
 	double getMpPerFrame() const;
 

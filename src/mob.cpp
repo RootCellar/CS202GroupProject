@@ -123,6 +123,10 @@ void Mob::graphicsSetup()
 
 Team& Mob::getTeam() { return _team; }
 
+void Mob::setTeam(Team t) {
+  _team = t;
+}
+
 //=========
 // Increase Hp by hpPlus
 void Mob::addToHealth(double hpPlus) { _health += hpPlus; }

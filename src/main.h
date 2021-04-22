@@ -37,6 +37,8 @@ public:
 
 	Level level;
 
+	Team enemyTeam;
+
 	Example();
 
 	bool OnUserCreate() override;

@@ -34,10 +34,14 @@ bool Example::OnUserCreate()
 	Text::addToTextPos("Spell Selector", { 6, 187 });
 
 	level.add(&player);
+
+	//Enemy Spawning
+
 	{
 		for(int i = 0; i < 4; i++) {
 
 			ChaserMob* m = new ChaserMob(double(i * 100), 100.0);
+			m->setTeam(enemyTeam);
 			level.add(m);
 
 		}
@@ -45,6 +49,7 @@ bool Example::OnUserCreate()
 		for (int i = 0; i < 4; i++) {
 
 			RangedChaserMob* m = new RangedChaserMob(double(i * 100), 100.0);
+			m->setTeam(enemyTeam);
 			level.add(m);
 
 		}
