@@ -80,6 +80,10 @@ private:
 class NewHomingProjectile : public Projectile {
 public:
     NewHomingProjectile(double x, double y, const olc::vd2d &fPos);
+    virtual void update () override;
+private:
+    double _searchRadius = 50;
+    void getDirectionToClosestMob();
 
 };
 #endif

@@ -155,6 +155,10 @@ Projectile * gimmeProjectile( int projectileType, double x, double y, const olc:
             //Orbital
             return new OrbitalProjectile(x, y, fPos);
             break;
+        case 3:
+            // NewHoming
+            return new NewHomingProjectile(x, y, fPos);
+            break;
 //            return std::make_unique<Projectile>(x, y, fx, fy);
     }
 }
@@ -202,3 +206,33 @@ void BlackHoleProjectile::drawSelf(Example &gfx) const{
 
 }
 
+NewHomingProjectile::NewHomingProjectile(double x, double y, const olc::vd2d &fPos) : Projectile(x, y, fPos) {
+    setDecal("New Chasing Fireball");
+//    auto mobsInRange = level.getMobsInRange();
+
+}
+
+void NewHomingProjectile::update() {
+//    auto displacement = getDirection() * getSpeed();
+//    addToPos(displacement);
+
+    Level* level = getLevel();
+    vector<Mob*> inRange = level->getMobsInRange(getPos(), _searchRadius, getShooter()->getTeam());
+    // now find closest mob
+    olc::vd2d displacementToNearest {5000, 5000};
+//    olc::vd2d closestMobPosition ;
+    Mob *closestMob = nullptr;
+    for ( auto m : inRange) {
+        auto d = m->getPos() - getPos() ;
+        if (d.mag2() < displacementToNearest.mag2())
+            closestMob = m;
+    }
+
+    if(inRange.size() > 0) {
+        setDirection(closestMob->getPos() - getPos());
+//        Mob* toHit = inRange[0];
+//        toHit->damage(50);
+//        level->remove(this);
+    }
+    Projectile::update();
+}

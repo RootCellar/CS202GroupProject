@@ -44,6 +44,7 @@ void DecalMap::loadDecals()
 
     // Test sprites
     load("Trailing Fireball", "test2.png");
+    load("New Chasing Fireball", "Egg_Yolk_Fireball.png");
 
     // Miscellaneous
     load("Dollar", "Dollar.png");
