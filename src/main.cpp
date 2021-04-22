@@ -30,6 +30,9 @@ bool Example::OnUserCreate()
 	Text::addText("Game Start!", "Begin", { 255, 255, 255 }, 70);
 	Text::addToTextPos("Begin", { 50, 50 });
 
+	Text::addText("Normal", "Spell Selector", { 255, 255, 255 }, -1, {0.5f, 0.5f});
+	Text::addToTextPos("Spell Selector", { 6, 187 });
+
 	level.add(&player);
 	{
 		for(int i = 0; i < 4; i++) {
@@ -102,6 +105,7 @@ bool Example::OnUserUpdate(float fElapsedTime)
     if(GetKey(olc::K2).bPressed) {
         player.changeSpellNumber();
     }
+
 	if(GetKey(olc::K0).bPressed && player.getMana() > 80) { // key pressed 0
 		player.setMana(player.getMana() - 80);
 		player._speedSpellDuration = 80;

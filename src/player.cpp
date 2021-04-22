@@ -352,9 +352,15 @@ int Player::getSpellNumber() const {
     return _spellNumber;
 }
 
-void Player::changeSpellNumber () {
-    ++_spellNumber;
-    if ( _spellNumber > 2)
-        _spellNumber = 0;
+void Player::changeSpellNumber() {
+	++_spellNumber;
+	if (_spellNumber > 2)
+		_spellNumber = 0;
 
+	if (_spellNumber == 0)
+		Text::overWriteText("Normal", "Spell Selector");
+	if (_spellNumber == 1)
+		Text::overWriteText("Black Hole", "Spell Selector");
+	if (_spellNumber == 2)
+		Text::overWriteText("Orbital", "Spell Selector");
 }
