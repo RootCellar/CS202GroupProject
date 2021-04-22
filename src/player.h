@@ -41,6 +41,10 @@ public:
 
 	int _speedSpellDuration = 200;
 
+	// Bottom two just for playing with projectiles
+	int getSpellNumber () const;
+	void changeSpellNumber ();
+	//
 private:
 
 	float _bounceMotion = 0.0f; // Determines the shrink and stretch of the sprite for bouncy motion
@@ -63,6 +67,10 @@ private:
 
 	std::vector<Spell> _AvailableSpells[10];
 	int _lives;
+
+	// Just for testing
+	int _spellNumber = 0 ; // for projectiles
+
 };
 
 void playerTextSetup(const double health, const double mana);

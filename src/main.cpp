@@ -88,14 +88,20 @@ bool Example::OnUserUpdate(float fElapsedTime)
 
 	//Button Presses
 
-	if(GetKey(olc::K2).bPressed && player.getMana() > 30) {
+//	if(GetKey(olc::K2).bPressed && player.getMana() > 30) {
+    if(GetMouse(0).bPressed && player.getMana() > 30) {
 		player.setMana(player.getMana() - 30);
 		olc::vd2d fireballDir( GetMouseX(), GetMouseY() );
-		Projectile* fireball = new Projectile(player.getXPos(), player.getYPos(), fireballDir - getOffsetVector());
-		fireball->setShooter(&player);
+//		Projectile* fireball = new Projectile(player.getXPos(), player.getYPos(), fireballDir - getOffsetVector());
+        Projectile* fireball = gimmeProjectile(player.getSpellNumber(), player.getXPos(), player.getYPos(), fireballDir - getOffsetVector());
+        fireball->setShooter(&player);
 		level.add(fireball);
 	}
 
+/// The toggle system
+    if(GetKey(olc::K2).bPressed) {
+        player.changeSpellNumber();
+    }
 	if(GetKey(olc::K0).bPressed && player.getMana() > 80) { // key pressed 0
 		player.setMana(player.getMana() - 80);
 		player._speedSpellDuration = 80;

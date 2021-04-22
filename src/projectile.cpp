@@ -95,6 +95,7 @@ std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, d
 
 HomingProjectile::HomingProjectile(double x, double y, Mob* mob) :
 Projectile(x, y, mob->getPos()) , _entityTarget(mob) {
+    // maybe shoul use cosest mob's distance instead?
 }
 
 void HomingProjectile::update() {
@@ -123,6 +124,14 @@ Projectile(x, y)
   setDecal("Fireball");
 }
 
+OrbitalProjectile::OrbitalProjectile(double x, double y, const olc::vd2d &center):Projectile( x, y) {
+    olc::vd2d sPos {x, y};
+    olc::vd2d centre = center;
+
+    setDirection ((sPos - centre).perp());
+    radiusOrbital = (sPos - centre).mag();
+    setDecal("Fireball");
+}
 void OrbitalProjectile::update() {
 
   auto direction = getDirection();
@@ -131,3 +140,65 @@ void OrbitalProjectile::update() {
 
   Projectile::update();
 }
+
+Projectile * gimmeProjectile( int projectileType, double x, double y, const olc::vd2d &fPos  ) {
+    switch (projectileType) {
+        case 0:
+            // regular
+            return new Projectile (x, y, fPos);
+            break;
+        case 1:
+            // blackhole
+            return new BlackHoleProjectile (x, y, fPos);
+            break;
+        case 2:
+            //Orbital
+            return new OrbitalProjectile(x, y, fPos);
+            break;
+//            return std::make_unique<Projectile>(x, y, fx, fy);
+    }
+}
+
+BlackHoleProjectile::BlackHoleProjectile(double x, double y, double fx, double fy) : Projectile(x, y, fx, fy){
+    setSpeed(1);
+    setDecal("Black Hole");
+}
+
+BlackHoleProjectile::BlackHoleProjectile(double x, double y, const olc::vd2d &fPos) : Projectile(x, y, fPos){
+    setSpeed(1);
+    setDecal("Black Hole");
+}
+
+void BlackHoleProjectile::update() {
+//    DrawPartialDecal({ 100.0f + xBHHold + xBH * bHCount, 100.0f + yBHHold + yBH * bHCount } , m_pDecal_BH, { 16.0f * (stage % 5), 16.0f * (stage / 5) }, { 16.0f, 16.0f });
+    bHCount += 0.2f;
+    if (int(bHCount * 50.0f) % 120 == 0)
+        stage++;
+//    if (stage == 7) && !blackHoleHold)
+//    {
+//        blackHoleHold = true;
+//        xBHHold = xBH * bHCount;
+//        yBHHold = yBH * bHCount;
+//        xBH = 0.0f;
+//        yBH = 0.0f;
+//    }
+    if (stage > 10)
+    {
+//        blackHole = false;
+//        blackHoleHold = false;
+//        xBH = 0.0f;
+//        yBH = 0.0f;
+//        xBHHold = 0.0f;
+//        yBHHold = 0.0f;
+        bHCount = 0;
+        stage = 0;
+    }
+    Projectile::update();
+}
+
+void BlackHoleProjectile::drawSelf(Example &gfx) const{
+    gfx.DrawPartialDecal(getPos() + gfx.getOffsetVector(),getDecal(), {16.0f * stage, 0}, {16.0f, 16.0f});
+//    DrawPartialDecal({ 100.0f + xBHHold + xBH * bHCount, 100.0f + yBHHold + yBH * bHCount } , m_pDecal_BH, { 16.0f * (stage % 5), 16.0f * (stage / 5) }, { 16.0f, 16.0f });
+
+}
+
