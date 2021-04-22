@@ -58,7 +58,7 @@ void Projectile::update() {
   addToPos(displacement);
 
   Level* level = getLevel();
-  vector<Mob*> inRange = level->getMobsInRange(getPos(), 20, _shooter->getTeam());
+  vector<Mob*> inRange = level->getMobsInRange(getPos(), getRadius(), _shooter->getTeam());
   if(inRange.size() > 0) {
     Mob* toHit = inRange[0];
     toHit->damage(50);
@@ -86,6 +86,11 @@ Mob* Projectile::getShooter() {
 
 void Projectile::setShooter(Mob* m) {
   _shooter = m;
+}
+
+void Projectile::setRadius(double r) {
+    _radius = r;
+
 }
 
 std::unique_ptr<Projectile> projectileFactory ( double x, double y, double fx, double fy) // fP only gives directions
@@ -155,6 +160,10 @@ Projectile * gimmeProjectile( int projectileType, double x, double y, const olc:
             //Orbital
             return new OrbitalProjectile(x, y, fPos);
             break;
+        case 3:
+            // NewHoming
+            return new NewHomingProjectile(x, y, fPos);
+            break;
 //            return std::make_unique<Projectile>(x, y, fx, fy);
     }
 }
@@ -201,4 +210,44 @@ void BlackHoleProjectile::drawSelf(Example &gfx) const{
     gfx.DrawPartialDecal(getPos() + gfx.getOffsetVector(),getDecal(), {16.0f * stage, 0}, {16.0f, 16.0f});
 //    DrawPartialDecal({ 100.0f + xBHHold + xBH * bHCount, 100.0f + yBHHold + yBH * bHCount } , m_pDecal_BH, { 16.0f * (stage % 5), 16.0f * (stage / 5) }, { 16.0f, 16.0f });
 
+}
+
+NewHomingProjectile::NewHomingProjectile(double x, double y, const olc::vd2d &fPos) : Projectile(x, y, fPos) {
+//    setDecal("New Chasing Fireball");
+    setDecal("Trailing Fireball");
+    setSpeed(1);
+    setRadius(5);
+//    setRadius
+//    auto mobsInRange = level.getMobsInRange();
+
+}
+
+void NewHomingProjectile::update() {
+
+    auto oldDirection = getDirection();
+
+    Level* level = getLevel();
+    vector<Mob*> inRange = level->getMobsInRange(getPos(), _searchRadius, getShooter()->getTeam());
+    // now find closest mob
+    olc::vd2d displacementToNearest {5000, 5000};
+//    olc::vd2d closestMobPosition ;
+    Mob *closestMob = nullptr;
+    for ( auto m : inRange) {
+        auto d = m->getPos() - getPos() ;
+        if (d.mag2() < displacementToNearest.mag2())
+            closestMob = m;
+    }
+
+    if(inRange.size() > 0) {
+//        setDirection(closestMob->getPos() - getPos());
+        setEndPosition(closestMob->getPos());
+        auto directionToObject = (getEndPosition() - getPos()).norm();
+        auto newDirection = oldDirection * .96 + directionToObject * .04; // for slow chang in direction
+        setDirection(newDirection);
+
+//        Mob* toHit = inRange[0];
+//        toHit->damage(50);
+//        level->remove(this);
+    }
+    Projectile::update();
 }

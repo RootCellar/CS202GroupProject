@@ -10,7 +10,7 @@ private:
 
     olc::vd2d _endPosition;
 
-    double _radius = 10;
+    double _radius = 20;
 
     Mob* _shooter;
 
@@ -34,6 +34,7 @@ public:
     olc::vd2d getEndPosition() const;
 
     double getRadius() const;
+    void setRadius(double r);
 
     Mob* getShooter();
     void setShooter(Mob*);
@@ -74,5 +75,16 @@ public:
 private:
     double bHCount = 0;
     int stage = 0;
+};
+
+// Adding Homing Projectile to work without reference to target.
+class NewHomingProjectile : public Projectile {
+public:
+    NewHomingProjectile(double x, double y, const olc::vd2d &fPos);
+    virtual void update () override;
+private:
+    double _searchRadius = 50;
+    void getDirectionToClosestMob();
+
 };
 #endif
