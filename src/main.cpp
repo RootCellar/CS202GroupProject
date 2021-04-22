@@ -38,7 +38,7 @@ bool Example::OnUserCreate()
 	//Enemy Spawning
 
 	{
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 7; i++) {
 
 			ChaserMob* m = new ChaserMob(double(i * 100), 100.0);
 			m->setTeam(enemyTeam);
@@ -46,9 +46,9 @@ bool Example::OnUserCreate()
 
 		}
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 12; i++) {
 
-			RangedChaserMob* m = new RangedChaserMob(double(i * 100), 100.0);
+			RangedChaserMob* m = new RangedChaserMob(double(i * 50), 50.0);
 			m->setTeam(enemyTeam);
 			level.add(m);
 

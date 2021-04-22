@@ -99,7 +99,7 @@ void Player::regen() {
 }
 
 void Player::manaRegen() {
-	addToMana(getMaxMana() * 0.001);
+	addToMana(getMaxMana() * 0.002);
 }
 
 void Player::drawSelf(Example& gfx) const {

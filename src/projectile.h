@@ -10,7 +10,7 @@ private:
 
     olc::vd2d _endPosition;
 
-    double _radius = 20;
+    double _radius = 10;
 
     Mob* _shooter;
 
