@@ -7,7 +7,7 @@ Spring 2021.
 
 Darian Marvel
 
-Uddeep Karki
+Uddeep Karki (R.I.P. 10/17/2021)
 
 Aleks McCormick
 
